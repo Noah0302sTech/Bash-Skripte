@@ -148,9 +148,9 @@ volumes:
 
 #----- Start the Nextcloud server
   cd /home/$SUDO_USER
-  sudo wget -O NextcloudConfig-Noah0302sTech.sh https://pastebin.com/raw/WjkSzEAu
-  sudo chmod +x NextcloudConfig-Noah0302sTech.sh
+  sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Nextcloud/NextcloudConfig-Docker-Noah0302sTech.sh
+  sudo chmod +x NextcloudConfig-Docker-Noah0302sTech.sh
   echo "Um NACH DER INSTALLATION die Nextcloud-Config-Datei anzupassen, folgendes Skript:"
-  echo "sudo ./NextcloudConfig-Noah0302sTech.sh"
+  echo "sudo ./NextcloudConfig-Docker-Noah0302sTech.sh"
   echo
   echo
