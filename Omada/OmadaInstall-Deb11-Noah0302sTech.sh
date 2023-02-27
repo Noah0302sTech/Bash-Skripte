@@ -9,9 +9,8 @@
   fi
 
 #--- Install Java
-  sudo echo "deb http://deb.debian.org/debian/ sid main" | sudo tee -a /etc/apt/sources.list
   echo "Installiere OpenJDK-8, bitte warten... "
-  sudo apt update && sudo apt install openjdk-8-jre-headless -y &> /dev/null &
+  sudo echo "deb http://deb.debian.org/debian/ sid main" | sudo tee -a /etc/apt/sources.list &> /dev/null &
   PID=$!
   i=1
   sp="/-\|"
@@ -22,7 +21,20 @@
   done
   echo
   printf "\xE2\x9C\x94 \n"
-  sudo sed -i '\%^deb http://deb.debian.org/debian/ sid main%d' /etc/apt/sources.list
+  sudo apt update && sudo apt install openjdk-8-jre-headless -y
+  echo
+  printf "\xE2\x9C\x94 \n"
+  sudo sed -i '\%^deb http://deb.debian.org/debian/ sid main%d' /etc/apt/sources.list &> /dev/null &
+  PID=$!
+  i=1
+  sp="/-\|"
+  echo -n ' '
+  while [ -d /proc/$PID ]
+    do
+    printf "\b${sp:i++%${#sp}:1}"
+  done
+  echo
+  printf "\xE2\x9C\x94 \n"
   echo
   echo
 
