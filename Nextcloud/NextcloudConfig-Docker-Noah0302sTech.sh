@@ -27,7 +27,7 @@
                     echo
                     printf "\xE2\x9C\x94 \n"; break;;
             [Nn]* ) exit;;
-            * ) echo "Bitte gib Y/y für Ja, oder N/n für Nein ein.";;
+            * ) echo "Bitte gib Y/y für Ja, oder N/n für Nein ein." && echo;;
         esac
     done
     echo
