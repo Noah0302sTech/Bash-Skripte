@@ -8,7 +8,7 @@
     exit 1
   fi
 
-#----- Update
+#----- System Update
   echo "Update das System, bitte warten... "
   sudo apt update -y &> /dev/null &
   PID=$!
@@ -80,11 +80,11 @@
   echo
   echo
 
-#----- Set default values
+#----- Set default values for Docker-Compose
   MYSQL_ROOT_PASSWORD=sqlrootpassword
   MYSQL_PASSWORD=sqlpassword
 
-#----- Prompt for custom values
+#----- Prompt user for custom values
   read -p "MariaDB-Root-Passwort eigeben [default: $MYSQL_ROOT_PASSWORD]: " input
   MYSQL_ROOT_PASSWORD=${input:-$MYSQL_ROOT_PASSWORD}
   read -p "MariaDB-Passwort eigeben [default: $MYSQL_PASSWORD]: " input
@@ -146,7 +146,7 @@ volumes:
   echo
   echo
 
-#----- Start the Nextcloud server
+#----- Configure the Nextcloud Server
   cd /home/$SUDO_USER
   sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Nextcloud/NextcloudConfig-Docker-Noah0302sTech.sh
   sudo chmod +x NextcloudConfig-Docker-Noah0302sTech.sh
