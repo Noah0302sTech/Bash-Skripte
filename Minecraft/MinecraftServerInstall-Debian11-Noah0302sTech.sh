@@ -3,7 +3,7 @@
 # chmod +x MinecraftServerInstall-Debian11-Noah0302sTech.sh && sudo ./MinecraftServerInstall-Debian11-Noah0302sTech.sh
 
 echo
-echo "Skript von Noah0302"
+echo "Skript von Noah0302sTech"
 echo
 sleep 1
 
@@ -19,7 +19,7 @@ max=2048
  		exit 1
 	fi
 	sleep 1
-printf "\xE2\x9C\x94 \n"
+	printf "\xE2\x9C\x94 \n"
 
 
 
@@ -58,7 +58,7 @@ printf "\xE2\x9C\x94 \n"
 		printf "\b${sp:i++%${#sp}:1}"
 	done
 	echo
-printf "\xE2\x9C\x94 \n"
+	printf "\xE2\x9C\x94 \n"
 
 
 
@@ -77,7 +77,7 @@ printf "\xE2\x9C\x94 \n"
 		printf "\b${sp:i++%${#sp}:1}"
 	done
 	echo
-printf "\xE2\x9C\x94 \n"
+	printf "\xE2\x9C\x94 \n"
 
 
 
@@ -96,7 +96,7 @@ printf "\xE2\x9C\x94 \n"
 		printf "\b${sp:i++%${#sp}:1}"
 	done
 	echo
-printf "\xE2\x9C\x94 \n"
+	printf "\xE2\x9C\x94 \n"
 
 
 
@@ -115,7 +115,7 @@ printf "\xE2\x9C\x94 \n"
 		printf "\b${sp:i++%${#sp}:1}"
 	done
 	echo
-printf "\xE2\x9C\x94 \n"
+	printf "\xE2\x9C\x94 \n"
 
 
 
@@ -173,7 +173,7 @@ printf "\xE2\x9C\x94 \n"
 		fi
 	fi
 	echo
-printf "\xE2\x9C\x94 \n"
+	printf "\xE2\x9C\x94 \n"
 
 
 
@@ -237,7 +237,7 @@ printf "\xE2\x9C\x94 \n"
 		sleep 1
 	
 	fi
-printf "\xE2\x9C\x94 \n"
+	printf "\xE2\x9C\x94 \n"
 
 
 
@@ -247,7 +247,7 @@ printf "\xE2\x9C\x94 \n"
 	echo '-----Starte Minecraft-Server-----'
 	echo
 	sleep 3
-screen ./startMCserver.sh
+	screen ./startMCserver.sh
 
 
 
