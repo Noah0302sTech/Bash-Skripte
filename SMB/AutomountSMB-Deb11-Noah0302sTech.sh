@@ -54,7 +54,7 @@
         sudo echo "username=$USERNAME
         password=$PASSWORD" > /root/.$FILENAME
         
-            #----- Permissions
+        #----- Permissions
             sudo chmod 400 /root/.$FILENAME
 
     #----- SMB-Mount Folder
