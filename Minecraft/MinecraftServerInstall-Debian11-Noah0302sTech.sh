@@ -370,5 +370,3 @@ sudo systemctl restart mcserver.service"  > /home/$SUDO_USER/restartmcserver.sh
 	echo
 	echo "Das Skript is ausgeführt!"
 	echo
-	echo
-	echo
