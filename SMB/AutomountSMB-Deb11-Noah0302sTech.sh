@@ -48,10 +48,12 @@
 
 #----- Create Files
     echo "Erstelle benötigte Files..."
+
     #----- Password-File
         sudo touch /root/.$FILENAME
         sudo echo "username=$USERNAME
         password=$PASSWORD" > /root/.$FILENAME
+        
             #----- Permissions
             sudo chmod 400 /root/.$FILENAME
 
