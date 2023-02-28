@@ -78,6 +78,7 @@
     echo "Failed to create directory for Omada"
     exit 1
   fi
+  
   #--- Prompt user for the Omada download URL or use the default if left blank
   echo
   echo
@@ -87,5 +88,6 @@
       omada_url="https://static.tp-link.com/upload/software/2023/202301/20230130/Omada_SDN_Controller_v5.8.4_Linux_x64.deb"
   fi
   wget "$omada_url"
+  
   #--- Installation
   sudo apt install ./Omada_SDN_Controller_*.deb

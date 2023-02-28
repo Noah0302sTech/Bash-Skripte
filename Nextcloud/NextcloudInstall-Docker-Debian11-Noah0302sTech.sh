@@ -2,11 +2,15 @@
 # Made by Noah0302sTech
 # chmod +x NextcloudInstall-Docker-Debian11-Noah0302sTech.sh && sudo ./NextcloudInstall-Docker-Debian11-Noah0302sTech.sh
 
+
+
 #----- Check for administrative privileges
   if [[ $EUID -ne 0 ]]; then
     echo "Das Skript muss mit Admin-Privilegien ausgeführt werden! (sudo)"
     exit 1
   fi
+
+
 
 #----- System Update
   echo "Update das System, bitte warten... "
@@ -24,6 +28,8 @@
   echo
   echo
 
+
+
 #----- Install Docker
   echo "Installiere Docker, bitte warten... "
   sudo apt install -y docker.io &> /dev/null &
@@ -39,6 +45,8 @@
   printf "\xE2\x9C\x94 \n"
   echo
   echo
+
+
 
 #----- Install Docker Compose
   echo "Installiere Docker Compose, bitte warten... "
@@ -56,6 +64,8 @@
   printf "\xE2\x9C\x94 \n"
   echo
   echo
+
+
 
 #----- Create a folder for Nextcloud
   echo "Erstelle Nextcloud-Ordner, bitte warten... "
@@ -80,6 +90,8 @@
   echo
   echo
 
+
+
 #----- Set default values for Docker-Compose
   MYSQL_ROOT_PASSWORD=sqlrootpassword
   MYSQL_PASSWORD=sqlpassword
@@ -91,6 +103,8 @@
   MYSQL_PASSWORD=${input:-$MYSQL_PASSWORD}
   echo
   echo
+
+
 
 #----- Create a Docker Compose file
   echo "Erstelle Docker-Compose-File, bitte warten... "
@@ -126,6 +140,8 @@ volumes:
   echo
   echo
 
+
+
 #----- Start the Nextcloud server
   echo "Starte Nextcloud-Server, bitte warten... "
   docker-compose up -d &> /dev/null &
@@ -145,6 +161,8 @@ volumes:
   sudo docker ps
   echo
   echo
+
+
 
 #----- Configure the Nextcloud Server
   cd /home/$SUDO_USER

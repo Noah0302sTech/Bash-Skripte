@@ -180,6 +180,7 @@ max=2048
 #Skript erstellen & Rechte vergeben & Starten & EULA
 	echo
 	echo
+	
 	#echo '-----Erstelle das Start-Skript-----'
 	sleep 1
 
