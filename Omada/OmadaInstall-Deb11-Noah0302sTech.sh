@@ -17,6 +17,7 @@
 
   #--- Add sid main repo
     sudo echo "deb http://deb.debian.org/debian/ sid main" | sudo tee -a /etc/apt/sources.list > /dev/null 2>&1
+    echo
 
   #--- Install OpenJDK-8
     sudo apt update > /dev/null 2>&1
