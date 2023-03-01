@@ -150,8 +150,8 @@
 
   #--- Enable MongoDB and show Status
     start_spinner "Installiere Mongo-DB, bitte warten..."
-      sudo systemctl enable mongod --now
-      sudo systemctl status mongod
+      sudo systemctl enable mongod --now > /dev/null 2>&1
+      sudo systemctl status mongod > /dev/null 2>&1
     stop_spinner $?
 
   echo
