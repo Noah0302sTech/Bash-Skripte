@@ -188,9 +188,9 @@
 
   #--- Install downloaded Omada-Version
     echo
-    start_spinner "Installiere Omada-Controller, bitte warten..."
+    #start_spinner "Installiere Omada-Controller, bitte warten..."
       sudo apt install ./Omada_SDN_Controller_*.deb
-    stop_spinner $?
+    #stop_spinner $?
     echo
 
   echo
