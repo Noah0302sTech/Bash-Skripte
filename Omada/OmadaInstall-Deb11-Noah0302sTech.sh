@@ -88,40 +88,38 @@
 
 
 #----- Install Java
-  #--- Spinner-Call
-    start_spinner "Installiere OpenJDK-8, bitte warten..."
-
-      #--- Add sid main repo
-        sudo echo "deb http://deb.debian.org/debian/ sid main" | sudo tee -a /etc/apt/sources.list > /dev/null 2>&1
-
-      #--- Refresh Packages
-        sudo apt update > /dev/null 2>&1
-
+  #--- Add sid main repo
+    start_spinner "Füge Sid-Main-Repo hinzu, bitte warten..."
+      sudo echo "deb http://deb.debian.org/debian/ sid main" | sudo tee -a /etc/apt/sources.list > /dev/null 2>&1
     stop_spinner $?
 
-    #--- Install OpenJDK-8
-        sudo apt install openjdk-8-jre-headless -y
+  #--- Refresh Packages
+    start_spinner "Aktualisiere Package-Listen, bitte warten..."
+      sudo apt update > /dev/null 2>&1
+    stop_spinner $?
 
-    #--- Remove sid main repo
-        sudo sed -i '\%^deb http://deb.debian.org/debian/ sid main%d' /etc/apt/sources.list > /dev/null 2>&1
-    
-    
+  #--- Install OpenJDK-8
+    sudo apt install openjdk-8-jre-headless -y
 
+  #--- Remove sid main repo
+    start_spinner "Entferne Sid-Main-Repo, bitte warten..."
+      sudo sed -i '\%^deb http://deb.debian.org/debian/ sid main%d' /etc/apt/sources.list > /dev/null 2>&1
+    stop_spinner $?
+    
   echo
   echo
 
 
 
 #----- Install jsvc curl gnupg2
-  #--- Spinner-Call
+  #--- Refresh Packages
+    start_spinner "Aktualisiere Package-Listen, bitte warten..."
+      sudo apt update > /dev/null 2>&1
+    stop_spinner $?
+
+  #--- Install jsvc curl gnupg2
     start_spinner "Installiere jsvc curl gnupg2, bitte warten..."
-
-      #--- Refresh Packages
-        sudo apt update > /dev/null 2>&1
-
-      #--- Install jsvc curl gnupg2
-        sudo apt install jsvc curl gnupg2 -y > /dev/null 2>&1
-    
+      sudo apt install jsvc curl gnupg2 -y > /dev/null 2>&1
     stop_spinner $?
 
   echo
@@ -130,31 +128,34 @@
 
 
 #----- Install MongoDB
-  #--- Spinner-Call
+  #--- Add apt key
     start_spinner "Installiere MongoDB, bitte warten..."
-
-      #--- Add apt key
-        curl -fsSL https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -  > /dev/null 2>&1
-
-      #--- Configure sources.list
-        echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list > /dev/null 2>&1
-
-      #--- Install Mongo-DB
-        sudo apt update > /dev/null 2>&1
-        sudo apt install mongodb-org -y > /dev/null 2>&1
-
-      #--- Enable Mongo-DB
-        sudo systemctl enable mongod --now
-
+      curl -fsSL https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -  > /dev/null 2>&1
     stop_spinner $?
 
-  #--- Status Mongo-DB
-    sudo systemctl status mongod
+  #--- Configure sources.list
+    start_spinner "Installiere MongoDB, bitte warten..."
+      echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list > /dev/null 2>&1
+    stop_spinner $?
+
+  #--- Refresh Packages
+    start_spinner "Aktualisiere Package-Listen, bitte warten..."
+      sudo apt update > /dev/null 2>&1
+    stop_spinner $?
+
+  #--- Install MongoDB
+    start_spinner "Installiere Mongo-DB, bitte warten..."
+      sudo apt install mongodb-org -y > /dev/null 2>&1
+    stop_spinner $?
+
+  #--- Enable MongoDB and show Status
+    start_spinner "Installiere Mongo-DB, bitte warten..."
+      sudo systemctl enable mongod --now
+      sudo systemctl status mongod
+    stop_spinner $?
 
   echo
   echo
-
-
 
 
 
