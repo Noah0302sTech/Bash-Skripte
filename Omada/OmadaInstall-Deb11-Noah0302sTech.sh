@@ -10,122 +10,183 @@
     exit 1
   fi
 
+#----- Source of spinner function: https://github.com/tlatsas/bash-spinner
+    function _spinner() {
+        # $1 start/stop
+        #
+        # on start: $2 display message
+        # on stop : $2 process exit status
+        #           $3 spinner function pid (supplied from stop_spinner)
 
+        local on_success="DONE"
+        local on_fail="FAIL"
+        local white="\e[1;37m"
+        local green="\e[1;32m"
+        local red="\e[1;31m"
+        local nc="\e[0m"
 
-#--- Install Java
-  echo "Installiere OpenJDK-8, bitte warten... "
+        case $1 in
+            start)
+                # calculate the column where spinner and status msg will be displayed
+                let column=$(tput cols)-${#2}-8
+                # display message and position the cursor in $column column
+                echo -ne ${2}
+                printf "%${column}s"
 
-  #--- Add sid main repo
-    sudo echo "deb http://deb.debian.org/debian/ sid main" | sudo tee -a /etc/apt/sources.list > /dev/null 2>&1
-    echo
+                # start spinner
+                i=1
+                sp='\|/-'
+                delay=${SPINNER_DELAY:-0.15}
 
-  #--- Install OpenJDK-8
-    sudo apt update > /dev/null 2>&1
-    sudo apt install openjdk-8-jre-headless -y
+                while :
+                do
+                    printf "\b${sp:i++%${#sp}:1}"
+                    sleep $delay
+                done
+                ;;
+            stop)
+                if [[ -z ${3} ]]; then
+                    echo "spinner is not running.."
+                    exit 1
+                fi
 
-  #--- Remove sid main repo
-    sudo sed -i '\%^deb http://deb.debian.org/debian/ sid main%d' /etc/apt/sources.list > /dev/null 2>&1
-    echo
-  
-  echo
-  echo
+                kill $3 > /dev/null 2>&1
 
+                # inform the user uppon success or failure
+                echo -en "\b["
+                if [[ $2 -eq 0 ]]; then
+                    echo -en "${green}${on_success}${nc}"
+                else
+                    echo -en "${red}${on_fail}${nc}"
+                fi
+                echo -e "]"
+                ;;
+            *)
+                echo "invalid argument, try {start/stop}"
+                exit 1
+                ;;
+        esac
+    }
 
+    function start_spinner {
+        # $1 : msg to display
+        _spinner "start" "${1}" &
+        # set global spinner pid
+        _sp_pid=$!
+        disown
+    }
 
-#--- Install jsvc curl gnupg2
-  echo "Installiere jsvc curl gnupg2, bitte warten... "
-
-  #--- Refresh Packages
-    sudo apt update > /dev/null 2>&1
-
-  #--- Install jsvc curl gnupg2
-    sudo apt install jsvc curl gnupg2 -y &> /dev/null &
-      PID=$!
-      i=1
-      sp="/-\|"
-      echo -n ' '
-      while [ -d /proc/$PID ]
-        do
-        printf "\b${sp:i++%${#sp}:1}"
-      done
-      echo
-      printf "\xE2\x9C\x94 \n"
-    echo
-  
-  echo
-  echo
-
-
-
-#--- Install MongoDB
-  echo "Installiere MongoDB, bitte warten... "
-
-  #--- Add apt key
-    curl -fsSL https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -  > /dev/null 2>&1
-  
-  #--- Configure sources.list
-    echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list > /dev/null 2>&1
-
-  #--- Install Mongo-DB
-    sudo apt update > /dev/null 2>&1
-    sudo apt install mongodb-org -y &> /dev/null &
-      PID=$!
-      i=1
-      sp="/-\|"
-      echo -n ' '
-      while [ -d /proc/$PID ]
-        do
-        printf "\b${sp:i++%${#sp}:1}"
-      done
-      echo
-      printf "\xE2\x9C\x94 \n"
-    echo
-
-  #--- Enable Mongo-DB
-    sudo systemctl enable mongod --now
-    sudo systemctl status mongod
-  
-  echo
-  echo
+    function stop_spinner {
+        # $1 : command exit status
+        _spinner "stop" $1 $_sp_pid
+        unset _sp_pid
+    }
 
 
 
-#--- Install Omada
 
-  #--- Create directory
-    sudo mkdir /home/$SUDO_USER/omada
-    if [ -d /home/$SUDO_USER/omada ]; then
-      cd /home/$SUDO_USER/omada
-    else
-      echo "Failed to create directory for Omada"
-      exit 1
-    fi
-  
-  #--- Prompt user for the Omada download URL or use the default if left blank
-    read -p "Füge die Download-URL für Omada_SDN_Controller_vX.X.X_Linux_x64.deb hier ein (Leer für v5.8.4): " omada_url
-    if [ -z "$omada_url" ]; then
-      omada_url="https://static.tp-link.com/upload/software/2023/202301/20230130/Omada_SDN_Controller_v5.8.4_Linux_x64.deb"
-    fi
-    echo
 
-    echo "Downloade Omada-Controller, bitte warten... "
-    wget "$omada_url" &> /dev/null &
-      PID=$!
-      i=1
-      sp="/-\|"
-      echo -n ' '
-      while [ -d /proc/$PID ]
-        do
-        printf "\b${sp:i++%${#sp}:1}"
-      done
-      echo
-      printf "\xE2\x9C\x94 \n"
-    echo
-  
-  #--- Installation
-    echo "Installiere Omada-Controller, bitte warten... "
+
+#----- Install Java
+  #--- Spinner-Call
+    start_spinner "Installiere OpenJDK-8, bitte warten..."
+
+      #--- Add sid main repo
+        sudo echo "deb http://deb.debian.org/debian/ sid main" | sudo tee -a /etc/apt/sources.list > /dev/null 2>&1
+
+      #--- Refresh Packages
+        sudo apt update > /dev/null 2>&1
+
+    stop_spinner $?
+
+    #--- Install OpenJDK-8
+        sudo apt install openjdk-8-jre-headless -y
+
+    #--- Remove sid main repo
+        sudo sed -i '\%^deb http://deb.debian.org/debian/ sid main%d' /etc/apt/sources.list > /dev/null 2>&1
     
+    
+
+  echo
+  echo
+
+
+
+#----- Install jsvc curl gnupg2
+  #--- Spinner-Call
+    start_spinner "Installiere jsvc curl gnupg2, bitte warten..."
+
+      #--- Refresh Packages
+        sudo apt update > /dev/null 2>&1
+
+      #--- Install jsvc curl gnupg2
+        sudo apt install jsvc curl gnupg2 -y > /dev/null 2>&1
+    
+    stop_spinner $?
+
+  echo
+  echo
+
+
+
+#----- Install MongoDB
+  #--- Spinner-Call
+    start_spinner "Installiere MongoDB, bitte warten..."
+
+      #--- Add apt key
+        curl -fsSL https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -  > /dev/null 2>&1
+
+      #--- Configure sources.list
+        echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list > /dev/null 2>&1
+
+      #--- Install Mongo-DB
+        sudo apt update > /dev/null 2>&1
+        sudo apt install mongodb-org -y > /dev/null 2>&1
+
+      #--- Enable Mongo-DB
+        sudo systemctl enable mongod --now
+
+    stop_spinner $?
+
+  #--- Status Mongo-DB
+    sudo systemctl status mongod
+
+  echo
+  echo
+
+
+
+
+
+#----- Install Omada
+  #--- Create directory
+    start_spinner "Erstelle Omada-Directory, bitte warten..."
+      sudo mkdir /home/$SUDO_USER/omada > /dev/null 2>&1
+      if [ -d /home/$SUDO_USER/omada ]; then
+        cd /home/$SUDO_USER/omada
+      else
+        echo "Failed to create directory for Omada"
+        exit 1
+      fi
+    stop_spinner $?
+    echo
+
+  #--- Prompt user for the Omada download URL or use the default if left blank
+    read -p "Füge die Download-URL für Omada_SDN_Controller_vX.X.X_Linux_x64.deb hier ein (Leer für v5.9.9): " omada_url
+    if [ -z "$omada_url" ]; then
+      omada_url="https://static.tp-link.com/upload/software/2023/202302/20230227/Omada_SDN_Controller_v5.9.9_Linux_x64.deb"
+    fi
+    echo "Gewählte Version: $omada_url"
+    echo
+
+  #--- Download selcted Omada-Version
+    start_spinner "Downloade Omada-Controller, bitte warten..."
+      wget "$omada_url" > /dev/null 2>&1
+    stop_spinner $?
+    echo
+
+  #--- Install downloaded Omada-Version
     sudo apt install ./Omada_SDN_Controller_*.deb
 
-    echo
-    echo
+  echo
+  echo
