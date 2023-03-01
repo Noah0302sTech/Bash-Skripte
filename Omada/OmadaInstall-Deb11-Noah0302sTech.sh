@@ -129,12 +129,12 @@
 
 #----- Install MongoDB
   #--- Add apt key
-    start_spinner "Installiere MongoDB, bitte warten..."
+    start_spinner "Füge MongoDB Apt-Key hinzu, bitte warten..."
       curl -fsSL https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -  > /dev/null 2>&1
     stop_spinner $?
 
   #--- Configure sources.list
-    start_spinner "Installiere MongoDB, bitte warten..."
+    start_spinner "Füge MongoDB-Repo hinzu, bitte warten..."
       echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list > /dev/null 2>&1
     stop_spinner $?
 
@@ -149,7 +149,7 @@
     stop_spinner $?
 
   #--- Enable MongoDB and show Status
-    start_spinner "Installiere Mongo-DB, bitte warten..."
+    start_spinner "Aktiviere Mongo-DB, bitte warten..."
       sudo systemctl enable mongod --now > /dev/null 2>&1
       sudo systemctl status mongod > /dev/null 2>&1
     stop_spinner $?
@@ -170,7 +170,6 @@
         exit 1
       fi
     stop_spinner $?
-    echo
 
   #--- Prompt user for the Omada download URL or use the default if left blank
     read -p "Füge die Download-URL für Omada_SDN_Controller_vX.X.X_Linux_x64.deb hier ein (Leer für v5.9.9): " omada_url
@@ -178,16 +177,17 @@
       omada_url="https://static.tp-link.com/upload/software/2023/202302/20230227/Omada_SDN_Controller_v5.9.9_Linux_x64.deb"
     fi
     echo "Gewählte Version: $omada_url"
-    echo
 
   #--- Download selcted Omada-Version
     start_spinner "Downloade Omada-Controller, bitte warten..."
       wget "$omada_url" > /dev/null 2>&1
     stop_spinner $?
-    echo
 
   #--- Install downloaded Omada-Version
-    sudo apt install ./Omada_SDN_Controller_*.deb
+    start_spinner "Installiere Mongo-DB, bitte warten..."
+      sudo apt install ./Omada_SDN_Controller_*.deb
+    stop_spinner $?
+    echo
 
   echo
   echo
