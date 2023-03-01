@@ -4,19 +4,26 @@
 
 
 
+#----- Check for administrative privileges
+  if [[ $EUID -ne 0 ]]; then
+    echo "Das Skript muss mit Admin-Privilegien ausgeführt werden! (sudo)"
+    exit 1
+  fi
+
+
 #----- Install SMB-Utils
     echo "Installiere SMB-Utilities..."
     sudo apt install cifs-utils -y &> /dev/null &
-    PID=$!
-    i=1
-    sp="/-\|"
-    echo -n ' '
-    while [ -d /proc/$PID ]
-        do
-        printf "\b${sp:i++%${#sp}:1}"
-    done
-    echo
-    printf "\xE2\x9C\x94 \n"
+        PID=$!
+        i=1
+        sp="/-\|"
+        echo -n ' '
+        while [ -d /proc/$PID ]
+            do
+            printf "\b${sp:i++%${#sp}:1}"
+        done
+        echo
+        printf "\xE2\x9C\x94 \n"
     echo
     echo
 
