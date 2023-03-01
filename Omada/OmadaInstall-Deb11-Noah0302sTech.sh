@@ -89,6 +89,7 @@
 
 #----- Install Java
   #--- Add sid main repo
+    echo
     start_spinner "Füge Sid-Main-Repo hinzu, bitte warten..."
       sudo echo "deb http://deb.debian.org/debian/ sid main" | sudo tee -a /etc/apt/sources.list > /dev/null 2>&1
     stop_spinner $?
@@ -99,7 +100,9 @@
     stop_spinner $?
 
   #--- Install OpenJDK-8
+    echo
     sudo apt install openjdk-8-jre-headless -y
+    echo
 
   #--- Remove sid main repo
     start_spinner "Entferne Sid-Main-Repo, bitte warten..."
@@ -184,7 +187,8 @@
     stop_spinner $?
 
   #--- Install downloaded Omada-Version
-    start_spinner "Installiere Mongo-DB, bitte warten..."
+    echo
+    start_spinner "Installiere Omada-Controller, bitte warten..."
       sudo apt install ./Omada_SDN_Controller_*.deb
     stop_spinner $?
     echo
