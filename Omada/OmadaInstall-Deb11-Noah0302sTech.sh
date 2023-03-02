@@ -91,9 +91,9 @@
 
 #----- Install Java
   #--- Add Sid-Main-Repo
-      #---                    Note: I add the Debian-Unstable-Repo, since OpenJDK-8 does not come with the Standard-Debian-11-Repository.
-      #---                          Sadly the Omada-Controller does not yet support newer OpenJDK Versions, so I have to do it that way...
-      #---                          Hopefully I can skip this step with future Releases!
+      #-      Note: I add the Debian-Unstable-Repo, since OpenJDK-8 does not come with the Standard-Debian-11-Repository.
+      #-      Sadly the Omada-Controller does not yet support newer OpenJDK Versions, so I have to do it that way...
+      #-      Hopefully I can skip this step with future Releases!
     echo
     start_spinner "Füge Sid-Main-Repo hinzu, bitte warten..."
       sudo echo "deb http://deb.debian.org/debian/ sid main" | sudo tee -a /etc/apt/sources.list > /dev/null 2>&1
@@ -110,10 +110,10 @@
     echo
 
   #--- Remove Sid-Main-Repo
-    #---                    Note: I remove the Repo here after installing it, so Debian does not upgrade all other Packages to the Unstable-Release.
-    #---                          With that, Java will not be updated with apt update && apt upgrade, since its missing in the Stable-Repository...ss
-    #---                          But you can just run the first part of the Script again to update Java.
-    #---                          I plan on adding a Script that you can run, to check for OpenJDK-8 Updates!
+    #-      Note: I remove the Repo here after installing it, so Debian does not upgrade all other Packages to the Unstable-Release.
+    #-      With that, Java will not be updated with apt update && apt upgrade, since its missing in the Stable-Repository...ss
+    #-      But you can just run the first part of the Script again to update Java.
+    #-      I plan on adding a Script that you can run, to check for OpenJDK-8 Updates!
     start_spinner "Entferne Sid-Main-Repo, bitte warten..."
       sudo sed -i '\%^deb http://deb.debian.org/debian/ sid main%d' /etc/apt/sources.list > /dev/null 2>&1
     stop_spinner $?
