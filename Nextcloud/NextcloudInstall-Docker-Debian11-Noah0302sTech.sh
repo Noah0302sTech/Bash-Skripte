@@ -196,6 +196,7 @@ volumes:
     docker-compose up -d > /dev/null 2>&1&
     echo
     sudo docker ps
+  stop_spinner $?
 
   echo
   echo
@@ -209,6 +210,7 @@ volumes:
     sudo chmod +x NextcloudConfig-Docker-Noah0302sTech.sh > /dev/null 2>&1&
     echo "Um NACH DER INSTALLATION die Nextcloud-Config anzupassen, starte das Nextcloud-Config-Skript mit:"
     echo "sudo ./NextcloudConfig-Docker-Noah0302sTech.sh"
+  stop_spinner $?
 
   echo
   echo
