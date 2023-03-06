@@ -99,7 +99,6 @@
 
 
 #----- Docker
-  start_spinner "Installation Docker-Komponenten..."
   #--- Install Docker
     start_spinner "Installiere docker.io..."
       sudo apt install -y docker.io > /dev/null 2>&1
@@ -118,7 +117,6 @@
     stop_spinner $?
     echo
 
-  stop_spinner $?
   echo
   echo
 
