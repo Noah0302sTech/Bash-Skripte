@@ -115,7 +115,6 @@
     start_spinner "Füge $SUDO_USER zu Docker-Gruppe hinzu..."
       sudo usermod -aG docker $SUDO_USER > /dev/null 2>&1
     stop_spinner $?
-    echo
 
   echo
   echo
@@ -183,7 +182,7 @@ services:
       - db
 volumes:
   nextcloud_data:
-" >> docker-compose.yml > /dev/null 2>&1&
+" >> docker-compose.yml
   stop_spinner $?
 
   echo
@@ -194,7 +193,6 @@ volumes:
 #----- Start the Nextcloud server
   start_spinner "Starte Nextcloud-Server... "
     docker-compose up -d > /dev/null 2>&1&
-    echo
     sudo docker ps
   stop_spinner $?
 
