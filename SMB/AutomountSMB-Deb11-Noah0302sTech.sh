@@ -88,6 +88,16 @@
 
 
 
+#----- Refresh Packages
+  start_spinner "Aktualisiere Package-Listen..."
+    sudo apt update -y > /dev/null 2>&1
+  stop_spinner $?
+
+  echo
+  echo
+
+
+
 #----- Install SMB-Utils
     start_spinner "Installiere SMB-Utilities..."
         sudo apt install cifs-utils -y > /dev/null 2>&1
@@ -125,19 +135,19 @@
 
 #----- Create Files
 
-    #----- Password-File
+    #--- Password-File
         start_spinner "Erstelle User-Credential-Files..."
             sudo touch /root/.$FILENAME
             sudo echo "username=$USERNAME" > /root/.$FILENAME
             sudo echo "password=$PASSWORD" >> /root/.$FILENAME
         stop_spinner $?
         
-        #----- Permissions
+        #--- Permissions
             start_spinner "Modifiziere Permissions..."
                 sudo chmod 400 /root/.$FILENAME
             stop_spinner $?
 
-    #----- SMB-Mount Folder
+    #--- SMB-Mount Folder
         start_spinner "Modifiziere Permissions..."
             sudo mkdir /mnt/$FOLDERNAME
         stop_spinner $?
