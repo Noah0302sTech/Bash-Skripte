@@ -98,11 +98,11 @@
 
 
 #----- Set default values
-    FILENAME=filename
+    FILENAME=smbcreds
     SHARE=192.168.x.x/SMB-Share
     USERNAME=username
     PASSWORD=password1
-    FOLDERNAME=smbmount
+    FOLDERNAME=SMBMOUNT
 
 
 
@@ -115,7 +115,7 @@
     USERNAME=${input:-$USERNAME}
     read -p "Gib das Passwort für den SMB-Share ein [default: $PASSWORD]: " input
     PASSWORD=${input:-$PASSWORD}
-    read -p "Gib den Name für den lokalen SMB-Mount-Folder ein [default: /media/$FOLDERNAME]: " input
+    read -p "Gib den Name für den lokalen SMB-Mount-Folder ein [default: /mnt/$FOLDERNAME]: " input
     FOLDERNAME=${input:-$FOLDERNAME}
 
     echo
@@ -127,8 +127,8 @@
     #----- Password-File
         start_spinner "Erstelle User-Credential-Files..."
             sudo touch /root/.$FILENAME
-            sudo echo "username=$USERNAME
-            password=$PASSWORD" > /root/.$FILENAME
+            sudo echo "username=$USERNAME" > /root/.$FILENAME
+            sudo echo "password=$PASSWORD" >> /root/.$FILENAME
         stop_spinner $?
         
         #----- Permissions
@@ -138,7 +138,7 @@
 
     #----- SMB-Mount Folder
         start_spinner "Modifiziere Permissions..."
-            sudo mkdir /media/$FOLDERNAME
+            sudo mkdir /mnt/$FOLDERNAME
         stop_spinner $?
     
     echo
@@ -149,7 +149,7 @@
 #----- FSTAB
     start_spinner "Erstelle FStab..."
         sudo touch /etc/fstab
-        sudo echo "//$SHARE /media/$FOLDERNAME cifs vers=3.0,credentials=/root/.$FILENAME" > /etc/fstab
+        sudo echo "//$SHARE /mnt/$FOLDERNAME cifs vers=3.0,credentials=/root/.$FILENAME" > /etc/fstab
     stop_spinner $?
     
     echo
@@ -158,7 +158,7 @@
 
 #----- Mount SMB-Share
     start_spinner "Mounte das Netzlaufwerk..."
-        sudo mount -t cifs -o rw,vers=3.0,credentials=/root/.$FILENAME //$SHARE /media/$FOLDERNAME
+        sudo mount -t cifs -o rw,vers=3.0,credentials=/root/.$FILENAME //$SHARE /mnt/$FOLDERNAME
     stop_spinner $?
 
     echo
