@@ -98,63 +98,44 @@
 
 
 
-#----- Install Docker
-  echo "Installiere Docker, bitte warten... "
-  sudo apt install -y docker.io &> /dev/null &
-  PID=$!
-  i=1
-  sp="/-\|"
-  echo -n ' '
-  while [ -d /proc/$PID ]
-    do
-    printf "\b${sp:i++%${#sp}:1}"
-  done
-  echo
-  printf "\xE2\x9C\x94 \n"
-  echo
-  echo
+#----- Docker
+  start_spinner "Installation Docker-Komponenten..."
+  #--- Install Docker
+    start_spinner "Installiere docker.io..."
+      sudo apt install -y docker.io > /dev/null 2>&1
+    stop_spinner $?
+    echo
 
+  #--- Install Docker Compose
+    start_spinner "Installiere Docker-Compose..."
+      sudo apt install -y docker-compose > /dev/null 2>&1
+    stop_spinner $?
+    echo
 
+  #--- Install Docker
+    start_spinner "Füge $SUDO_USER zu Docker-Gruppe hinzu..."
+      sudo usermod -aG docker $SUDO_USER > /dev/null 2>&1
+    stop_spinner $?
+    echo
 
-#----- Install Docker Compose
-  echo "Installiere Docker Compose, bitte warten... "
-  sudo usermod -aG docker $SUDO_USER
-  sudo apt install -y docker-compose &> /dev/null &
-  PID=$!
-  i=1
-  sp="/-\|"
-  echo -n ' '
-  while [ -d /proc/$PID ]
-    do
-    printf "\b${sp:i++%${#sp}:1}"
-  done
-  echo
-  printf "\xE2\x9C\x94 \n"
+  stop_spinner $?
   echo
   echo
 
 
 
 #----- Create a folder for Nextcloud
-  echo "Erstelle Nextcloud-Ordner, bitte warten... "
-  mkdir nextcloud
-  if [ -d /home/$SUDO_USER/nextcloud ]; then
-    cd /home/$SUDO_USER/nextcloud
-  else
-    echo "Fehler beim Erstellen des Ordners!"
-    exit 1
-  fi
-  cd nextcloud &> /dev/null &
-  PID=$!
-  i=1
-  sp="/-\|"
-  echo -n ' '
-  while [ -d /proc/$PID ]
-    do
-    printf "\b${sp:i++%${#sp}:1}"
-  done
-  echo
-  printf "\xE2\x9C\x94 \n"
+  start_spinner "Erstelle Nextcloud-Ordner..."
+    mkdir nextcloud
+    if [ -d /home/$SUDO_USER/nextcloud ]; then
+      cd /home/$SUDO_USER/nextcloud
+    else
+      echo "Fehler beim Erstellen des Ordners!"
+      exit 1
+    fi
+    cd nextcloud > /dev/null 2>&1&
+  stop_spinner $?
+
   echo
   echo
 
@@ -169,15 +150,16 @@
   MYSQL_ROOT_PASSWORD=${input:-$MYSQL_ROOT_PASSWORD}
   read -p "MariaDB-Passwort eigeben [default: $MYSQL_PASSWORD]: " input
   MYSQL_PASSWORD=${input:-$MYSQL_PASSWORD}
+  
   echo
   echo
 
 
 
 #----- Create a Docker Compose file
-  echo "Erstelle Docker-Compose-File, bitte warten... "
-  touch docker-compose.yml
-  echo "version: '3'
+  start_spinner "Erstelle Docker-Compose-File... "
+    sudo touch docker-compose.yml > /dev/null 2>&1&
+    sudo echo "version: '3'
 services:
   db:
     image: mariadb
@@ -203,40 +185,32 @@ services:
       - db
 volumes:
   nextcloud_data:
-" >> docker-compose.yml
-  printf "\xE2\x9C\x94 \n"
+" >> docker-compose.yml > /dev/null 2>&1&
+  stop_spinner $?
+
   echo
   echo
 
 
 
 #----- Start the Nextcloud server
-  echo "Starte Nextcloud-Server, bitte warten... "
-  docker-compose up -d &> /dev/null &
-  PID=$!
-  i=1
-  sp="/-\|"
-  echo -n ' '
-  while [ -d /proc/$PID ]
-    do
-    printf "\b${sp:i++%${#sp}:1}"
-  done
-  echo
-  printf "\xE2\x9C\x94 \n"
-  echo
-  echo
+  start_spinner "Starte Nextcloud-Server... "
+    docker-compose up -d > /dev/null 2>&1&
+    echo
+    sudo docker ps
 
-  sudo docker ps
   echo
   echo
 
 
 
 #----- Configure the Nextcloud Server
-  cd /home/$SUDO_USER
-  sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Nextcloud/NextcloudConfig-Docker-Noah0302sTech.sh
-  sudo chmod +x NextcloudConfig-Docker-Noah0302sTech.sh
-  echo "Um NACH DER INSTALLATION die Nextcloud-Config-Datei anzupassen, folgendes Skript:"
-  echo "sudo ./NextcloudConfig-Docker-Noah0302sTech.sh"
+  start_spinner "Erstelle Nextcloud-Config-Skript... "
+    cd /home/$SUDO_USER > /dev/null 2>&1&
+    sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Nextcloud/NextcloudConfig-Docker-Noah0302sTech.sh > /dev/null 2>&1&
+    sudo chmod +x NextcloudConfig-Docker-Noah0302sTech.sh > /dev/null 2>&1&
+    echo "Um NACH DER INSTALLATION die Nextcloud-Config anzupassen, starte das Nextcloud-Config-Skript mit:"
+    echo "sudo ./NextcloudConfig-Docker-Noah0302sTech.sh"
+
   echo
   echo
