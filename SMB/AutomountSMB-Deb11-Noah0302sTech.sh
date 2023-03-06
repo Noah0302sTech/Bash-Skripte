@@ -117,6 +117,7 @@
     PASSWORD=${input:-$PASSWORD}
     read -p "Gib den Name für den lokalen SMB-Mount-Folder ein [default: /media/$FOLDERNAME]: " input
     FOLDERNAME=${input:-$FOLDERNAME}
+
     echo
     echo
 
@@ -151,7 +152,8 @@
         sudo echo "//$SHARE /media/$FOLDERNAME cifs vers=3.0,credentials=/root/.$FILENAME" > /etc/fstab
     stop_spinner $?
     
-
+    echo
+    echo
 
 
 #----- Mount SMB-Share
