@@ -92,6 +92,7 @@
     start_spinner "Installiere SMB-Utilities..."
         sudo apt install cifs-utils -y > /dev/null 2>&1
     stop_spinner $?
+
     echo
     echo
 
