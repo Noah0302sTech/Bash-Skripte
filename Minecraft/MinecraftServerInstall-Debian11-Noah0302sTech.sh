@@ -217,10 +217,19 @@
 	sleep 3
 	screen ./startMCserver.sh
 
+	echo
+	echo
+
 
 
 #----- Change permissions of MC-Folder
-	sudo chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/Minecraft
+	start_spinner "Permissions für Minecraft-Direcory anpassen..."
+		sudo chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/Minecraft
+	stop_spinner $?
+	echo
+
+	echo
+	echo
 
 
 
