@@ -97,7 +97,10 @@
     while true; do
         read -p "Möchtest du die Docker-Container jetzt neustarten [empfohlen]? Y/N: " yn
         case $yn in
-            [Yy]* ) start_spinner "Starte Nextcloud-Server... " && sudo docker restart nextcloud_nextcloud_1 && sudo docker restart nextcloud_db_1 > /dev/null 2>&1; break;;
+            [Yy]* ) start_spinner "Starte Nextcloud-Server... "
+                    && sudo docker restart nextcloud_nextcloud_1 > /dev/null 2>&1
+                    && sudo docker restart nextcloud_db_1 > /dev/null 2>&1
+                    stop_spinner $?; break;;
             [Nn]* ) exit;;
             * ) echo "Bitte gib Y/y für Ja, oder N/n für Nein ein." && echo;;
         esac
