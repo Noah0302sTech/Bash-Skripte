@@ -226,30 +226,24 @@
 
 #----- Creating Service
 	start_spinner "Minecaft-System-Service wird erstellt..."
-	cd /etc/systemd/system/
-	file=mcserver.socket
-	if [ ! -e "$file" ]; then
-
-		sudo touch /etc/systemd/system/mcserver.socket
-		sudo echo "[Unit]
+		cd /etc/systemd/system/
+		file=mcserver.socket
+		if [ ! -e "$file" ]; then
+			sudo touch /etc/systemd/system/mcserver.socket
+			sudo echo "[Unit]
 PartOf=mcserver.service
 
 [Socket]
 ListenFIFO=%t/mcserver.stdin"  > /etc/systemd/system/mcserver.socket
-		
-	else 
+		else 
+			echo "mcserver.socket existiert bereits!"
+		fi
 
-		echo "mcserver.socket existiert bereits!"
-
-	fi
-
-
-	cd /etc/systemd/system/
-	file=mcserver.service
-		if [ ! -e "$file" ]; then
-
-			sudo touch /etc/systemd/system/mcserver.service
-			sudo echo "[Unit]
+		cd /etc/systemd/system/
+		file=mcserver.service
+			if [ ! -e "$file" ]; then
+				sudo touch /etc/systemd/system/mcserver.service
+				sudo echo "[Unit]
 Description=Minecraft Server
 
 [Service]
@@ -265,28 +259,32 @@ StandardError=journal
 
 [Install]
 WantedBy=multi-user.target"  > /etc/systemd/system/mcserver.service
-		
-		else 
-			echo "mcserver.service existiert bereits!"
-			exit 1
-		fi
+			else 
+				echo "mcserver.service existiert bereits!"
+				exit 1
+			fi
 
-	sudo systemctl daemon-reload
-	sudo systemctl start mcserver.service
-	sudo systemctl enable mcserver.service
-	sudo systemctl status mcserver.service
-	touch startmcserver.sh
-	sudo echo "sudo systemctl restart mcserver.service"  > /home/$SUDO_USER/startmcserver.sh
-	sudo chmod +x /home/$SUDO_USER/startmcserver.sh
-	touch stopmcserver.sh
-	sudo echo "sudo echo "stop" > /run/mcserver.stdin"  > /home/$SUDO_USER/stopmcserver.sh
-	sudo chmod +x /home/$SUDO_USER/stopmcserver.sh
-	touch restartmcserver.sh
-	sudo echo "sudo echo "stop" > /run/mcserver.stdin
+		sudo systemctl daemon-reload
+		sudo systemctl start mcserver.service
+		sudo systemctl enable mcserver.service
+		sudo systemctl status mcserver.service
+	stop_spinner $?
+	echo
+
+	start_spinner "Minecaft-Befehls-Skripte werden erstellt..."
+		touch startmcserver.sh
+		sudo echo "sudo systemctl restart mcserver.service"  > /home/$SUDO_USER/startmcserver.sh
+		sudo chmod +x /home/$SUDO_USER/startmcserver.sh
+		touch stopmcserver.sh
+		sudo echo "sudo echo "stop" > /run/mcserver.stdin"  > /home/$SUDO_USER/stopmcserver.sh
+		sudo chmod +x /home/$SUDO_USER/stopmcserver.sh
+		touch restartmcserver.sh
+		sudo echo "sudo echo "stop" > /run/mcserver.stdin
 sleep 5
 sudo systemctl restart mcserver.service"  > /home/$SUDO_USER/restartmcserver.sh
-	sudo chmod +x /home/$SUDO_USER/restartmcserver.sh
+		sudo chmod +x /home/$SUDO_USER/restartmcserver.sh
 	stop_spinner $?
+	echo
 
 	echo
 	echo
