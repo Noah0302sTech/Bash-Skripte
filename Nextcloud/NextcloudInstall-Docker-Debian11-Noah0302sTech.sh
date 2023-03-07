@@ -154,9 +154,9 @@
 
 
 #----- Create a Docker Compose file
-  start_spinner "Erstelle Docker-Compose-File... "
-    sudo touch docker-compose.yml > /dev/null 2>&1&
-    sudo echo "version: '3'
+  echo "Erstelle Docker-Compose-File... "
+  sudo touch docker-compose.yml
+  echo "version: '3'
 services:
   db:
     image: mariadb
@@ -183,7 +183,6 @@ services:
 volumes:
   nextcloud_data:
 " >> docker-compose.yml
-  stop_spinner $?
 
   echo
   echo
