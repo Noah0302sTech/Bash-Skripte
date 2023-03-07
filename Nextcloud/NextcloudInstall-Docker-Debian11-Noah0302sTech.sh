@@ -154,9 +154,9 @@
 
 
 #----- Create a Docker Compose file
-  echo "Erstelle Docker-Compose-File..."
-  sudo touch docker-compose.yml
-  echo "version: '3'
+  start_spinner "Erstelle Docker-Compose-File..."
+    sudo touch docker-compose.yml
+    echo "version: '3'
 services:
   db:
     image: mariadb
@@ -183,6 +183,7 @@ services:
 volumes:
   nextcloud_data:
 " >> docker-compose.yml
+  stop_spinner $?
 
   echo
   echo
@@ -202,9 +203,9 @@ volumes:
 
 #----- Configure the Nextcloud Server
   start_spinner "Erstelle Nextcloud-Config-Skript..."
-    cd /home/$SUDO_USER > /dev/null 2>&1
+    cd /home/$SUDO_USER/
     sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Nextcloud/NextcloudConfig-Docker-Noah0302sTech.sh > /dev/null 2>&1&
-    sudo chmod +x /home/$SUDO_USER/NextcloudConfig-Docker-Noah0302sTech.sh > /dev/null 2>&1
+    sudo chmod +x /home/$SUDO_USER/NextcloudConfig-Docker-Noah0302sTech.sh
   stop_spinner $?
   echo "Um NACH DER INSTALLATION die Nextcloud-Config anzupassen, starte das Nextcloud-Config-Skript mit:"
   echo "sudo ./NextcloudConfig-Docker-Noah0302sTech.sh"
