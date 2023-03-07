@@ -130,7 +130,7 @@
       echo "Fehler beim Erstellen des Ordners!"
       exit 1
     fi
-    cd nextcloud > /dev/null 2>&1&
+    cd nextcloud > /dev/null 2>&1
   stop_spinner $?
 
   echo
@@ -191,7 +191,7 @@ volumes:
 
 #----- Start the Nextcloud server
   start_spinner "Starte Nextcloud-Server... "
-    docker-compose up -d > /dev/null 2>&1&
+    docker-compose up -d > /dev/null 2>&1
   stop_spinner $?
   sudo docker ps
 
@@ -202,9 +202,9 @@ volumes:
 
 #----- Configure the Nextcloud Server
   start_spinner "Erstelle Nextcloud-Config-Skript... "
-    cd /home/$SUDO_USER > /dev/null 2>&1&
+    cd /home/$SUDO_USER > /dev/null 2>&1
     sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Nextcloud/NextcloudConfig-Docker-Noah0302sTech.sh > /dev/null 2>&1&
-    sudo chmod +x NextcloudConfig-Docker-Noah0302sTech.sh > /dev/null 2>&1&
+    sudo chmod +x NextcloudConfig-Docker-Noah0302sTech.sh > /dev/null 2>&1
   stop_spinner $?
   echo "Um NACH DER INSTALLATION die Nextcloud-Config anzupassen, starte das Nextcloud-Config-Skript mit:"
   echo "sudo ./NextcloudConfig-Docker-Noah0302sTech.sh"
