@@ -123,14 +123,14 @@
 
 #----- Create a folder for Nextcloud
   start_spinner "Erstelle Nextcloud-Ordner..."
-    mkdir nextcloud
+    sudo mkdir /home/$SUDO_USER/nextcloud
     if [ -d /home/$SUDO_USER/nextcloud ]; then
       cd /home/$SUDO_USER/nextcloud
     else
       echo "Fehler beim Erstellen des Ordners!"
       exit 1
     fi
-    cd nextcloud > /dev/null 2>&1
+    cd /home/$SUDO_USER/nextcloud > /dev/null 2>&1
   stop_spinner $?
 
   echo

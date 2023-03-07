@@ -88,16 +88,16 @@
 
 
 
-#----- Anpassen der Config
+#----- Change Config
     sudo nano /var/lib/docker/volumes/nextcloud_nextcloud_data/_data/config/config.php
 
 
 
-#----- Docker neu starten
+#----- Restart Docker
     while true; do
         read -p "Möchtest du die Docker-Container jetzt neustarten [empfohlen]? Y/N: " yn
         case $yn in
-            [Yy]* ) "Starte Docker-Container neu, bitte warten... " && sudo docker restart $(docker ps -q) > /dev/null 2>&1
+            [Yy]* ) "Starte Docker-Container neu, bitte warten... " && sudo docker restart $(docker ps -q) > /dev/null 2>&1; break;;
             [Nn]* ) exit;;
             * ) echo "Bitte gib Y/y für Ja, oder N/n für Nein ein." && echo;;
         esac
