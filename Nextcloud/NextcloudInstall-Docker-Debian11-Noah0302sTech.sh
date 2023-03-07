@@ -1,4 +1,4 @@
-  #!/bin/bash
+#!/bin/bash
 # Made by Noah0302sTech
 # chmod +x NextcloudInstall-Docker-Debian11-Noah0302sTech.sh && sudo ./NextcloudInstall-Docker-Debian11-Noah0302sTech.sh
 
