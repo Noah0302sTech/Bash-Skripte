@@ -192,6 +192,7 @@
 
   #--- Download selcted Omada-Version
     start_spinner "Downloade Omada-Controller, bitte warten..."
+      sudo apt install wget -y > /dev/null 2>&1
       wget "$omada_url" > /dev/null 2>&1
     stop_spinner $?
 
