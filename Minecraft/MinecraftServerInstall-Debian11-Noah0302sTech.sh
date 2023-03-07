@@ -207,33 +207,25 @@
 			exit 1
 		fi
 
-
-
-
-#Starten und Welt generieren
 	echo
-	echo '-----Starte Minecraft-Server-----'
 	echo
+
+
+
+#----- Starten und Welt generieren
+	echo "Starte Minecraft-Server..."
 	sleep 3
 	screen ./startMCserver.sh
 
 
 
-#Anweisungen den Server erneut zu starten
-	echo
-	echo 
-	echo
-	echo 'Nun wird Service installiert'
+#----- Change permissions of MC-Folder
 	sudo chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/Minecraft
-	echo
-	echo
-	echo
 
 
 
-
-
-#Installation des Services
+#----- Creating Service
+	start_spinner "Minecaft-System-Service wird erstellt..."
 	cd /etc/systemd/system/
 	file=mcserver.socket
 	if [ ! -e "$file" ]; then
@@ -275,50 +267,33 @@ StandardError=journal
 WantedBy=multi-user.target"  > /etc/systemd/system/mcserver.service
 		
 		else 
-
 			echo "mcserver.service existiert bereits!"
-
+			exit 1
 		fi
 
-
-
 	sudo systemctl daemon-reload
-
 	sudo systemctl start mcserver.service
-
 	sudo systemctl enable mcserver.service
-
-	sleep 5 &> /dev/null &
-		PID=$!
-		i=1
-		sp="/-\|"
-		echo -n ' '
-		while [ -d /proc/$PID ]
-			do
-			printf "\b${sp:i++%${#sp}:1}"
-		done
-		echo
-		printf "\xE2\x9C\x94 \n"
-		echo
 	sudo systemctl status mcserver.service
-
 	touch startmcserver.sh
 	sudo echo "sudo systemctl restart mcserver.service"  > /home/$SUDO_USER/startmcserver.sh
 	sudo chmod +x /home/$SUDO_USER/startmcserver.sh
-
 	touch stopmcserver.sh
 	sudo echo "sudo echo "stop" > /run/mcserver.stdin"  > /home/$SUDO_USER/stopmcserver.sh
 	sudo chmod +x /home/$SUDO_USER/stopmcserver.sh
-
 	touch restartmcserver.sh
 	sudo echo "sudo echo "stop" > /run/mcserver.stdin
 sleep 5
 sudo systemctl restart mcserver.service"  > /home/$SUDO_USER/restartmcserver.sh
 	sudo chmod +x /home/$SUDO_USER/restartmcserver.sh
+	stop_spinner $?
 
 	echo
 	echo
-	echo
+
+
+
+#----- Finished + User Advice
 	echo "Um den Server zu stoppen:"
 	echo "sudo ./stopmcserver.sh"
 	echo
