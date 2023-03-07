@@ -192,8 +192,8 @@ volumes:
 #----- Start the Nextcloud server
   start_spinner "Starte Nextcloud-Server... "
     docker-compose up -d > /dev/null 2>&1&
-    sudo docker ps
   stop_spinner $?
+  sudo docker ps
 
   echo
   echo
@@ -205,9 +205,9 @@ volumes:
     cd /home/$SUDO_USER > /dev/null 2>&1&
     sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Nextcloud/NextcloudConfig-Docker-Noah0302sTech.sh > /dev/null 2>&1&
     sudo chmod +x NextcloudConfig-Docker-Noah0302sTech.sh > /dev/null 2>&1&
-    echo "Um NACH DER INSTALLATION die Nextcloud-Config anzupassen, starte das Nextcloud-Config-Skript mit:"
-    echo "sudo ./NextcloudConfig-Docker-Noah0302sTech.sh"
   stop_spinner $?
+  echo "Um NACH DER INSTALLATION die Nextcloud-Config anzupassen, starte das Nextcloud-Config-Skript mit:"
+  echo "sudo ./NextcloudConfig-Docker-Noah0302sTech.sh"
 
   echo
   echo
