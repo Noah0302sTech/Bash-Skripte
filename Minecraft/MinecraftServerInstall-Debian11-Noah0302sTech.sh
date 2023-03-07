@@ -143,7 +143,7 @@
 	#--- Prompt user for the Omada download URL or use the default if left blank
 		file=server.jar
 		if [ ! -e "$file" ]; then
-			read -p "Füge die Download-URL für die Minecraft-Server-Version ein (Leer für v5.9.9): " minecraftserver_url
+			read -p "Füge die Download-URL für die Minecraft-Server-Version ein (Leer für 1.9.3): " minecraftserver_url
 			if [ -z "$minecraftserver_url" ]; then
 				minecraftserver_url="https://piston-data.mojang.com/v1/objects/c9df48efed58511cdd0213c56b9013a7b5c9ac1f/server.jar"
 			fi
@@ -198,7 +198,7 @@
 
 				#Eula akzeptieren
 					start_spinner "Akzepiere EULA..."
-						echo "eula=true" > eula.txt > /dev/null 2>&1
+						echo "eula=true" > eula.txt
 					stop_spinner $?
 					echo
 
