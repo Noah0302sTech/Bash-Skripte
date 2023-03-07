@@ -204,7 +204,7 @@ volumes:
   start_spinner "Erstelle Nextcloud-Config-Skript... "
     cd /home/$SUDO_USER > /dev/null 2>&1
     sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Nextcloud/NextcloudConfig-Docker-Noah0302sTech.sh > /dev/null 2>&1&
-    sudo chmod +x NextcloudConfig-Docker-Noah0302sTech.sh > /dev/null 2>&1
+    sudo chmod +x /home/$SUDO_USER/NextcloudConfig-Docker-Noah0302sTech.sh > /dev/null 2>&1
   stop_spinner $?
   echo "Um NACH DER INSTALLATION die Nextcloud-Config anzupassen, starte das Nextcloud-Config-Skript mit:"
   echo "sudo ./NextcloudConfig-Docker-Noah0302sTech.sh"
