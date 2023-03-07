@@ -2,243 +2,210 @@
 # Made by Noah0302sTech
 # chmod +x MinecraftServerInstall-Debian11-Noah0302sTech.sh && sudo ./MinecraftServerInstall-Debian11-Noah0302sTech.sh
 
-echo
-echo "Skript von Noah0302sTech"
-echo
-sleep 1
-
-min=1024
-max=2048
 
 
-#Test für root Rechte
-	echo "-----Root?-----"
-	if [[ "${UID}" -ne 0 ]]
-		then
-		echo '-----Root wird benötigt!-----' >&2
- 		exit 1
-	fi
-	sleep 1
-	printf "\xE2\x9C\x94 \n"
+#----- Check for administrative privileges
+  if [[ $EUID -ne 0 ]]; then
+    echo "Das Skript muss mit Admin-Privilegien ausgeführt werden! (sudo)"
+    exit 1
+  fi
 
 
 
+#----- Source of Spinner-Function: https://github.com/tlatsas/bash-spinner
+    function _spinner() {
+        # $1 start/stop
+        #
+        # on start: $2 display message
+        # on stop : $2 process exit status
+        #           $3 spinner function pid (supplied from stop_spinner)
 
+        local on_success="DONE"
+        local on_fail="FAIL"
+        local white="\e[1;37m"
+        local green="\e[1;32m"
+        local red="\e[1;31m"
+        local nc="\e[0m"
 
-#MC Server Debian Installation
+        case $1 in
+            start)
+                # calculate the column where spinner and status msg will be displayed
+                let column=$(tput cols)-${#2}-8
+                # display message and position the cursor in $column column
+                echo -ne ${2}
+                printf "%${column}s"
 
+                # start spinner
+                i=1
+                sp='\|/-'
+                delay=${SPINNER_DELAY:-0.15}
 
+                while :
+                do
+                    printf "\b${sp:i++%${#sp}:1}"
+                    sleep $delay
+                done
+                ;;
+            stop)
+                if [[ -z ${3} ]]; then
+                    echo "spinner is not running.."
+                    exit 1
+                fi
 
+                kill $3 > /dev/null 2>&1
 
+                # inform the user uppon success or failure
+                echo -en "\b["
+                if [[ $2 -eq 0 ]]; then
+                    echo -en "${green}${on_success}${nc}"
+                else
+                    echo -en "${red}${on_fail}${nc}"
+                fi
+                echo -e "]"
+                ;;
+            *)
+                echo "invalid argument, try {start/stop}"
+                exit 1
+                ;;
+        esac
+    }
 
-#Update & Upgrade
-	echo
-	echo '-----Update && Upgrade-----'
-	sleep 1
+    function start_spinner {
+        # $1 : msg to display
+        _spinner "start" "${1}" &
+        # set global spinner pid
+        _sp_pid=$!
+        disown
+    }
 
-	apt update -y &> /dev/null &
-	PID=$!
-	i=1
-	sp="/-\|"
-	echo -n ' '
-	while [ -d /proc/$PID ]
-		do
-		printf "\b${sp:i++%${#sp}:1}"
-	done
-	echo
-	printf "\xE2\x9C\x94 \n"
-
-	apt upgrade -y &> /dev/null &
-	PID=$!
-	i=1
-	sp="/-\|"
-	echo -n ' '
-	while [ -d /proc/$PID ]
-		do
-		printf "\b${sp:i++%${#sp}:1}"
-	done
-	echo
-	printf "\xE2\x9C\x94 \n"
-
-
-
-#WGET
-	echo
-	echo
-	echo '-----Installiere WGET-----'
-	sleep 1
-	apt install wget -y &> /dev/null &
-	PID=$!
-	i=1
-	sp="/-\|"
-	echo -n ' '
-	while [ -d /proc/$PID ]
-		do
-		printf "\b${sp:i++%${#sp}:1}"
-	done
-	echo
-	printf "\xE2\x9C\x94 \n"
-
-
-
-#Screen
-	echo
-	echo
-	echo '-----Installiere Java-----'
-	sleep 1
-	apt install openjdk-17-jdk -y &> /dev/null &
-	PID=$!
-	i=1
-	sp="/-\|"
-	echo -n ' '
-	while [ -d /proc/$PID ]
-		do
-		printf "\b${sp:i++%${#sp}:1}"
-	done
-	echo
-	printf "\xE2\x9C\x94 \n"
+    function stop_spinner {
+        # $1 : command exit status
+        _spinner "stop" $1 $_sp_pid
+        unset _sp_pid
+    }
 
 
 
-#Java Installieren
+
+
+#----- Refresh Packages
+	start_spinner "Aktualisiere Package-Listen..."
+    	sudo apt update -y > /dev/null 2>&1
+	stop_spinner $?
+
 	echo
 	echo
-	echo '-----Installiere Screen-----'
-	sleep 1
-	apt install screen -y &> /dev/null &
-	PID=$!
-	i=1
-	sp="/-\|"
-	echo -n ' '
-	while [ -d /proc/$PID ]
-		do
-		printf "\b${sp:i++%${#sp}:1}"
-	done
-	echo
-	printf "\xE2\x9C\x94 \n"
 
 
+#----- WGET
+	start_spinner "Installiere wget..."
+		apt install wget -y > /dev/null 2>&1
+	stop_spinner $?
 
-#Minecraft Server Download & Verzeichnis erstellen
 	echo
 	echo
-	echo '-----Erstelle /Minecraft/ und downloade die server.jar-----'
-	sleep 1
 
-	if [ ! -d Minecraft ]; then
-	
-		#echo "-----Minecraft/ existiert NICHT, wird erstellt!-----"
-		mkdir Minecraft
+
+
+#----- Java
+	start_spinner "Installiere Java..."
+		apt install openjdk-17-jdk -y > /dev/null 2>&1
+	stop_spinner $?
+
+	echo
+	echo
+
+
+
+#----- Screen
+	start_spinner "Installiere Screen..."
+		apt install screen -y  > /dev/null 2>&1
+	stop_spinner $?
+
+	echo
+	echo
+
+
+
+#----- Minecraft-Server
+	#--- Create directory
+		start_spinner "Erstelle Minecraft-Directory..."
+			if [ ! -d Minecraft ]; then
+				mkdir Minecraft
+			else
+				echo "Minecraft-Directory ist bereits vorhanden!"
+				exit 1
+			fi
 		cd Minecraft
-		sleep 1
-		echo "-----Downloadlink für Server.jar hier einfügen (https://www.minecraft.net/en-us/download/server): "
-		read jar
-		echo "wget "$jar"-----"
-		wget $jar  &> /dev/null &
-		PID=$!
-		i=1
-		sp="/-\|"
-		echo -n ' '
-		while [ -d /proc/$PID ]
-			do
-		  	printf "\b${sp:i++%${#sp}:1}"
-		done
+		stop_spinner $?
+		echo
 
-	else
-
-		cd Minecraft
+	#--- Prompt user for the Omada download URL or use the default if left blank
 		file=server.jar
 		if [ ! -e "$file" ]; then
-
- 		   	echo "-----SERVER.JAR existiert NICHT!-----"
-			echo "-----Link für Server.jar hier einfügen: "
-			read jar
-			sleep 1
-			echo "wget "$jar"-----"
-			wget $jar  &> /dev/null &
-			PID=$!
-			i=1
-			sp="/-\|"
-			echo -n ' '
-			while [ -d /proc/$PID ]
-				do
- 				printf "\b${sp:i++%${#sp}:1}"
-			done
-		
+			read -p "Füge die Download-URL für die Minecraft-Server-Version ein (Leer für v5.9.9): " minecraftserver_url
+			if [ -z "$minecraftserver_url" ]; then
+				minecraftserver_url="https://piston-data.mojang.com/v1/objects/c9df48efed58511cdd0213c56b9013a7b5c9ac1f/server.jar"
+			fi
+			echo "Gewählte Version: $minecraftserver_url"
 		else 
-			echo
-   			echo "-----SERVER.JAR  existiert bereits! Wird NICHT heruntergeladen!-----"
-			echo
-			sleep 1
+				echo "server.jar  ist bereits vorhanden!"
+				exit 1
 		fi
-	fi
+		echo
+
+	#--- Download selcted Minecraft-Server-Version
+		start_spinner "Downloade jerver.jar, bitte warten..."
+			sudo apt install wget -y > /dev/null 2>&1
+			wget "$minecraftserver_url" > /dev/null 2>&1
+		stop_spinner $?
+		echo
+
 	echo
-	printf "\xE2\x9C\x94 \n"
-
-
-
-#Skript erstellen & Rechte vergeben & Starten & EULA
 	echo
-	echo
-	
-	#echo '-----Erstelle das Start-Skript-----'
-	sleep 1
-
-	file=startMCserver.sh
-	if [ ! -e "$file" ]; then
-
-		#echo "-----START-SKRIPT existiert nicht, WIRD erstellt und ausführbar gemacht!-----"
-		sleep 1
-		echo "Wie viel RAM darf der Server verwenden?"
-		echo 'RAM Minumum (in MB), Default 1024: '
-		read -p "min: " min
-		min=${min:-1024}
-		echo 'RAM Maximum (in MB), Default 2048: '
-		read -p "max: " max
-		max=${max:-2048}
-		#sleep 1
-		echo "Gewählte RAM-Settings -Xms"$min"M -Xmx"$max"M-----"
-		touch startMCserver.sh
-		echo "java -Xms"$min"M -Xmx"$max"M -jar server.jar nogui" > startMCserver.sh
-		chmod +x startMCserver.sh
-		printf "\xE2\x9C\x94 \n"
-	
 
 
 
 
-		#Server das erste Mal starten
-			echo
-			echo '-----Server wird das erste Mal gestartet-----'
-			sleep 3
-			./startMCserver.sh  &> /dev/null &
-			PID=$!
-			i=1
-			sp="/-\|"
-			echo -n ' '
-			while [ -d /proc/$PID ]
-				do
-				  printf "\b${sp:i++%${#sp}:1}"
-			done
-			echo
-		printf "\xE2\x9C\x94 \n"
+#-----
+	#--- Create Start-Script
+		file=startMCserver.sh
+		if [ ! -e "$file" ]; then
 
+			min=1024
+			max=2048
+			#echo "-----START-SKRIPT existiert nicht, WIRD erstellt und ausführbar gemacht!-----"
+				echo "Wie viel RAM darf der Server verwenden?"
+				echo '	RAM Minumum (in MB), Default 1024: '
+				read -p "min: " min
+				min=${min:-1024}
+				echo '	RAM Maximum (in MB), Default 2048: '
+				read -p "max: " max
+				max=${max:-2048}
+				echo "Gewählte RAM-Settings -Xms"$min"M -Xmx"$max"M-----"
+				touch startMCserver.sh
+				start_spinner "Start.Skript wird erstellt..."
+					echo "java -Xms"$min"M -Xmx"$max"M -jar server.jar nogui" > startMCserver.sh
+					chmod +x startMCserver.sh
+				stop_spinner $?
+				echo
 
+			#Server das erste Mal starten
+				start_spinner "Server wird das erste Mal gestartet..."
+					./startMCserver.sh > /dev/null 2>&1
+				stop_spinner $?
+				echo
 
-	
-		#Eula akzeptieren
-			echo
-			echo '-----Akzepiere EULA-----'
-			sleep 1
-			echo "eula=true" > eula.txt
+				#Eula akzeptieren
+					start_spinner "Akzepiere EULA..."
+						echo "eula=true" > eula.txt > /dev/null 2>&1
+					stop_spinner $?
+					echo
 
-	else 
-
-    	echo "-----START-SKRIPT existiert! Wird NICHT erstellt!-----"
-		sleep 1
-	
-	fi
-	printf "\xE2\x9C\x94 \n"
+		else
+			echo "Start.Skript ist bereits vorhanden!"
+			exit 1
+		fi
 
 
 
