@@ -97,7 +97,7 @@
     while true; do
         read -p "Möchtest du die Docker-Container jetzt neustarten [empfohlen]? Y/N: " yn
         case $yn in
-            [Yy]* ) start_spinner "Starte Nextcloud-Server... "
+            [Yy]* ) start_spinner "Starte Docker-Container neu... "
                         sudo docker restart nextcloud_nextcloud_1 > /dev/null 2>&1
                         sudo docker restart nextcloud_db_1 > /dev/null 2>&1
                     stop_spinner $?; break;;

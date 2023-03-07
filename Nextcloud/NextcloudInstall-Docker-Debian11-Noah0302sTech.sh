@@ -154,7 +154,7 @@
 
 
 #----- Create a Docker Compose file
-  echo "Erstelle Docker-Compose-File... "
+  echo "Erstelle Docker-Compose-File..."
   sudo touch docker-compose.yml
   echo "version: '3'
 services:
@@ -190,7 +190,7 @@ volumes:
 
 
 #----- Start the Nextcloud server
-  start_spinner "Starte Nextcloud-Server... "
+  start_spinner "Starte Nextcloud-Server..."
     docker-compose up -d > /dev/null 2>&1
   stop_spinner $?
   sudo docker ps
@@ -201,7 +201,7 @@ volumes:
 
 
 #----- Configure the Nextcloud Server
-  start_spinner "Erstelle Nextcloud-Config-Skript... "
+  start_spinner "Erstelle Nextcloud-Config-Skript..."
     cd /home/$SUDO_USER > /dev/null 2>&1
     sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Nextcloud/NextcloudConfig-Docker-Noah0302sTech.sh > /dev/null 2>&1&
     sudo chmod +x /home/$SUDO_USER/NextcloudConfig-Docker-Noah0302sTech.sh > /dev/null 2>&1
