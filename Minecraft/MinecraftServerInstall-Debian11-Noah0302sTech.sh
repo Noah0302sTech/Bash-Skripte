@@ -143,9 +143,9 @@
 	#--- Prompt user for the Omada download URL or use the default if left blank
 		file=server.jar
 		if [ ! -e "$file" ]; then
-			read -p "Füge die Download-URL für die Minecraft-Server-Version ein (Leer für 1.9.3): " minecraftserver_url
+			read -p "Füge die Download-URL für die Minecraft-Server-Version ein (Leer für 1.9.4): " minecraftserver_url
 			if [ -z "$minecraftserver_url" ]; then
-				minecraftserver_url="https://piston-data.mojang.com/v1/objects/c9df48efed58511cdd0213c56b9013a7b5c9ac1f/server.jar"
+				minecraftserver_url="https://piston-data.mojang.com/v1/objects/8f3112a1049751cc472ec13e397eade5336ca7ae/server.jar"
 			fi
 			echo "Gewählte Version: $minecraftserver_url"
 		else 
