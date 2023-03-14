@@ -290,18 +290,12 @@ sudo echo 'stop' > /run/minecraftserver.stdin"  > /home/$SUDO_USER/Minecraft-Com
 
 			#- Restart Minecraft Server
 				touch /home/$SUDO_USER/Minecraft-Commands/restartminecraftserver.sh
-				sudo echo "sudo echo 'say Server will be restarted in 5 Seconds...' > /run/minecraftserver.stdin
-sleep 5
-sudo systemctl restart minecraftserver.service"  > /home/$SUDO_USER/Minecraft-Commands/restartminecraftserver.sh
+				sudo wget
 				sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/restartminecraftserver.sh
 
-			#- Restart Minecraft Server
+			#- Command Minecraft Server
 				touch /home/$SUDO_USER/Minecraft-Commands/commandminecraftserver.sh
-				sudo echo "#----- Set default values
-COMMAND="say Hallo!"
-read -p "Gib deinem MC-Server-Command ein [default: $COMMAND]: " input
-COMMAND=${input:-$COMMAND}
-sudo echo $COMMAND > /run/minecraftserver.stdin"
+				sudo wget 
 				sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/commandminecraftserver.sh
 
 	#----- Create Alias
