@@ -1,6 +1,6 @@
 #!/bin/bash
 #   Made by Noah0302sTech
-#   chmod +x Variables-MC-Commands.sh && sudo ./Variables-MC-Commands.sh
+#   chmod +x MC-Server-Command-Noah0302sTech.sh && sudo ./MC-Server-Command-Noah0302sTech.sh
 
 #----- Check for administrative privileges
   if [[ $EUID -ne 0 ]]; then

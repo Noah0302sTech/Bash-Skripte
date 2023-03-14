@@ -1,6 +1,6 @@
 #!/bin/bash
 #   Made by Noah0302sTech
-#   chmod +x MC-Server-Restart.sh && sudo ./MC-Server-Restart.sh
+#   chmod +x MC-Server-Stop-Noah0302sTech.sh && sudo ./MC-Server-Stop-Noah0302sTech.sh
 
 #----- Check for administrative privileges
   if [[ $EUID -ne 0 ]]; then
@@ -11,6 +11,6 @@
 
 
 #----- Restart Server
-  sudo echo 'say Server will be restarted in 5 Seconds...' > /run/minecraftserver.stdin
+  sudo echo 'say Server will be stopped in 5 Seconds...' > /run/minecraftserver.stdin
   sleep 5
-  sudo systemctl restart minecraftserver.service
+  sudo echo 'stop' > /run/minecraftserver.stdin
