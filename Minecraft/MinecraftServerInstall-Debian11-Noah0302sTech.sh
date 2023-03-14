@@ -214,6 +214,7 @@
 
 #----- Starten und Welt generieren
 	echo "Starte Minecraft-Server..."
+	echo "Server mit 'stop' nach Erstellung der Welt beenden"
 	sleep 3
 	screen ./MC-Server-Start-Noah0302sTech.sh
 
