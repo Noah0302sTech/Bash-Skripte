@@ -11,6 +11,6 @@
 
 
 #----- Restart Server
-  sudo echo 'say Server will be stopped in 5 Seconds...' > /run/minecraftserver.stdin
+  sudo echo 'say Server wird in 5 Sekunden gestoppt...' > /run/minecraftserver.stdin
   sleep 5
   sudo echo 'stop' > /run/minecraftserver.stdin

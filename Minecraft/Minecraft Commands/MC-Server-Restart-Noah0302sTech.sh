@@ -11,6 +11,6 @@
 
 
 #----- Restart Server
-  sudo echo 'say Server will be restarted in 5 Seconds...' > /run/minecraftserver.stdin
+  sudo echo 'say Server wird in 5 Sekunden neu gestartet...' > /run/minecraftserver.stdin
   sleep 5
   sudo systemctl restart minecraftserver.service
