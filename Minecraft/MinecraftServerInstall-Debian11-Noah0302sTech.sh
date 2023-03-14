@@ -169,7 +169,7 @@
 
 #----- Minecraft Server Installation
 	#--- Create Start-Script
-		file=startminecraftserver.sh
+		file=MC-Server-Start.sh
 		if [ ! -e "$file" ]; then
 
 			min=1024
@@ -183,16 +183,16 @@
 				read -p "max: " max
 				max=${max:-2048}
 				echo "Gewählte RAM-Settings -Xms"$min"M -Xmx"$max"M"
-				touch startminecraftserver.sh
+				touch MC-Server-Start.sh
 				start_spinner "Start.Skript wird erstellt..."
-					echo "java -Xms"$min"M -Xmx"$max"M -jar server.jar nogui" > startminecraftserver.sh
-					chmod +x startminecraftserver.sh
+					echo "java -Xms"$min"M -Xmx"$max"M -jar server.jar nogui" > MC-Server-Start.sh
+					chmod +x MC-Server-Start.sh
 				stop_spinner $?
 				echo
 
 			#Server das erste Mal starten
 				start_spinner "Server wird das erste Mal gestartet..."
-					./startminecraftserver.sh > /dev/null 2>&1
+					./MC-Server-Start.sh > /dev/null 2>&1
 				stop_spinner $?
 				echo
 
@@ -215,7 +215,7 @@
 #----- Starten und Welt generieren
 	echo "Starte Minecraft-Server..."
 	sleep 3
-	screen ./startminecraftserver.sh
+	screen ./MC-Server-Start.sh
 
 	echo
 	echo
@@ -277,34 +277,29 @@ WantedBy=multi-user.target"  > /etc/systemd/system/minecraftserver.service
 				mv MinecraftServerInstall-Debian11-Noah0302sTech.sh /home/$SUDO_USER/Minecraft-Commands
 
 			#- Start Minecraft Server
-				touch /home/$SUDO_USER/Minecraft-Commands/startminecraftserver.sh
-				sudo echo "sudo systemctl restart minecraftserver.service"  > /home/$SUDO_USER/Minecraft-Commands/startminecraftserver.sh
-				sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/startminecraftserver.sh
+				sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Minecraft/Minecraft%20Commands/MC-Server-Start.sh -P /home/$SUDO_USER/Minecraft-Commands
+				sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/MC-Server-Start.sh
 
 			#- Stop Minecraft Server
-				touch /home/$SUDO_USER/Minecraft-Commands/stopminecraftserver.sh
-				sudo echo "sudo echo 'say Server will be stopped in 5 Seconds...' > /run/minecraftserver.stdin
-sleep 5
-sudo echo 'stop' > /run/minecraftserver.stdin"  > /home/$SUDO_USER/Minecraft-Commands/stopminecraftserver.sh
-				sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/stopminecraftserver.sh
+				sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Minecraft/Minecraft%20Commands/MC-Server-Stop.sh -P /home/$SUDO_USER/Minecraft-Commands
+				sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/MC-Server-Stop.sh
 
 			#- Restart Minecraft Server
-				touch /home/$SUDO_USER/Minecraft-Commands/restartminecraftserver.sh
-				sudo wget
-				sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/restartminecraftserver.sh
+				sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Minecraft/Minecraft%20Commands/MC-Server-Restart.sh -P /home/$SUDO_USER/Minecraft-Commands
+				sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/MC-Server-Restart.sh
 
 			#- Command Minecraft Server
-				touch /home/$SUDO_USER/Minecraft-Commands/commandminecraftserver.sh
-				sudo wget 
-				sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/commandminecraftserver.sh
+				sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Minecraft/Minecraft%20Commands/MC-Server-Command.sh -P /home/$SUDO_USER/Minecraft-Commands
+				sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/MC-Server-Command.sh
 
 	#----- Create Alias
 		echo "
 #Minecraft-Server Commands
 alias mcstatus='sudo systemctl status minecraftserver.service'
-alias mcrestart='sudo bash /home/$SUDO_USER/Minecraft-Commands/restartminecraftserver.sh'
-alias mcstart='sudo bash /home/$SUDO_USER/Minecraft-Commands/startminecraftserver.sh'
-alias mcstop='sudo bash /home/$SUDO_USER/Minecraft-Commands/stopminecraftserver.sh'"  >> /home/$SUDO_USER/.bashrc
+alias mcrestart='sudo bash /home/$SUDO_USER/Minecraft-Commands/MC-Server-Restart.sh'
+alias mcstart='sudo bash /home/$SUDO_USER/Minecraft-Commands/MC-Server-Start.sh'
+alias mcstop='sudo bash /home/$SUDO_USER/Minecraft-Commands/MC-Server-Stop.sh'
+alias mccommand='sudo bash /home/$SUDO_USER/Minecraft-Commands/MC-Server-Command.sh'"  >> /home/$SUDO_USER/.bashrc
 
 		#--- Create Readme
 			touch mc-server-readme.txt
@@ -321,9 +316,7 @@ Server neu starten:
 mcrestart
 
 Um Befehle einzugeben:
-sudo echo BEFEHLT > /run/minecraftserver.stdin
-Beispiel:
-sudo echo op USERNAME > /run/minecraftserver.stdin"  > /home/$SUDO_USER/mc-server-readme.txt
+mccommand"  > /home/$SUDO_USER/mc-server-readme.txt
 
 	stop_spinner $?
 	echo
