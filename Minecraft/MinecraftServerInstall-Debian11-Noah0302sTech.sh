@@ -109,7 +109,7 @@
 
 #----- Java
 	start_spinner "Installiere Java..."
-		apt install openjdk-17-jdk -y > /dev/null 2>&1
+		apt install openjdk-17-jdk-headless -y > /dev/null 2>&1
 	stop_spinner $?
 
 	echo
@@ -169,30 +169,30 @@
 
 #-----
 	#--- Create Start-Script
-		file=startMCserver.sh
+		file=startminecraftserver.sh
 		if [ ! -e "$file" ]; then
 
 			min=1024
 			max=2048
 			#echo "-----START-SKRIPT existiert nicht, WIRD erstellt und ausführbar gemacht!-----"
 				echo "Wie viel RAM darf der Server verwenden?"
-				echo '	RAM Minumum (in MB), Default 1024: '
+				echo "RAM Minumum (in MB), Default 1024:"
 				read -p "min: " min
 				min=${min:-1024}
-				echo '	RAM Maximum (in MB), Default 2048: '
+				echo "RAM Maximum (in MB), Default 2048:"
 				read -p "max: " max
 				max=${max:-2048}
-				echo "Gewählte RAM-Settings -Xms"$min"M -Xmx"$max"M-----"
-				touch startMCserver.sh
+				echo "Gewählte RAM-Settings -Xms"$min"M -Xmx"$max"M"
+				touch startminecraftserver.sh
 				start_spinner "Start.Skript wird erstellt..."
-					echo "java -Xms"$min"M -Xmx"$max"M -jar server.jar nogui" > startMCserver.sh
-					chmod +x startMCserver.sh
+					echo "java -Xms"$min"M -Xmx"$max"M -jar server.jar nogui" > startminecraftserver.sh
+					chmod +x startminecraftserver.sh
 				stop_spinner $?
 				echo
 
 			#Server das erste Mal starten
 				start_spinner "Server wird das erste Mal gestartet..."
-					./startMCserver.sh > /dev/null 2>&1
+					./startminecraftserver.sh > /dev/null 2>&1
 				stop_spinner $?
 				echo
 
@@ -215,43 +215,32 @@
 #----- Starten und Welt generieren
 	echo "Starte Minecraft-Server..."
 	sleep 3
-	screen ./startMCserver.sh
+	screen ./startminecraftserver.sh
 
 	echo
 	echo
 
 
 
-#----- Change permissions of MC-Folder
-	start_spinner "Permissions für Minecraft-Direcory anpassen..."
-		sudo chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/Minecraft
-	stop_spinner $?
-	echo
-
-	echo
-	echo
-
-
-
-#----- Creating Service
+#----- Creating Services
 	start_spinner "Minecaft-System-Service wird erstellt..."
 		cd /etc/systemd/system/
-		file=mcserver.socket
+		file=minecraftserver.socket
 		if [ ! -e "$file" ]; then
-			sudo touch /etc/systemd/system/mcserver.socket
+			sudo touch /etc/systemd/system/minecraftserver.socket
 			sudo echo "[Unit]
-PartOf=mcserver.service
+PartOf=minecraftserver.service
 
 [Socket]
-ListenFIFO=%t/mcserver.stdin"  > /etc/systemd/system/mcserver.socket
+ListenFIFO=%t/minecraftserver.stdin"  > /etc/systemd/system/minecraftserver.socket
 		else 
-			echo "mcserver.socket existiert bereits!"
+			echo "minecraftserver.socket existiert bereits!"
 		fi
 
 		cd /etc/systemd/system/
-		file=mcserver.service
+		file=minecraftserver.service
 			if [ ! -e "$file" ]; then
-				sudo touch /etc/systemd/system/mcserver.service
+				sudo touch /etc/systemd/system/minecraftserver.service
 				sudo echo "[Unit]
 Description=Minecraft Server
 
@@ -261,37 +250,69 @@ WorkingDirectory=/home/$SUDO_USER/Minecraft
 ExecStart=java -Xms"$min"M -Xmx"$max"M -jar /home/$SUDO_USER/Minecraft/server.jar nogui
 User=$SUDO_USER
 Restart=on-failure
-Sockets=mcserver.socket
+Sockets=minecraftserver.socket
 StandardInput=socket
 StandardOutput=journal
 StandardError=journal
 
 [Install]
-WantedBy=multi-user.target"  > /etc/systemd/system/mcserver.service
+WantedBy=multi-user.target"  > /etc/systemd/system/minecraftserver.service
 			else 
-				echo "mcserver.service existiert bereits!"
+				echo "minecraftserver.service existiert bereits!"
 				exit 1
 			fi
 
 		sudo systemctl daemon-reload
-		sudo systemctl start mcserver.service
-		sudo systemctl enable mcserver.service
-		sudo systemctl status mcserver.service
+		sudo systemctl start minecraftserver.service
+		sudo systemctl enable minecraftserver.service
+		sudo systemctl status minecraftserver.service
 	stop_spinner $?
 	echo
 
 	start_spinner "Minecaft-Befehls-Skripte werden erstellt..."
-		touch startmcserver.sh
-		sudo echo "sudo systemctl restart mcserver.service"  > /home/$SUDO_USER/startmcserver.sh
-		sudo chmod +x /home/$SUDO_USER/startmcserver.sh
-		touch stopmcserver.sh
-		sudo echo "sudo echo "stop" > /run/mcserver.stdin"  > /home/$SUDO_USER/stopmcserver.sh
-		sudo chmod +x /home/$SUDO_USER/stopmcserver.sh
-		touch restartmcserver.sh
-		sudo echo "sudo echo "stop" > /run/mcserver.stdin
+		mkdir /home/$SUDO_USER/Minecraft-Commands
+		touch startminecraftserver.sh
+		sudo echo "sudo systemctl restart minecraftserver.service"  > /home/$SUDO_USER/Minecraft-Commands/startminecraftserver.sh
+		sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/startminecraftserver.sh
+		touch stopminecraftserver.sh
+		sudo echo "sudo echo 'say Server will be stopped in 5 Seconds...' > /run/minecraftserver.stdin
 sleep 5
-sudo systemctl restart mcserver.service"  > /home/$SUDO_USER/restartmcserver.sh
-		sudo chmod +x /home/$SUDO_USER/restartmcserver.sh
+sudo echo 'stop' > /run/minecraftserver.stdin"  > /home/$SUDO_USER/Minecraft-Commands/stopminecraftserver.sh
+		sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/stopminecraftserver.sh
+		touch restartminecraftserver.sh
+		sudo echo "sudo echo 'say Server will be restarted in 5 Seconds...' > /run/minecraftserver.stdin
+sleep 5
+sudo systemctl restart minecraftserver.service"  > /home/$SUDO_USER/Minecraft-Commands/restartminecraftserver.sh
+		sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/restartminecraftserver.sh
+		touch readme-minecraft-commands.txt
+		echo "Status des Mincraft-Servers anzuzeigen:
+sudo systemctl status minecraftserver.service 
+		
+Server stoppen:
+sudo /home/$SUDO_USER/Minecraft-Commands/stopminecraftserver.sh
+
+Server starten:
+sudo /home/$SUDO_USER/Minecraft-Commands/startminecraftserver.sh
+
+Server neu starten:
+sudo /home/$SUDO_USER/Minecraft-Commands/restartminecraftserver.sh
+
+Um Befehle einzugeben:
+sudo echo BEFEHLT > /run/minecraftserver.stdin
+Beispiel:
+sudo echo op USERNAME > /run/minecraftserver.stdin"  > /home/$SUDO_USER/readme-minecraft-commands.txt
+	stop_spinner $?
+	echo
+
+	echo
+	echo
+
+
+
+#----- Change permissions of MC-Folders
+	start_spinner "Permissions für Minecraft-Direcories anpassen..."
+		sudo chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/Minecraft
+		sudo chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/Minecraft-Commands
 	stop_spinner $?
 	echo
 
@@ -301,23 +322,9 @@ sudo systemctl restart mcserver.service"  > /home/$SUDO_USER/restartmcserver.sh
 
 
 #----- Finished + User Advice
-	echo "Um den Server zu stoppen:"
-	echo "sudo ./stopmcserver.sh"
-	echo
-	echo "Um den Server zu starten:"
-	echo "sudo ./startmcserver.sh"
-	echo
-	echo "Um den Server neu zu starten:"
-	echo "sudo ./restartmcserver.sh"
-	echo
-	echo "Um Befehle einzugeben:"
-	echo "sudo echo "BEFEHLT" > /run/mcserver.stdin"
-	echo "Beispiel:"
-	echo "sudo echo "op Username" > /run/mcserver.stdin"
-	echo
+	echo "Für Infos über Server-Commands, öffne die readme-minecraft-commands.txt:"
+	echo "cat readme-minecraft-commands.txt"
 	echo
 	echo
 	echo "Das Skript is ausgeführt!"
-	echo
-	echo
 	echo
