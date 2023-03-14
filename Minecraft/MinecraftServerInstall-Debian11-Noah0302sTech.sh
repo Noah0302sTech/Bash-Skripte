@@ -127,7 +127,7 @@
 
 
 
-#----- Minecraft-Server
+#----- Minecraft-Server Dir and Download Jar
 	#--- Create directory
 		start_spinner "Erstelle Minecraft-Directory..."
 			if [ ! -d Minecraft ]; then
@@ -136,7 +136,7 @@
 				echo "Minecraft-Directory ist bereits vorhanden!"
 				exit 1
 			fi
-		cd Minecraft
+			cd Minecraft
 		stop_spinner $?
 		echo
 
@@ -167,7 +167,7 @@
 
 
 
-#-----
+#----- Minecraft Server Installation
 	#--- Create Start-Script
 		file=startminecraftserver.sh
 		if [ ! -e "$file" ]; then
@@ -269,38 +269,56 @@ WantedBy=multi-user.target"  > /etc/systemd/system/minecraftserver.service
 	stop_spinner $?
 	echo
 
-	start_spinner "Minecaft-Befehls-Skripte werden erstellt..."
-		mkdir /home/$SUDO_USER/Minecraft-Commands
-		touch startminecraftserver.sh
-		sudo echo "sudo systemctl restart minecraftserver.service"  > /home/$SUDO_USER/Minecraft-Commands/startminecraftserver.sh
-		sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/startminecraftserver.sh
-		touch stopminecraftserver.sh
-		sudo echo "sudo echo 'say Server will be stopped in 5 Seconds...' > /run/minecraftserver.stdin
+	#--- Create Minecraft Server Commands
+		start_spinner "Minecaft-Befehls-Skripte werden erstellt..."
+			mkdir /home/$SUDO_USER/Minecraft-Commands
+
+			#- Start Minecraft Server
+				touch startminecraftserver.sh
+				sudo echo "sudo systemctl restart minecraftserver.service"  > /home/$SUDO_USER/Minecraft-Commands/startminecraftserver.sh
+				sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/startminecraftserver.sh
+
+			#- Stop Minecraft Server
+				touch stopminecraftserver.sh
+				sudo echo "sudo echo 'say Server will be stopped in 5 Seconds...' > /run/minecraftserver.stdin
 sleep 5
 sudo echo 'stop' > /run/minecraftserver.stdin"  > /home/$SUDO_USER/Minecraft-Commands/stopminecraftserver.sh
-		sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/stopminecraftserver.sh
-		touch restartminecraftserver.sh
-		sudo echo "sudo echo 'say Server will be restarted in 5 Seconds...' > /run/minecraftserver.stdin
+				sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/stopminecraftserver.sh
+
+			#- Restart Minecraft Server
+				touch restartminecraftserver.sh
+				sudo echo "sudo echo 'say Server will be restarted in 5 Seconds...' > /run/minecraftserver.stdin
 sleep 5
 sudo systemctl restart minecraftserver.service"  > /home/$SUDO_USER/Minecraft-Commands/restartminecraftserver.sh
-		sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/restartminecraftserver.sh
-		touch readme-minecraft-commands.txt
-		echo "Status des Mincraft-Servers anzuzeigen:
-sudo systemctl status minecraftserver.service 
+				sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/restartminecraftserver.sh
+
+	#----- Create Alias
+		echo "
+#Minecraft-Server Commands
+alias mcstatus='sudo systemctl status minecraftserver.service'
+alias mcrestart='sudo bash /home/$SUDO_USER/Minecraft-Commands/restartminecraftserver.sh'
+alias mcstart='sudo bash /home/$SUDO_USER/Minecraft-Commands/startminecraftserver.sh'
+alias mcstop='sudo bash /home/$SUDO_USER/Minecraft-Commands/stopminecraftserver.sh'"  >> /home/$SUDO_USER/.bashrc
+
+		#--- Create Readme
+			touch mc-server-readme.txt
+			echo "Status des Mincraft-Servers anzeigen:
+mcstatus 
 		
 Server stoppen:
-sudo /home/$SUDO_USER/Minecraft-Commands/stopminecraftserver.sh
+mcstop
 
 Server starten:
-sudo /home/$SUDO_USER/Minecraft-Commands/startminecraftserver.sh
+mcstart
 
 Server neu starten:
-sudo /home/$SUDO_USER/Minecraft-Commands/restartminecraftserver.sh
+mcrestart
 
 Um Befehle einzugeben:
 sudo echo BEFEHLT > /run/minecraftserver.stdin
 Beispiel:
-sudo echo op USERNAME > /run/minecraftserver.stdin"  > /home/$SUDO_USER/readme-minecraft-commands.txt
+sudo echo op USERNAME > /run/minecraftserver.stdin"  > /home/$SUDO_USER/mc-server-readme.txt
+
 	stop_spinner $?
 	echo
 
@@ -322,9 +340,10 @@ sudo echo op USERNAME > /run/minecraftserver.stdin"  > /home/$SUDO_USER/readme-m
 
 
 #----- Finished + User Advice
-	echo "Für Infos über Server-Commands, öffne die readme-minecraft-commands.txt:"
-	echo "cat readme-minecraft-commands.txt"
+	echo "Für Infos über Server-Commands, öffne die mc-server-readme.txt:"
+	echo "cat mc-server-readme.txt"
+	echo "Achtung, diese Befehle funktionieren erst nach einer Neuverbindung per SSH!"
 	echo
 	echo
-	echo "Das Skript is ausgeführt!"
+	printf "\xE2\x9C\x94 \n"
 	echo
