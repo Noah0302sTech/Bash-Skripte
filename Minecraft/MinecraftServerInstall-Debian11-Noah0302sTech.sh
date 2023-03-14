@@ -273,24 +273,36 @@ WantedBy=multi-user.target"  > /etc/systemd/system/minecraftserver.service
 		start_spinner "Minecaft-Befehls-Skripte werden erstellt..."
 			mkdir /home/$SUDO_USER/Minecraft-Commands
 
+			#- Move Installer File
+				mv MinecraftServerInstall-Debian11-Noah0302sTech.sh /home/$SUDO_USER/Minecraft-Commands
+
 			#- Start Minecraft Server
-				touch startminecraftserver.sh
+				touch /home/$SUDO_USER/Minecraft-Commands/startminecraftserver.sh
 				sudo echo "sudo systemctl restart minecraftserver.service"  > /home/$SUDO_USER/Minecraft-Commands/startminecraftserver.sh
 				sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/startminecraftserver.sh
 
 			#- Stop Minecraft Server
-				touch stopminecraftserver.sh
+				touch /home/$SUDO_USER/Minecraft-Commands/stopminecraftserver.sh
 				sudo echo "sudo echo 'say Server will be stopped in 5 Seconds...' > /run/minecraftserver.stdin
 sleep 5
 sudo echo 'stop' > /run/minecraftserver.stdin"  > /home/$SUDO_USER/Minecraft-Commands/stopminecraftserver.sh
 				sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/stopminecraftserver.sh
 
 			#- Restart Minecraft Server
-				touch restartminecraftserver.sh
+				touch /home/$SUDO_USER/Minecraft-Commands/restartminecraftserver.sh
 				sudo echo "sudo echo 'say Server will be restarted in 5 Seconds...' > /run/minecraftserver.stdin
 sleep 5
 sudo systemctl restart minecraftserver.service"  > /home/$SUDO_USER/Minecraft-Commands/restartminecraftserver.sh
 				sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/restartminecraftserver.sh
+
+			#- Restart Minecraft Server
+				touch /home/$SUDO_USER/Minecraft-Commands/commandminecraftserver.sh
+				sudo echo "#----- Set default values
+COMMAND="say Hallo!"
+read -p "Gib deinem MC-Server-Command ein [default: $COMMAND]: " input
+COMMAND=${input:-$COMMAND}
+sudo echo $COMMAND > /run/minecraftserver.stdin"
+				sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/commandminecraftserver.sh
 
 	#----- Create Alias
 		echo "
