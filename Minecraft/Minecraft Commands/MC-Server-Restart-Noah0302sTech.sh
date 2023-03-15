@@ -12,5 +12,6 @@
 
 #----- Restart Server
   sudo echo 'say Server wird in 5 Sekunden neu gestartet...' > /run/minecraftserver.stdin
+  sudo echo 'save-all flush' > /run/minecraftserver.stdin
   sleep 5
   sudo systemctl restart minecraftserver.service
