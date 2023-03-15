@@ -348,11 +348,30 @@ mccommand"  > /home/$SUDO_USER/mc-server-readme.txt
 
 
 
+#----- Add new MOTD
+	start_spinner "Füge MOTD hinzu..."
+		sudo echo "
+-----   MOTD für MC-Server-Commands by Noah0302sTech    -----
+
+Für die Liste von Minecraft-Server-Commands,
+öffne die mc-server-readme.txt
+
+cat mc-server-readme.txt
+
+-----   MOTD für MC-Server-Commands by Noah0302sTech    -----
+" >> /etc/motd
+	stop_spinner $?
+
+	echo
+	echo
+
+
+
 #----- Finished + User Advice
 	echo "Für Infos über Server-Commands, öffne die mc-server-readme.txt:"
 	echo "cat mc-server-readme.txt"
+	echo
 	echo "Achtung, diese Befehle funktionieren erst nach einer Neuverbindung per SSH!"
 	echo
 	echo
 	printf "\xE2\x9C\x94 \n"
-	echo
