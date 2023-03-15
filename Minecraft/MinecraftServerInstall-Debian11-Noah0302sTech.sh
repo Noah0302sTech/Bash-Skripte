@@ -184,6 +184,7 @@
 				max=${max:-2048}
 				echo "Gewählte RAM-Settings -Xms"$min"M -Xmx"$max"M"
 				touch MC-Server-Start-Noah0302sTech.sh
+				echo
 				start_spinner "Start.Skript wird erstellt..."
 					echo "java -Xms"$min"M -Xmx"$max"M -jar server.jar nogui" > MC-Server-Start-Noah0302sTech.sh
 					chmod +x MC-Server-Start-Noah0302sTech.sh
@@ -199,6 +200,7 @@
 				#Eula akzeptieren
 					start_spinner "Akzepiere EULA..."
 						echo "eula=true" > eula.txt
+						sleep 1
 					stop_spinner $?
 					echo
 
@@ -215,7 +217,7 @@
 #----- Starten und Welt generieren
 	echo "Starte Minecraft-Server..."
 	echo "Server mit 'stop' nach Erstellung der Welt beenden"
-	sleep 3
+	sleep 5
 	screen ./MC-Server-Start-Noah0302sTech.sh
 
 	echo
@@ -263,35 +265,41 @@ WantedBy=multi-user.target"  > /etc/systemd/system/minecraftserver.service
 				exit 1
 			fi
 
-		sudo systemctl daemon-reload
-		sudo systemctl start minecraftserver.service
-		sudo systemctl enable minecraftserver.service
-		sudo systemctl status minecraftserver.service
+		sudo systemctl daemon-reload > /dev/null 2>&1
+		sudo systemctl start minecraftserver.service > /dev/null 2>&1
+		sudo systemctl enable minecraftserver.service > /dev/null 2>&1
+		sudo systemctl status minecraftserver.service > /dev/null 2>&1
 	stop_spinner $?
 	echo
 
 	#--- Create Minecraft Server Commands
-		start_spinner "Minecaft-Befehls-Skripte werden erstellt..."
-			mkdir /home/$SUDO_USER/Minecraft-Commands
+		start_spinner "Minecaft-Befehls-Verzeichnis wird erstellt..."
+			mkdir /home/$SUDO_USER/Minecraft-Commands > /dev/null 2>&1
+		stop_spinner $?
+		echo
 
 			#- Move Installer File
-				mv MinecraftServerInstall-Debian11-Noah0302sTech.sh /home/$SUDO_USER/Minecraft-Commands
+				mv mv MinecraftServerInstall-Debian11-Noah0302sTech.sh /home/$SUDO_USER/Minecraft > /dev/null 2>&1
 
 			#- Start Minecraft Server
-				sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Minecraft/Minecraft%20Commands/MC-Server-Start-Noah0302sTech.sh -P /home/$SUDO_USER/Minecraft-Commands
-				sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/MC-Server-Start-Noah0302sTech.sh
+				start_spinner "Server-Command Skripte werden heruntergeladen..."
+					sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Minecraft/Minecraft%20Commands/MC-Server-Start-Noah0302sTech.sh -P /home/$SUDO_USER/Minecraft-Commands > /dev/null 2>&1
+					sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/MC-Server-Start-Noah0302sTech.sh > /dev/null 2>&1
 
 			#- Stop Minecraft Server
-				sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Minecraft/Minecraft%20Commands/MC-Server-Stop-Noah0302sTech.sh -P /home/$SUDO_USER/Minecraft-Commands
-				sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/MC-Server-Stop-Noah0302sTech.sh
+					sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Minecraft/Minecraft%20Commands/MC-Server-Stop-Noah0302sTech.sh -P /home/$SUDO_USER/Minecraft-Commands > /dev/null 2>&1
+					sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/MC-Server-Stop-Noah0302sTech.sh > /dev/null 2>&1
 
 			#- Restart Minecraft Server
-				sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Minecraft/Minecraft%20Commands/MC-Server-Restart-Noah0302sTech.sh -P /home/$SUDO_USER/Minecraft-Commands
-				sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/MC-Server-Restart-Noah0302sTech.sh
+					sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Minecraft/Minecraft%20Commands/MC-Server-Restart-Noah0302sTech.sh -P /home/$SUDO_USER/Minecraft-Commands > /dev/null 2>&1
+					sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/MC-Server-Restart-Noah0302sTech.sh > /dev/null 2>&1
 
 			#- Command Minecraft Server
-				sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Minecraft/Minecraft%20Commands/MC-Server-Command-Noah0302sTech.sh -P /home/$SUDO_USER/Minecraft-Commands
-				sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/MC-Server-Command-Noah0302sTech.sh
+					sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Minecraft/Minecraft%20Commands/MC-Server-Command-Noah0302sTech.sh -P /home/$SUDO_USER/Minecraft-Commands > /dev/null 2>&1
+					sudo chmod +x /home/$SUDO_USER/Minecraft-Commands/MC-Server-Command-Noah0302sTech.sh > /dev/null 2>&1
+				stop_spinner $?
+				echo
+				
 
 	#----- Create Alias
 		echo "
@@ -303,8 +311,9 @@ alias mcstop='sudo bash /home/$SUDO_USER/Minecraft-Commands/MC-Server-Stop-Noah0
 alias mccommand='sudo bash /home/$SUDO_USER/Minecraft-Commands/MC-Server-Command-Noah0302sTech.sh'"  >> /home/$SUDO_USER/.bashrc
 
 		#--- Create Readme
-			touch mc-server-readme.txt
-			echo "Status des Mincraft-Servers anzeigen:
+			start_spinner "Erstelle mc-server-readme.txt..."
+				touch mc-server-readme.txt  > /dev/null 2>&1
+				echo "Status des Mincraft-Servers anzeigen:
 mcstatus 
 		
 Server stoppen:
@@ -319,8 +328,8 @@ mcrestart
 Um Befehle einzugeben:
 mccommand"  > /home/$SUDO_USER/mc-server-readme.txt
 
-	stop_spinner $?
-	echo
+			stop_spinner $?
+			echo
 
 	echo
 	echo
@@ -329,8 +338,8 @@ mccommand"  > /home/$SUDO_USER/mc-server-readme.txt
 
 #----- Change permissions of MC-Folders
 	start_spinner "Permissions für Minecraft-Direcories anpassen..."
-		sudo chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/Minecraft
-		sudo chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/Minecraft-Commands
+		sudo chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/Minecraft > /dev/null 2>&1
+		sudo chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/Minecraft-Commands > /dev/null 2>&1
 	stop_spinner $?
 	echo
 
