@@ -279,7 +279,7 @@ WantedBy=multi-user.target"  > /etc/systemd/system/minecraftserver.service
 		echo
 
 			#- Move Installer File
-				mv mv MinecraftServerInstall-Debian11-Noah0302sTech.sh /home/$SUDO_USER/Minecraft > /dev/null 2>&1
+				mv MinecraftServerInstall-Debian11-Noah0302sTech.sh /home/$SUDO_USER/Minecraft > /dev/null 2>&1
 
 			#- Start Minecraft Server
 				start_spinner "Server-Command Skripte werden heruntergeladen..."
