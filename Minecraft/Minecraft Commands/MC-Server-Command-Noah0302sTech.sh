@@ -16,8 +16,7 @@
 
 
 #----- Prompt for custom values
-    read -p "Gib deinen MC-Server-Command ein [default: $COMMAND]: " input
-    COMMAND=${input:-$COMMAND}
+    COMMAND="$@"
 
 
 
