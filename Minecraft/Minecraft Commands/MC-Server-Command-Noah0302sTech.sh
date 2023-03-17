@@ -10,15 +10,25 @@
 
 
 
-#----- Set default values
-    COMMAND="say Hallo!"
+
+
+#----- Set Variable values
+    command="$@"
 
 
 
-#----- Prompt for custom values
-    COMMAND="$@"
+#----- Check if Input is empty
+    if [ ! -z "$command" -a "$command" != " " ];
+      then
+          command="$@"
+      else
+          #----- Prompt for custom values
+              command="say Hallo!"
+              read -p "Gib deinen MC-Server-command ein [default: $command]: " input
+              command=${input:-$command}
+    fi
 
 
 
 #----- Execute
-    sudo echo $COMMAND > /run/minecraftserver.stdin
+              sudo echo $command > /run/minecraftserver.stdin
