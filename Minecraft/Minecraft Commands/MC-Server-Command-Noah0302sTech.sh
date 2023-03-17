@@ -24,7 +24,7 @@
       else
           #----- Prompt for custom values
               command="say Hallo!"
-              read -p "Gib deinen MC-Server-command ein [default: "$command"]: " input
+              read -p "Gib deinen MC-Server-command ein [default: $command]: " input
               command=${input:-$command}
     fi
 
