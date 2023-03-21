@@ -174,9 +174,9 @@
 #----- Install Omada
   #--- Create directory
     start_spinner "Erstelle Omada-Directory, bitte warten..."
-      sudo mkdir /home/$SUDO_USER/omada > /dev/null 2>&1
-      if [ -d /home/$SUDO_USER/omada ]; then
-        cd /home/$SUDO_USER/omada
+      sudo mkdir /home/$SUDO_USER/Omada > /dev/null 2>&1
+      if [ -d /home/$SUDO_USER/Omada ]; then
+        cd /home/$SUDO_USER/Omada
       else
         echo "Failed to create directory for Omada"
         exit 1
@@ -199,9 +199,13 @@
   #--- Install downloaded Omada-Version
     echo
     #start_spinner "Installiere Omada-Controller, bitte warten..."
-      sudo apt install ./Omada_SDN_Controller_*.deb
+      sudo apt install ./*.deb
     #stop_spinner $?
     echo
+
+
+  #----- Moving Bash-Script
+    mv /home/$SUDO_USER/OmadaInstall-Deb11-Noah0302sTech.sh /home/$SUDO_USER/Omada/OmadaInstall-Deb11-Noah0302sTech.sh > /dev/null 2>&1
 
   echo
   echo
