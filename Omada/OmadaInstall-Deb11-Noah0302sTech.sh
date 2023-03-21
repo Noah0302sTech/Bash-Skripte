@@ -106,7 +106,7 @@
 
   #--- Install OpenJDK-8-Headless
     start_spinner "Installiere OpenJDK-8, bitte warten..."
-      DEBIAN_FRONTEND=noninteractive apt install openjdk-8-jre-headless -y
+      DEBIAN_FRONTEND=noninteractive apt install openjdk-8-jre-headless -y > /dev/null 2>&1
     stop_spinner $?
 
   #--- Remove Sid-Main-Repo
