@@ -184,7 +184,7 @@
     stop_spinner $?
 
   #--- Prompt user for the Omada download URL or use the default if left blank
-    read -p "Füge die Download-URL für Omada_SDN_Controller_vX.X.X_Linux_x64.deb hier ein (Leer für v5.9.9): " omada_url
+    read -t 10 -p "Füge die Download-URL für Omada_SDN_Controller_vX.X.X_Linux_x64.deb hier ein (Leer oder warte 10 Sekunden für v5.9.9): " omada_url
     if [ -z "$omada_url" ]; then
       omada_url="https://static.tp-link.com/upload/software/2023/202302/20230227/Omada_SDN_Controller_v5.9.9_Linux_x64.deb"
     fi
