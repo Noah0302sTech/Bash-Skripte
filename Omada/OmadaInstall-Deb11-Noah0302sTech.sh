@@ -105,9 +105,9 @@
     stop_spinner $?
 
   #--- Install OpenJDK-8-Headless
-    echo
-    sudo apt install openjdk-8-jre-headless -y
-    echo
+    start_spinner "Installiere OpenJDK-8, bitte warten..."
+      DEBIAN_FRONTEND=noninteractive apt install openjdk-8-jre-headless -y
+    stop_spinner $?
 
   #--- Remove Sid-Main-Repo
     #-      Note: I remove the Repo here after installing it, so Debian does not upgrade all other Packages to the Unstable-Release.
