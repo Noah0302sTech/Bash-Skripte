@@ -111,9 +111,14 @@
     stop_spinner $?
     echo
 
-  #--- Install Docker
+  #--- Add User to Docker-Group
     start_spinner "Füge $SUDO_USER zu Docker-Gruppe hinzu..."
       sudo usermod -aG docker $SUDO_USER > /dev/null 2>&1
+    stop_spinner $?
+
+  #--- Install Apparmor (Only needed on specific Systems like Hetzner VServer)
+    start_spinner "Installiere Apparmor, falls benötigt..."
+      sudo apt install apparmor -y > /dev/null 2>&1
     stop_spinner $?
 
   echo
