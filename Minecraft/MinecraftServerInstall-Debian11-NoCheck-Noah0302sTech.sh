@@ -1,6 +1,6 @@
 #!/bin/bash
 # Made by Noah0302sTech
-# chmod +x MinecraftServerInstall-Debian11-NoCheck-Noah0302sTech.sh && sudo ./MinecraftServerInstall-Debian11-NoCheck-Noah0302sTech.sh
+# chmod +x MinecraftServerInstall-Debian11-NoCheck-Noah0302sTech.sh && sudo bash MinecraftServerInstall-Debian11-NoCheck-Noah0302sTech.sh
 
 
 
@@ -132,6 +132,7 @@
 	#--- Create directory
 		start_spinner "Erstelle Minecraft-Directory..."
 			mkdir /home/$SUDO_USER/Minecraft-Server  > /dev/null 2>&1
+			cd /home/$SUDO_USER/Minecraft-Server
 		stop_spinner $?
 		echo
 
@@ -306,32 +307,6 @@ alias mccommand='sudo bash /home/$SUDO_USER/Minecraft-Server-Commands/MC-Server-
 
 
 
-
-
-#----- Create Readme File
-	start_spinner "Erstelle mc-server-readme.txt..."
-	touch mc-server-readme.txt  > /dev/null 2>&1
-	echo "Status des Mincraft-Servers anzeigen:
-mcstatus 
-		
-Server stoppen:
-mcstop
-
-Server starten:
-mcstart
-
-Server neu starten:
-mcrestart
-
-Um Befehle einzugeben:
-mccommand"  > /home/$SUDO_USER/mc-server-readme.txt
-	stop_spinner $?
-
-	echo
-	echo
-
-
-
 #----- Change permissions of MC-Folders
 	start_spinner "Permissions für Minecraft-Direcories anpassen..."
 		sudo chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/Minecraft-Server > /dev/null 2>&1
@@ -346,14 +321,24 @@ mccommand"  > /home/$SUDO_USER/mc-server-readme.txt
 #----- Add new MOTD
 	start_spinner "Füge MOTD hinzu..."
 		sudo echo "
------   MOTD für MC-Server-Commands by Noah0302sTech    -----
+-----   MOTD MC-Server-Commands by Noah0302sTech    -----
 
-Für die Liste von Minecraft-Server-Commands,
-öffne die mc-server-readme.txt
+Status des Mincraft-Servers anzeigen:
+mcstatus
 
-cat mc-server-readme.txt
+Server stoppen:
+mcstop
 
------   MOTD für MC-Server-Commands by Noah0302sTech    -----
+Server starten:
+mcstart
+
+Server neu starten:
+mcrestart
+
+Um Befehle einzugeben:
+mccommand
+
+-----   MOTD MC-Server-Commands by Noah0302sTech    -----
 " >> /etc/motd
 	stop_spinner $?
 
@@ -363,8 +348,7 @@ cat mc-server-readme.txt
 
 
 #----- Finished + User Advice
-	echo "Für Infos über Server-Commands, öffne die mc-server-readme.txt:"
-	echo "cat mc-server-readme.txt"
+	echo "Server-Commands wurden in die MOTD hinzugefügt."
 	echo
 	echo "Achtung, diese Befehle funktionieren erst nach einer Neuverbindung per SSH!"
 	echo
