@@ -1,6 +1,6 @@
 #!/bin/bash
 #   Made by Noah0302sTech
-#   chmod +x MC-Server-Stop-Noah0302sTech.sh && sudo ./MC-Server-Stop-Noah0302sTech.sh
+#   chmod +x MC-Host-Restart-Noah0302sTech.sh && sudo bash MC-Host-Restart-Noah0302sTech.sh
 
 #----- Check for administrative privileges
   if [[ $EUID -ne 0 ]]; then
