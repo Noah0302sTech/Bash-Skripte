@@ -289,6 +289,10 @@ WantedBy=multi-user.target"  > /etc/systemd/system/minecraftserver.service
 				sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Minecraft/Minecraft%20Commands/MC-Server-Command-Noah0302sTech.sh -P /home/$SUDO_USER/Minecraft-Server-Commands > /dev/null 2>&1
 				sudo chmod +x /home/$SUDO_USER/Minecraft-Server-Commands/MC-Server-Command-Noah0302sTech.sh > /dev/null 2>&1
 
+			#- Command Host Restart 
+				sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Minecraft/Minecraft%20Commands/MC-Host-Restart-Noah0302sTech.sh -P /home/$SUDO_USER/Minecraft-Server-Commands > /dev/null 2>&1
+				sudo chmod +x /home/$SUDO_USER/Minecraft-Server-Commands/MC-Host-Restart-Noah0302sTech.sh > /dev/null 2>&1
+
 		stop_spinner $?
 	
 	echo
@@ -338,6 +342,9 @@ mcrestart
 
 Um Befehle einzugeben:
 mccommand
+
+Um der kompletten Host neu zu starten:
+restart
 
 -----   MOTD MC-Server-Commands by Noah0302sTech    -----
 " >> /etc/motd
