@@ -10,5 +10,15 @@
 
 
 
-#----- Restart Server
-  sudo systemctl restart minecraftserver.service
+#----- Check for MC-Status
+  status="$(systemctl is-active minecraftserver.service)"
+  if [ "${status}" = "active" ]; then
+    echo "Der Service hat des Status: $status"
+  elif [ "${status}" = "dead" ]; then
+    echo "Der Service hat des Status: $status"
+  elif [ "${status}" = "inactive" ]; then
+    #--- Restart Server
+      sudo systemctl restart minecraftserver.service
+  else
+    echo "Der Service hat des Status: $status"
+  fi

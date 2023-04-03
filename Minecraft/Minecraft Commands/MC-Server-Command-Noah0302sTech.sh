@@ -12,23 +12,33 @@
 
 
 
-#----- Set Variable values
+#----- Check for MC-Status
+  status="$(systemctl is-active minecraftserver.service)"
+  if [ "${status}" = "active" ]; then
+    #--- Set Variable values
     command="$@"
 
 
 
-#----- Check if Input is empty
-    if [ ! -z "$command" -a "$command" != " " ];
-      then
-          command="$@"
-      else
-          #----- Prompt for custom values
-              command="say Hallo!"
-              read -p "Gib deinen MC-Server-command ein [default: $command]: " input
-              command=${input:-$command}
-    fi
+    #--- Check if Input is empty
+        if [ ! -z "$command" -a "$command" != " " ];
+          then
+              command="$@"
+          else
+              #----- Prompt for custom values
+                  command="say Hallo!"
+                  read -p "Gib deinen MC-Server-command ein [default: $command]: " input
+                  command=${input:-$command}
+        fi
 
 
 
-#----- Execute
-              sudo echo $command > /run/minecraftserver.stdin
+    #--- Execute
+        sudo echo $command > /run/minecraftserver.stdin
+  elif [ "${status}" = "dead" ]; then
+    echo "Der Service hat des Status: $status"
+  elif [ "${status}" = "inactive" ]; then
+    echo "Der Service hat des Status: $status"
+  else
+    echo "Der Service hat des Status: $status"
+  fi

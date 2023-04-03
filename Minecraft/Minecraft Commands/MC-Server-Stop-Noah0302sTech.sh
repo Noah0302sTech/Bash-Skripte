@@ -10,7 +10,17 @@
 
 
 
-#----- Restart Server
-  sudo echo 'say Server wird in 5 Sekunden gestoppt...' > /run/minecraftserver.stdin
-  sleep 5
-  sudo echo 'stop' > /run/minecraftserver.stdin
+#----- Check for MC-Status
+  status="$(systemctl is-active minecraftserver.service)"
+  if [ "${status}" = "active" ]; then
+    #--- Restart Server
+      sudo echo 'say Server wird in 5 Sekunden gestoppt...' > /run/minecraftserver.stdin
+      sleep 5
+      sudo echo 'stop' > /run/minecraftserver.stdin
+  elif [ "${status}" = "dead" ]; then
+    echo "Der Service hat des Status: $status"
+  elif [ "${status}" = "inactive" ]; then
+    echo "Der Service hat des Status: $status"
+  else
+    echo "Der Service hat des Status: $status"
+  fi
