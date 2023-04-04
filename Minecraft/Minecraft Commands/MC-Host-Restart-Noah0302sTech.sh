@@ -17,6 +17,7 @@
   if [ "${status}" = "active" ]; then
     #--- Restart Server
       sudo echo 'say Server wird in 5 Sekunden gestoppt...' > /run/minecraftserver.stdin
+      sudo echo 'save-all flush' > /run/minecraftserver.stdin
       sleep 5
       sudo echo 'stop' > /run/minecraftserver.stdin
   elif [ "${status}" = "dead" ]; then
