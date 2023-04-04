@@ -303,7 +303,7 @@ WantedBy=multi-user.target"  > /etc/systemd/system/minecraftserver.service
 #----- Create Bash-Alias
 	echo "
 #Minecraft-Server Commands
-alias restart='sudo bash /home/$SUDO_USER/MC-Host-Restart-Noah0302sTech.sh'
+alias reboot='sudo bash /home/$SUDO_USER/Minecraft-Server-Commands/MC-Host-Restart-Noah0302sTech.sh'
 alias mcstatus='sudo systemctl status minecraftserver.service'
 alias mcrestart='sudo bash /home/$SUDO_USER/Minecraft-Server-Commands/MC-Server-Restart-Noah0302sTech.sh'
 alias mcstart='sudo bash /home/$SUDO_USER/Minecraft-Server-Commands/MC-Server-Start-Noah0302sTech.sh'
@@ -344,7 +344,7 @@ Um Befehle einzugeben:
 mccommand
 
 Um der kompletten Host neu zu starten:
-restart
+reboot
 
 -----   MOTD MC-Server-Commands by Noah0302sTech    -----
 " >> /etc/motd

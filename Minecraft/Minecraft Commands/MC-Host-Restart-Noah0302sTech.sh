@@ -20,9 +20,9 @@
       sleep 5
       sudo echo 'stop' > /run/minecraftserver.stdin
   elif [ "${status}" = "dead" ]; then
-    echo "Der Service hat des Status: $status"
+    shutdown -r 1
   elif [ "${status}" = "inactive" ]; then
-    echo "Der Service hat des Status: $status"
+    shutdown -r 1
   else
     echo "Der Service hat des Status: $status"
   fi
@@ -36,7 +36,35 @@
   elif [ "${status}" = "dead" ]; then
     shutdown -r 1
   elif [ "${status}" = "inactive" ]; then
+    shutdown -r 1
+  else
     echo "Der Service hat des Status: $status"
+  fi
+
+
+
+#----- Check for MC-Status
+  status="$(systemctl is-active minecraftserver.service)"
+  if [ "${status}" = "active" ]; then
+    sleep 5
+  elif [ "${status}" = "dead" ]; then
+    shutdown -r 1
+  elif [ "${status}" = "inactive" ]; then
+    shutdown -r 1
+  else
+    echo "Der Service hat des Status: $status"
+  fi
+
+
+
+#----- Check for MC-Status
+  status="$(systemctl is-active minecraftserver.service)"
+  if [ "${status}" = "active" ]; then
+    sleep 5
+  elif [ "${status}" = "dead" ]; then
+    shutdown -r 1
+  elif [ "${status}" = "inactive" ]; then
+    shutdown -r 1
   else
     echo "Der Service hat des Status: $status"
   fi
