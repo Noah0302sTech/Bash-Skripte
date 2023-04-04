@@ -20,9 +20,13 @@
       sleep 5
       sudo echo 'stop' > /run/minecraftserver.stdin
   elif [ "${status}" = "dead" ]; then
-    shutdown -r 1
+    echo "Der Minecraft Server hast den Status: $status"
+    echo "Deswegen wird der Host in 5 Sekunder heruntergefahren!"
+    shutdown -r 0
   elif [ "${status}" = "inactive" ]; then
-    shutdown -r 1
+    echo "Der Minecraft Server hast den Status: $status"
+    echo "Deswegen wird der Host in 5 Sekunder heruntergefahren!"
+    shutdown -r 0
   else
     echo "Der Service hat des Status: $status"
   fi
@@ -34,9 +38,15 @@
   if [ "${status}" = "active" ]; then
     sleep 5
   elif [ "${status}" = "dead" ]; then
-    shutdown -r 1
+    echo "Der Minecraft Server hast den Status: $status"
+    echo "Deswegen wird der Host in 5 Sekunder heruntergefahren!"
+    shutdown -r 0
+    exit
   elif [ "${status}" = "inactive" ]; then
-    shutdown -r 1
+    echo "Der Minecraft Server hast den Status: $status"
+    echo "Deswegen wird der Host in 5 Sekunder heruntergefahren!"
+    shutdown -r 0
+    exit
   else
     echo "Der Service hat des Status: $status"
   fi
@@ -46,11 +56,17 @@
 #----- Check for MC-Status
   status="$(systemctl is-active minecraftserver.service)"
   if [ "${status}" = "active" ]; then
-    sleep 5
+    sleep 10
   elif [ "${status}" = "dead" ]; then
-    shutdown -r 1
+    echo "Der Minecraft Server hast den Status: $status"
+    echo "Deswegen wird der Host in 5 Sekunder heruntergefahren!"
+    shutdown -r 0
+    exit
   elif [ "${status}" = "inactive" ]; then
-    shutdown -r 1
+    echo "Der Minecraft Server hast den Status: $status"
+    echo "Deswegen wird der Host in 5 Sekunder heruntergefahren!"
+    shutdown -r 0
+    exit
   else
     echo "Der Service hat des Status: $status"
   fi
@@ -60,11 +76,17 @@
 #----- Check for MC-Status
   status="$(systemctl is-active minecraftserver.service)"
   if [ "${status}" = "active" ]; then
-    sleep 5
+    sleep 15
   elif [ "${status}" = "dead" ]; then
-    shutdown -r 1
+    echo "Der Minecraft Server hast den Status: $status"
+    echo "Deswegen wird der Host in 5 Sekunder heruntergefahren!"
+    shutdown -r 0
+    exit
   elif [ "${status}" = "inactive" ]; then
-    shutdown -r 1
+    echo "Der Minecraft Server hast den Status: $status"
+    echo "Deswegen wird der Host in 5 Sekunder heruntergefahren!"
+    shutdown -r 0
+    exit
   else
     echo "Der Service hat des Status: $status"
   fi

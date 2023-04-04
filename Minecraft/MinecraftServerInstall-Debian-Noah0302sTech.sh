@@ -347,7 +347,7 @@ Um der kompletten Host neu zu starten:
 reboot
 
 -----   MOTD MC-Server-Commands by Noah0302sTech    -----
-" >> /etc/motd
+" > /etc/motd
 	stop_spinner $?
 
 	echo
