@@ -146,8 +146,7 @@
 
 	#--- Download selcted Minecraft-Server-Version
 		start_spinner "Downloade jerver.jar, bitte warten..."
-			sudo apt install wget -y > /dev/null 2>&1
-			wget "$minecraftserver_url" > /dev/null 2>&1
+			wget -O "server.jar" "$minecraftserver_url" > /dev/null 2>&1
 		stop_spinner $?
 		echo
 
