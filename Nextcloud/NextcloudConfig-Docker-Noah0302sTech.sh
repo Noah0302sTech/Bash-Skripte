@@ -89,7 +89,7 @@
 
 
 #----- Change Config
-    sudo nano /var/lib/docker/volumes/nextcloud_nextcloud_data/_data/config/config.php
+    sudo nano /media/Nextcloud-Data/config/config.php
 
 
 
