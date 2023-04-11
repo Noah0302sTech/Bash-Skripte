@@ -173,9 +173,9 @@
 
 #----- Create Crontab
 	start_spinner "Erstelle Crontab..."
-        touch /etc/cron.d/pihole-updater
+        touch /etc/cron.d/pihole-updater-Noah0302sTech
     	echo "#Daily Update for Pihole by Noah0302sTech
-00 8 * * * root /home/$SUDO_USER/Pihole-Files/Pihole-Updater.sh" >> /etc/cron.d/pihole-updater
+00 8 * * * root /home/$SUDO_USER/Pihole-Files/Pihole-Updater.sh" >> /etc/cron.d/pihole-updater-Noah0302sTech
 	stop_spinner $?
 
     echo
