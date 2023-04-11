@@ -1,6 +1,6 @@
 #!/bin/bash
 # Made by Noah0302sTech
-# chmod +x OmadaInstall-Deb11-Noah0302sTech.sh && sudo ./OmadaInstall-Deb11-Noah0302sTech.sh
+# chmod +x Omada-Install-Deb11-Noah0302sTech.sh && sudo bash Omada-Install-Deb11-Noah0302sTech.sh
 
 
 
@@ -205,7 +205,7 @@
 
 
   #----- Moving Bash-Script
-    mv /home/$SUDO_USER/OmadaInstall-Deb11-Noah0302sTech.sh /home/$SUDO_USER/Omada/OmadaInstall-Deb11-Noah0302sTech.sh > /dev/null 2>&1
+    mv /home/$SUDO_USER/Omada-Install-Deb11-Noah0302sTech.sh /home/$SUDO_USER/Omada/Omada-Install-Deb11-Noah0302sTech.sh > /dev/null 2>&1
 
   echo
   echo

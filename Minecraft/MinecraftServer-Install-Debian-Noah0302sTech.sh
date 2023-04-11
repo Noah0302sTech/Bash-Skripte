@@ -1,6 +1,6 @@
 #!/bin/bash
 # Made by Noah0302sTech
-# chmod +x MinecraftServerInstall-Debian-Noah0302sTech.sh && sudo bash MinecraftServerInstall-Debian-Noah0302sTech.sh
+# chmod +x MinecraftServer-Install-Debian-Noah0302sTech.sh && sudo bash MinecraftServer-Install-Debian-Noah0302sTech.sh
 
 
 
@@ -268,7 +268,7 @@ WantedBy=multi-user.target"  > /etc/systemd/system/minecraftserver.service
 	stop_spinner $?
 
 	#--- Move Installer File
-				mv MinecraftServerInstall-Debian-Noah0302sTech.sh /home/$SUDO_USER/Minecraft-Server/ > /dev/null 2>&1
+				mv MinecraftServer-Install-Debian-Noah0302sTech.sh /home/$SUDO_USER/Minecraft-Server/ > /dev/null 2>&1
 
 	#--- Downloading Command-Skripts
 		start_spinner "Server-Command Skripte werden heruntergeladen..."

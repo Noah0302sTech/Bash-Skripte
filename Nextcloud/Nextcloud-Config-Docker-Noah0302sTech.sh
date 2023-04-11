@@ -1,6 +1,6 @@
 #!/bin/bash
 # Made by Noah0302sTech
-# chmod +x NextcloudConfig-Noah0302sTech.sh && sudo ./NextcloudConfig-Noah0302sTech.sh
+# chmod +x Nextcloud-Config-Docker-Noah0302sTech.sh && sudo bash Nextcloud-Config-Docker-Noah0302sTech.sh
 
 
 
