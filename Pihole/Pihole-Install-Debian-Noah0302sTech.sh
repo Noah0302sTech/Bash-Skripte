@@ -119,7 +119,7 @@
 #----- Create Bash-File
 	start_spinner "Erstelle Pihole-Updater Bash-File..."
         touch Pihole-Updater.sh
-        touch Pihole-Updater-Cron-Check.txt
+        touch Cron-Check.txt
 	stop_spinner $?
 
     #--- Echo Commands into Pihole-Updater.sh
@@ -146,7 +146,7 @@
 
 
 #Cron-Check
-    echo "Pihole Updated! @05:00" >> /home/'$SUDO_USER'/Pihole-Files/Pihole-Updater-Cron-Check.txt' > Pihole-Updater.sh
+    echo "Pihole Updated! @05:00" >> /home/'$SUDO_USER'/Pihole-Files/Cron-Check.txt' > Pihole-Updater.sh
 
     #--- Make Pihole-Updater.sh executable
         start_spinner "Mache Pihole-Updater.sh ausführbar..."
@@ -163,7 +163,7 @@
     	mkdir Pihole-Files > /dev/null 2>&1
 		mv /home/$SUDO_USER/Pihole-Install-Debian-Noah0302sTech.sh /home/$SUDO_USER/Pihole-Files/Pihole-Install-Debian-Noah0302sTech.sh
         mv /home/$SUDO_USER/Pihole-Updater.sh /home/$SUDO_USER/Pihole-Files/Pihole-Updater.sh
-        mv /home/$SUDO_USER/Pihole-Updater-Cron-Check.txt /home/$SUDO_USER/Pihole-Files/Pihole-Updater-Cron-Check.txt
+        mv /home/$SUDO_USER/Cron-Check.txt /home/$SUDO_USER/Pihole-Files/Cron-Check.txt
 	stop_spinner $?
 
 	echo
