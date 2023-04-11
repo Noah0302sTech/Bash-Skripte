@@ -119,6 +119,7 @@
 #----- Create Bash-File
 	start_spinner "Erstelle Pihole-Updater Bash-File..."
         touch Pihole-Updater.sh
+        touch Pihole-Updater-Cron-Check.txt
 	stop_spinner $?
 
     #--- Echo Commands into Pihole-Updater.sh
@@ -144,10 +145,8 @@
 
 
 
-#Reboot
-	echo "System wird in 60 Sekunden rebootet. Zum abbrechen STRG+C benutzen"
-	sleep 60
-	sudo reboot' > Pihole-Updater.sh
+#Cron-Check
+    echo "Pihole Updated! @05:00" >> /home/'$SUDO_USER'/Pihole-Files/Pihole-Updater-Cron-Check.txt' > Pihole-Updater.sh
 
     #--- Make Pihole-Updater.sh executable
         start_spinner "Mache Pihole-Updater.sh ausführbar..."
@@ -164,6 +163,7 @@
     	mkdir Pihole-Files > /dev/null 2>&1
 		mv /home/$SUDO_USER/Pihole-Install-Debian-Noah0302sTech.sh /home/$SUDO_USER/Pihole-Files/Pihole-Install-Debian-Noah0302sTech.sh
         mv /home/$SUDO_USER/Pihole-Updater.sh /home/$SUDO_USER/Pihole-Files/Pihole-Updater.sh
+        mv /home/$SUDO_USER/Pihole-Updater-Cron-Check.txt /home/$SUDO_USER/Pihole-Files/Pihole-Updater-Cron-Check.txt
 	stop_spinner $?
 
 	echo
@@ -175,7 +175,7 @@
 	start_spinner "Erstelle Crontab..."
         touch /etc/cron.d/pihole-updater-Noah0302sTech
     	echo "#Daily Update for Pihole by Noah0302sTech
-00 8 * * * root /home/$SUDO_USER/Pihole-Files/Pihole-Updater.sh" >> /etc/cron.d/pihole-updater-Noah0302sTech
+00 5 * * * root /home/$SUDO_USER/Pihole-Files/Pihole-Updater.sh" >> /etc/cron.d/pihole-updater-Noah0302sTech
 	stop_spinner $?
 
     echo
