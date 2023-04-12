@@ -3,20 +3,20 @@
 #   chmod +x MC-Server-Command-Noah0302sTech.sh && sudo ./MC-Server-Command-Noah0302sTech.sh
 
 #----- Check for administrative privileges
-  if [[ $EUID -ne 0 ]]; then
-    echo "Das Skript muss mit Admin-Privilegien ausgeführt werden! (sudo)"
-    exit 1
-  fi
+	if [[ $EUID -ne 0 ]]; then
+		echo "Das Skript muss mit Admin-Privilegien ausgeführt werden! (sudo)"
+		exit 1
+	fi
 
 
 
 
 
 #----- Check for MC-Status
-  status="$(systemctl is-active minecraftserver.service)"
-  if [ "${status}" = "active" ]; then
-    #--- Set Variable values
-    command="$@"
+	status="$(systemctl is-active minecraftserver.service)"
+	if [ "${status}" = "active" ]; then
+		#--- Set Variable values
+		command="$@"
 
 
 
@@ -34,11 +34,11 @@
 
 
     #--- Execute
-        sudo echo $command > /run/minecraftserver.stdin
-  elif [ "${status}" = "dead" ]; then
-    echo "Der Service hat des Status: $status"
-  elif [ "${status}" = "inactive" ]; then
-    echo "Der Service hat des Status: $status"
-  else
-    echo "Der Service hat des Status: $status"
-  fi
+		sudo echo $command > /run/minecraftserver.stdin
+	elif [ "${status}" = "dead" ]; then
+		echo "Der Service hat des Status: $status"
+	elif [ "${status}" = "inactive" ]; then
+		echo "Der Service hat des Status: $status"
+	else
+		echo "Der Service hat des Status: $status"
+	fi
