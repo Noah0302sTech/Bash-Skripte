@@ -5,10 +5,10 @@
 
 
 #----- Check for administrative privileges
-  if [[ $EUID -ne 0 ]]; then
-    echo "Das Skript muss mit Admin-Privilegien ausgeführt werden! (sudo)"
-    exit 1
-  fi
+	if [[ $EUID -ne 0 ]]; then
+		echo "Das Skript muss mit Admin-Privilegien ausgeführt werden! (sudo)"
+		exit 1
+	fi
 
 
 
@@ -89,79 +89,79 @@
 
 
 #----- Refresh Packages
-  start_spinner "Aktualisiere Package-Listen..."
-    sudo apt update -y > /dev/null 2>&1
-  stop_spinner $?
+	start_spinner "Aktualisiere Package-Listen..."
+		sudo apt update -y > /dev/null 2>&1
+	stop_spinner $?
 
-  echo
-  echo
+	echo
+	echo
 
 
 
 #----- Docker
-  #--- Install Docker
-    start_spinner "Installiere docker.io..."
-      sudo apt install -y docker.io > /dev/null 2>&1
-    stop_spinner $?
-    echo
+	#--- Install Docker
+		start_spinner "Installiere docker.io..."
+		sudo apt install -y docker.io > /dev/null 2>&1
+		stop_spinner $?
+		echo
 
-  #--- Install Docker Compose
-    start_spinner "Installiere Docker-Compose..."
-      sudo apt install -y docker-compose > /dev/null 2>&1
-    stop_spinner $?
-    echo
+	#--- Install Docker Compose
+		start_spinner "Installiere Docker-Compose..."
+		sudo apt install -y docker-compose > /dev/null 2>&1
+		stop_spinner $?
+		echo
 
-  #--- Add User to Docker-Group
-    start_spinner "Füge $SUDO_USER zu Docker-Gruppe hinzu..."
-      sudo usermod -aG docker $SUDO_USER > /dev/null 2>&1
-    stop_spinner $?
+	#--- Add User to Docker-Group
+		start_spinner "Füge $SUDO_USER zu Docker-Gruppe hinzu..."
+		sudo usermod -aG docker $SUDO_USER > /dev/null 2>&1
+		stop_spinner $?
 
-  #--- Install Apparmor (Only needed on specific Systems like Hetzner VServer)
-    start_spinner "Installiere Apparmor, falls benötigt..."
-      sudo apt install apparmor -y > /dev/null 2>&1
-    stop_spinner $?
+	#--- Install Apparmor (Only needed on specific Systems like Hetzner VServer)
+		start_spinner "Installiere Apparmor, falls benötigt..."
+		sudo apt install apparmor -y > /dev/null 2>&1
+		stop_spinner $?
 
-  echo
-  echo
+	echo
+	echo
 
 
 
 #----- Create a folder for Nextcloud
-  start_spinner "Erstelle Nextcloud-Ordner..."
-    sudo mkdir /home/$SUDO_USER/nextcloud
-    if [ -d /home/$SUDO_USER/nextcloud ]; then
-      cd /home/$SUDO_USER/nextcloud
-    else
-      echo "Fehler beim Erstellen des Ordners!"
-      exit 1
-    fi
-    cd /home/$SUDO_USER/nextcloud > /dev/null 2>&1
-  stop_spinner $?
+	start_spinner "Erstelle Nextcloud-Ordner..."
+		sudo mkdir /home/$SUDO_USER/nextcloud
+		if [ -d /home/$SUDO_USER/nextcloud ]; then
+		cd /home/$SUDO_USER/nextcloud
+		else
+		echo "Fehler beim Erstellen des Ordners!"
+		exit 1
+		fi
+		cd /home/$SUDO_USER/nextcloud > /dev/null 2>&1
+	stop_spinner $?
 
-  echo
-  echo
+	echo
+	echo
 
 
 
 #----- Set default values for Docker-Compose
-  MYSQL_ROOT_PASSWORD=sqlrootpassword
-  MYSQL_PASSWORD=sqlpassword
+	MYSQL_ROOT_PASSWORD=sqlrootpassword
+	MYSQL_PASSWORD=sqlpassword
 
 #----- Prompt user for custom values
-  read -p "MariaDB-Root-Passwort eigeben [default: $MYSQL_ROOT_PASSWORD]: " input
-  MYSQL_ROOT_PASSWORD=${input:-$MYSQL_ROOT_PASSWORD}
-  read -p "MariaDB-Passwort eigeben [default: $MYSQL_PASSWORD]: " input
-  MYSQL_PASSWORD=${input:-$MYSQL_PASSWORD}
-  
-  echo
-  echo
+	read -p "MariaDB-Root-Passwort eigeben [default: $MYSQL_ROOT_PASSWORD]: " input
+	MYSQL_ROOT_PASSWORD=${input:-$MYSQL_ROOT_PASSWORD}
+	read -p "MariaDB-Passwort eigeben [default: $MYSQL_PASSWORD]: " input
+	MYSQL_PASSWORD=${input:-$MYSQL_PASSWORD}
+	
+	echo
+	echo
 
 
 
 #----- Create a Docker Compose file
-  start_spinner "Erstelle Docker-Compose-File..."
-    sudo touch docker-compose.yml
-    echo "version: '3'
+	start_spinner "Erstelle Docker-Compose-File..."
+		sudo touch docker-compose.yml
+		echo "version: '3'
 services:
   db:
     image: mariadb
@@ -188,33 +188,33 @@ services:
 volumes:
   nextcloud_data:
 " >> docker-compose.yml
-  stop_spinner $?
+	stop_spinner $?
 
-  echo
-  echo
+	echo
+	echo
 
 
 
 #----- Start the Nextcloud server
-  start_spinner "Starte Nextcloud-Server..."
-    docker-compose up -d > /dev/null 2>&1
-  stop_spinner $?
-  sudo docker ps
+	start_spinner "Starte Nextcloud-Server..."
+		docker-compose up -d > /dev/null 2>&1
+	stop_spinner $?
+	sudo docker ps
 
-  echo
-  echo
+	echo
+	echo
 
 
 
 #----- Configure the Nextcloud Server
-  start_spinner "Erstelle Nextcloud-Config-Skript..."
-    cd /home/$SUDO_USER
-    sudo apt install wget -y > /dev/null 2>&1
-    sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Nextcloud/NextcloudConfig-Docker-Noah0302sTech.sh > /dev/null 2>&1
-    sudo chmod +x NextcloudConfig-Docker-Noah0302sTech.sh
-  stop_spinner $?
-  echo "Um NACH DER INSTALLATION die Nextcloud-Config anzupassen, starte das Nextcloud-Config-Skript mit:"
-  echo "sudo ./NextcloudConfig-Docker-Noah0302sTech.sh"
+	start_spinner "Erstelle Nextcloud-Config-Skript..."
+		cd /home/$SUDO_USER
+		sudo apt install wget -y > /dev/null 2>&1
+		sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Nextcloud/NextcloudConfig-Docker-Noah0302sTech.sh > /dev/null 2>&1
+		sudo chmod +x NextcloudConfig-Docker-Noah0302sTech.sh
+	stop_spinner $?
+	echo "Um NACH DER INSTALLATION die Nextcloud-Config anzupassen, starte das Nextcloud-Config-Skript mit:"
+	echo "sudo ./NextcloudConfig-Docker-Noah0302sTech.sh"
 
-  echo
-  echo
+	echo
+	echo
