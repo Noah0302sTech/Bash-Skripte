@@ -3,7 +3,7 @@
 # chmod +x Pihole-Install-Debian-Noah0302sTech.sh && sudo bash Pihole-Install-Debian-Noah0302sTech.sh
 
 #----- Check for administrative privileges
-    if [[ $EUID -ne 0 ]]; then
+	if [[ $EUID -ne 0 ]]; then
         echo "Das Skript muss mit Admin-Privilegien ausgeführt werden! (sudo)"
         exit 1
     fi
