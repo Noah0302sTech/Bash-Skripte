@@ -5,10 +5,10 @@
 
 
 #----- Check for administrative privileges
-  if [[ $EUID -ne 0 ]]; then
-    echo "Das Skript muss mit Admin-Privilegien ausgeführt werden! (sudo)"
-    exit 1
-  fi
+	if [[ $EUID -ne 0 ]]; then
+		echo "Das Skript muss mit Admin-Privilegien ausgeführt werden! (sudo)"
+		exit 1
+	fi
 
 
 
