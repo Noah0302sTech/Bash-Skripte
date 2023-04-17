@@ -102,8 +102,7 @@ options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf
 		stop_spinner $?
 
 		echo "Neue ZFS-Arc-Size:"
-		cat /proc/spl/kstat/zfs/arcstats | grep -w c_min
-		cat /proc/spl/kstat/zfs/arcstats | grep -w c_max
+		cat /etc/modprobe.d/zfs.conf
     }
 
 
@@ -112,6 +111,10 @@ options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf
 	function updateZfsConfNonP {
 		echo "$zfsMinimumRounded" >> /sys/module/zfs/parameters/zfs_arc_min;
 		echo "$zfsMaximumRounded" >> /sys/module/zfs/parameters/zfs_arc_max;
+
+		echo "Neue ZFS-Arc-Size:"
+		cat /proc/spl/kstat/zfs/arcstats | grep -w c_min
+		cat /proc/spl/kstat/zfs/arcstats | grep -w c_max
     }
 
 
@@ -158,16 +161,30 @@ options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf
 
 
 
+#----- Ask for Commit
+	while true; do
+		read -p "Möchtest du die Änderungen jetzt anwenden? (Y/N)" yn
+		case $yn in
+			[Yy]* ) updateZfsConf;
+					break;;
+			[Nn]* )	break;;
+			* ) echo "Ja (Y/y) oder nein (N/n)";;
+		esac
+	done
+	echo
+	echo
+
+
+
 #----- Ask for Reboot
 	while true; do
 		read -p "Möchtest du jetzt neu starten, um die Änderungen anzuwenden? (Y/N)" yn
 		case $yn in
-			[Yy]* ) updateZfsConf;
-					sleep 3;
+			[Yy]* ) echo "Reboot in 10 Sekunden! (STRG+C zum abbrechen)"
+					sleep 10;
 					reboot;
 					break;;
-			[Nn]* )	updateZfsConf;
-					break;;
+			[Nn]* )	break;;
 			* ) echo "Ja (Y/y) oder nein (N/n)";;
 		esac
 	done
@@ -181,7 +198,6 @@ options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf
 		read -p "Möchtest du die Änderungen schon vor dem Neustart anwenden? (Y/N)" yn
 		case $yn in
 			[Yy]* ) updateZfsConfNonP;
-					sleep 1;
 					break;;
 			[Nn]* ) break;;
 			* ) echo "Ja (Y/y) oder nein (N/n)";;
