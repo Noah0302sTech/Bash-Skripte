@@ -90,6 +90,32 @@
 
 
 
+#----- UpdateZFS Function
+	function updateZfsConf {
+		start_spinner "Passe zfs.conf an..."
+			echo "options zfs zfs_arc_min=$zfsMinimumRounded
+options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf
+		stop_spinner $?
+
+		start_spinner "Update InitramFS..."
+			update-initramfs -u > /dev/null 2>&1
+		stop_spinner $?
+
+		echo "Neue ZFS-Arc-Size:"
+		cat /proc/spl/kstat/zfs/arcstats | grep -w c_min
+		cat /proc/spl/kstat/zfs/arcstats | grep -w c_max
+    }
+
+
+
+#----- UpdateZFS-NonP Function
+	function updateZfsConfNonP {
+		echo "$zfsMinimumRounded" >> /sys/module/zfs/parameters/zfs_arc_min;
+		echo "$zfsMaximumRounded" >> /sys/module/zfs/parameters/zfs_arc_max;
+    }
+
+
+
 #----- Update Packages
 	start_spinner "Update Package-Listen..."
 		apt update -y > /dev/null 2>&1
@@ -136,24 +162,11 @@
 	while true; do
 		read -p "Möchtest du jetzt neu starten, um die Änderungen anzuwenden? (Y/N)" yn
 		case $yn in
-			[Yy]* ) start_spinner "Passe zfs.conf an...";
-						echo "options zfs zfs_arc_min=$zfsMinimumRounded
-options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf;
-					stop_spinner $?;
-
-					echo "Neue ZFS-Arc-Size:";
-					cat /etc/modprobe.d/zfs.conf;
-					echo;
-
-					start_spinner "Update InitramFS...";
-						update-initramfs -u > /dev/null 2>&1;
-					stop_spinner $?;
-
+			[Yy]* ) updateZfsConf;
 					sleep 3;
 					reboot;
 					break;;
-			[Nn]* ) echo "options zfs zfs_arc_min=$zfsMinimumRounded
-options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf;
+			[Nn]* )	updateZfsConf;
 					break;;
 			* ) echo "Ja (Y/y) oder nein (N/n)";;
 		esac
@@ -167,13 +180,8 @@ options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf;
 	while true; do
 		read -p "Möchtest du die Änderungen schon vor dem Neustart anwenden? (Y/N)" yn
 		case $yn in
-			[Yy]* ) start_spinner "Passe zfs.conf an...";
-						echo "options zfs zfs_arc_min=$zfsMinimumRounded
-options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf;
-					stop_spinner $?;
-					
-					echo "$zfsMinimumRounded" >> /sys/module/zfs/parameters/zfs_arc_min;
-					echo "$zfsMaximumRounded" >> /sys/module/zfs/parameters/zfs_arc_max;
+			[Yy]* ) updateZfsConfNonP;
+					sleep 1;
 					break;;
 			[Nn]* ) break;;
 			* ) echo "Ja (Y/y) oder nein (N/n)";;
@@ -181,17 +189,3 @@ options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf;
 	done
 	echo
 	echo
-	
-
-
-#----- Output New ZFS-Arc-Size
-	echo "Neue ZFS-Arc-Size:"
-	cat /proc/spl/kstat/zfs/arcstats | grep -w c_min
-	cat /proc/spl/kstat/zfs/arcstats | grep -w c_max
-
-
-
-#----- Update InitramFS
-	start_spinner "Update InitramFS..."
-		update-initramfs -u > /dev/null 2>&1
-	stop_spinner $?
