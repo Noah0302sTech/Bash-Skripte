@@ -1,6 +1,6 @@
 #!/bin/bash
 # Made by Noah0302sTech
-# chmod +x ZFS-Arc-Config-Noah0302sTech.sh && bash ZFS-Arc-Config-Noah0302sTech.sh
+# chmod +x Proxmox-ZFS-Arc-Config-Noah0302sTech.sh && bash Proxmox-ZFS-Arc-Config-Noah0302sTech.sh
 
 
 
@@ -157,7 +157,7 @@ options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf
     mkdir ZFS-Arc
 
 		#--- Move Bash-Script
-		mv ZFS-Arc-Config-Noah0302sTech.sh ZFS-Arc/ZFS-Arc-Config-Noah0302sTech.sh
+		mv Proxmox-ZFS-Arc-Config-Noah0302sTech.sh ZFS-Arc/Proxmox-ZFS-Arc-Config-Noah0302sTech.sh
 
 
 
