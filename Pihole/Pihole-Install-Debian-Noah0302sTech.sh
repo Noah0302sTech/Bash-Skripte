@@ -102,7 +102,7 @@
 	stop_spinner $?
 
 	echo
-	echo  ««q
+	echo
 
 
 
