@@ -146,7 +146,7 @@
 
 
 #Cron-Check
-    echo "Pihole Updated! @05:00" >> /home/'$SUDO_USER'/Pihole-Files/Cron-Check.txt' > Pihole-Updater.sh
+    date >> /home/'$SUDO_USER'/Pihole-Files/Cron-Check.txt' > Pihole-Updater.sh
 
     #--- Make Pihole-Updater.sh executable
         start_spinner "Mache Pihole-Updater.sh ausführbar..."
