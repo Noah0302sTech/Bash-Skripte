@@ -1,6 +1,6 @@
 #!/bin/bash
 # Made by Noah0302sTech
-# chmod +x Pihole-Install-Debian-Noah0302sTech.sh && sudo bash Pihole-Install-Debian-Noah0302sTech.sh
+# chmod +x Pihole-Install-Updater-Debian-Noah0302sTech.sh && sudo bash Pihole-Install-Updater-Debian-Noah0302sTech.sh
 
 #----- Check for administrative privileges
 	if [[ $EUID -ne 0 ]]; then
@@ -93,34 +93,6 @@
 
 	echo
 	echo
-    
-    
-    
-#----- Install Curl
-	start_spinner "Installiere Curl..."
-    	apt install curl -y > /dev/null 2>&1
-	stop_spinner $?
-
-	echo
-	echo
-
-
-
-#----- Install Pihole
-    echo "Installiere Pihole..."
-    sleep 1
-	curl -sSL https://install.pi-hole.net | bash
-
-	echo
-	echo
-
-
-
-#----- Create Bash-File
-	start_spinner "Erstelle Pihole-Updater Bash-File..."
-        touch Pihole-Updater.sh
-        touch Cron-Check.txt
-	stop_spinner $?
 
 
 
@@ -130,8 +102,19 @@
 	#--- Prompt for custom values
 		read -p "Passe den Cron-Job an [default 8 Uhr täglich: $cronVariable]: " input
 		cronVariable=${input:-$cronVariable}
+		
+	echo
+	echo
+    
+    
 
-	#--- Echo Commands into Pihole-Updater.sh
+#----- Create Bash-File
+	start_spinner "Erstelle Pihole-Updater Bash-File..."
+        touch Pihole-Updater.sh
+        touch Cron-Check.txt
+	stop_spinner $?
+
+    #--- Echo Commands into Pihole-Updater.sh
         echo '#!/bin/bash
 
 #Pihole Update
@@ -170,7 +153,6 @@
 #----- Move Bash Script
 	start_spinner "Verschiebe Bash-Skripte..."
     	mkdir Pihole-Files > /dev/null 2>&1
-		mv /home/$SUDO_USER/Pihole-Install-Debian-Noah0302sTech.sh /home/$SUDO_USER/Pihole-Files/Pihole-Install-Debian-Noah0302sTech.sh
         mv /home/$SUDO_USER/Pihole-Updater.sh /home/$SUDO_USER/Pihole-Files/Pihole-Updater.sh
         mv /home/$SUDO_USER/Cron-Check.txt /home/$SUDO_USER/Pihole-Files/Cron-Check.txt
 	stop_spinner $?
