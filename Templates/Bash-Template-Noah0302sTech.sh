@@ -99,9 +99,9 @@
 
 
 
-#----- INSERT NEW LINES HERE
-	start_spinner "INSERT NEW LINES HERE..."
-		echo "INSERT NEW LINES HERE"
+#----- XXXXXXXXXX
+	start_spinner "XXXXXXXXXX..."
+		XXXXXXXXXX > /dev/null 2>&1sss
 	stop_spinner $?
 	echo
 	echo
