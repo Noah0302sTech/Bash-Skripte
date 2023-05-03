@@ -88,14 +88,14 @@
 
 
 
-
-
 #----- Refresh Packages
 	start_spinner "Aktualisiere Package-Listen..."
 		sudo apt update -y > /dev/null 2>&1
 	stop_spinner $?
 	echo
 	echo
+
+
 
 
 
@@ -108,7 +108,9 @@
 
 
 
-#----- Create Folder
+
+
+#----- Create Folders
 	start_spinner "Erstelle Verzeichnisse..."
 		mkdir Noah0302sTech
 		mkdir Noah0302sTech/Templates
