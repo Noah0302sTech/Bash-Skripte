@@ -118,13 +118,13 @@
 #-----	-----#	#-----	-----#	#-----	-----#
 #----- Create Folders
 	start_spinner "Erstelle Verzeichnisse..."
-		mkdir /home/$SUDO_USER/Noah0302sTech
-		mkdir /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder
+		mkdir /home/$SUDO_USER/Noah0302sTech > /dev/null 2>&1
+		mkdir /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder > /dev/null 2>&1
 	stop_spinner $?
 
 	#--- Move Bash-Script
 		start_spinner "Verschiebe Bash-Skript..."
-			mv /home/$SUDO_USER/XXXXXXXXXX.sh /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder/XXXXXXXXXX.sh
+			mv /home/$SUDO_USER/XXXXXXXXXX.sh /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder/XXXXXXXXXX.sh > /dev/null 2>&1
 		stop_spinner $?
 	echo
 	echo
