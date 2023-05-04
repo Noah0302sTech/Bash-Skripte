@@ -1,6 +1,6 @@
 #!/bin/bash
-#   Made by Noah0302sTech
-#   chmod +x Bash-Template-Noah0302sTech.sh && sudo bash Bash-Template-Noah0302sTech.sh
+#	Made by Noah0302sTech
+#	chmod +x XXXXXXXXXX.sh && sudo bash XXXXXXXXXX.sh
 
 
 
@@ -118,13 +118,13 @@
 #-----	-----#	#-----	-----#	#-----	-----#
 #----- Create Folders
 	start_spinner "Erstelle Verzeichnisse..."
-		mkdir Noah0302sTech
-		mkdir Noah0302sTech/Templates
+		mkdir /home/$SUDO_USER/Noah0302sTech
+		mkdir /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder
 	stop_spinner $?
 
 	#--- Move Bash-Script
 		start_spinner "Verschiebe Bash-Skript..."
-			mv Bash-Template-Noah0302sTech.sh Noah0302sTech/Templates/Bash-Template-Noah0302sTech.sh
+			mv /home/$SUDO_USER/XXXXXXXXXX.sh /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder/XXXXXXXXXX.sh
 		stop_spinner $?
 	echo
 	echo
