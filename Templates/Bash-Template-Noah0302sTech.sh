@@ -2,7 +2,7 @@
 #	Made by Noah0302sTech
 #	chmod +x XXXXXXXXXX.sh && sudo bash XXXXXXXXXX.sh
 
-#---------- Initial Checks
+#---------- Initial Checks & Functions
 	#----- Check for administrative privileges
 		if [[ $EUID -ne 0 ]]; then
 			echo "Das Skript muss mit Admin-Privilegien ausgeführt werden! (sudo)"
