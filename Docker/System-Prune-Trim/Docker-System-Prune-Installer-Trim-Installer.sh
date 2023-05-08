@@ -189,7 +189,7 @@ DSPtrim
 
 	#--- Downloade File
 		start_spinner "Downloade Docker-System-Prune-Trim.sh..."
-			wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Docker/Docker-System-Prune-Trim.sh > /dev/null 2>&1
+			wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Docker/System-Prune-Trim/Docker-System-Prune-Trim.sh > /dev/null 2>&1
 		stop_spinner $?
 
 	#--- Make Docker-System-Prune-Trim.sh executable
