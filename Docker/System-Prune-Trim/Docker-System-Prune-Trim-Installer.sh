@@ -156,7 +156,7 @@
 
 
 #Alias Docker-System-Prune and Trim
-alias DSPtrim='sudo bash /home/$SUDO_USER/Noah0302sTech/Docker/Docker-System-Prune-Trim.sh'
+alias DSPtrim='sudo bash /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Docker-System-Prune-Trim.sh'
 "  >> /home/$SUDO_USER/.bashrc
 		stop_spinner $?
 	fi
@@ -221,7 +221,7 @@ DSPtrim
 				start_spinner "Erstelle Crontab..."
 					touch /etc/cron.d/docker-System-Prune-Noah0302sTech
 					echo "#Daily Update for Pihole by Noah0302sTech
-$cronVariable root /home/$SUDO_USER/Noah0302sTech/Docker/Docker-System-Prune-Trim.sh" > /etc/cron.d/docker-System-Prune-Noah0302sTech
+$cronVariable root /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Docker-System-Prune-Trim.sh" > /etc/cron.d/docker-System-Prune-Noah0302sTech
 				stop_spinner $?
 
 			#--- Echo Commands into Pihole-Updater.sh
@@ -230,10 +230,10 @@ $cronVariable root /home/$SUDO_USER/Noah0302sTech/Docker/Docker-System-Prune-Tri
 
 #Cron-Check
 	echo "
-	Job lief am:" >> /home/'$SUDO_USER'/Noah0302sTech/Docker/Cron-Check.txt
-    date >> /home/'$SUDO_USER'/Noah0302sTech/Docker/Cron-Check.txt
-	echo $dockerPruneOutput >> /home/'$SUDO_USER'/Noah0302sTech/Docker/Cron-Check.txt
-	echo $fstrimOutput >> /home/'$SUDO_USER'/Noah0302sTech/Docker/Cron-Check.txt' >> Docker-System-Prune-Trim.sh
+	Job lief am:" >> /home/'$SUDO_USER'/Noah0302sTech/Docker/System-Prune/Cron-Check.txt
+    date >> /home/'$SUDO_USER'/Noah0302sTech/Docker/System-Prune/Cron-Check.txt
+	echo $dockerPruneOutput >> /home/'$SUDO_USER'/Noah0302sTech/Docker/System-Prune/Cron-Check.txt
+	echo $fstrimOutput >> /home/'$SUDO_USER'/Noah0302sTech/Docker/System-Prune/Cron-Check.txt' >> Docker-System-Prune-Trim.sh
 				stop_spinner $?
 
 		else
@@ -263,32 +263,38 @@ $cronVariable root /home/$SUDO_USER/Noah0302sTech/Docker/Docker-System-Prune-Tri
 			else
 				echo "Ordner /home/$SUDO_USER/Noah0302sTech/Docker bereits vorhanden!"
 			fi
-		#- /home/$SUDO_USER/Noah0302sTech/Docker/Installer
-			if [ ! -d /home/$SUDO_USER/Noah0302sTech/Docker/Installer ]; then
-				mkdir /home/$SUDO_USER/Noah0302sTech/Docker/Installer > /dev/null 2>&1
+		#- /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune
+			if [ ! -d /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune ]; then
+				mkdir /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune > /dev/null 2>&1
 			else
-				echo "Ordner /home/$SUDO_USER/Noah0302sTech/Docker/Installer bereits vorhanden!"
+				echo "Ordner /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune bereits vorhanden!"
+			fi
+		#- /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Installer
+			if [ ! -d /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Installer ]; then
+				mkdir /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Installer > /dev/null 2>&1
+			else
+				echo "Ordner /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Installer bereits vorhanden!"
 			fi
 	stop_spinner $?
 
 	#--- Move Files
 		start_spinner "Verschiebe Bash-Skript..."
 			#- Docker-System-Prune-Trim-Installer.sh
-				if [ ! -f /home/$SUDO_USER/Noah0302sTech/Docker/Installer/Docker-System-Prune-Trim-Installer.sh ]; then
-					mv /home/$SUDO_USER/Docker-System-Prune-Trim-Installer.sh /home/$SUDO_USER/Noah0302sTech/Docker/Installer/Docker-System-Prune-Trim-Installer.sh > /dev/null 2>&1
+				if [ ! -f /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Installer/Docker-System-Prune-Trim-Installer.sh ]; then
+					mv /home/$SUDO_USER/Docker-System-Prune-Trim-Installer.sh /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Installer/Docker-System-Prune-Trim-Installer.sh > /dev/null 2>&1
 				else
-					echo "Die Datei /home/$SUDO_USER/Noah0302sTech/Docker/Installer/Docker-System-Prune-Trim-Installer.sh ist bereits vorhanden!"
+					echo "Die Datei /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Installer/Docker-System-Prune-Trim-Installer.sh ist bereits vorhanden!"
 				fi
 			#- Docker-System-Prune-Trim.sh
-				if [ ! -f /home/$SUDO_USER/Noah0302sTech/Docker/Docker-System-Prune-Trim.sh ]; then
-					mv /home/$SUDO_USER/Docker-System-Prune-Trim.sh /home/$SUDO_USER/Noah0302sTech/Docker/Docker-System-Prune-Trim.sh > /dev/null 2>&1
+				if [ ! -f /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Docker-System-Prune-Trim.sh ]; then
+					mv /home/$SUDO_USER/Docker-System-Prune-Trim.sh /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Docker-System-Prune-Trim.sh > /dev/null 2>&1
 				else
-					echo "Die Datei /home/$SUDO_USER/Noah0302sTech/Docker/Docker-System-Prune-Trim.sh ist bereits vorhanden!"
+					echo "Die Datei /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Docker-System-Prune-Trim.sh ist bereits vorhanden!"
 				fi
 			#- Cron-Check.txt
-				if [ ! -f /home/$SUDO_USER/Noah0302sTech/Docker/Cron-Check.txt ]; then
-					mv /home/$SUDO_USER/Cron-Check.txt /home/$SUDO_USER/Noah0302sTech/Docker/Cron-Check.txt > /dev/null 2>&1
+				if [ ! -f /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Cron-Check.txt ]; then
+					mv /home/$SUDO_USER/Cron-Check.txt /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Cron-Check.txt > /dev/null 2>&1
 				else
-					echo "Die Datei /home/$SUDO_USER/Noah0302sTech/Docker/Docker-System-Prune-Trim.sh ist bereits vorhanden!"
+					echo "Die Datei /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Docker-System-Prune-Trim.sh ist bereits vorhanden!"
 				fi
 		stop_spinner $?
