@@ -114,26 +114,30 @@
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
+
 #----- Create Folders
 	start_spinner "Erstelle Verzeichnisse..."
-		if [ ! -d /home/$SUDO_USER/Noah0302sTech ]; then
-			mkdir /home/$SUDO_USER/Noah0302sTech > /dev/null 2>&1
-		else
-			echo "Ordner /home/$SUDO_USER/Noah0302sTech bereits vorhanden!"
-		fi
+		#--- /home/$SUDO_USER/Noah0302sTech
+			if [ ! -d /home/$SUDO_USER/Noah0302sTech ]; then
+				mkdir /home/$SUDO_USER/Noah0302sTech > /dev/null 2>&1
+			else
+				echo "Ordner /home/$SUDO_USER/Noah0302sTech bereits vorhanden!"
+			fi
 
-		if [ ! -d /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder ]; then
-			mkdir /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder > /dev/null 2>&1
-		else
-			echo "Ordner /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder bereits vorhanden!"
-		fi
+		#--- /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder
+			if [ ! -d /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder ]; then
+				mkdir /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder > /dev/null 2>&1
+			else
+				echo "Ordner /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder bereits vorhanden!"
+			fi
 	stop_spinner $?
 
 	#--- Move Bash-Script
 		start_spinner "Verschiebe Bash-Skript..."
-			if [ ! -f /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder/XXXXXXXXXX.sh ]; then
-				mv /home/$SUDO_USER/XXXXXXXXXX.sh /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder/XXXXXXXXXX.sh > /dev/null 2>&1
-			else
-				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder/XXXXXXXXXX.sh ist bereits vorhanden!"
-			fi
+			#- /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder/XXXXXXXXXX.sh
+				if [ ! -f /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder/XXXXXXXXXX.sh ]; then
+					mv /home/$SUDO_USER/XXXXXXXXXX.sh /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder/XXXXXXXXXX.sh > /dev/null 2>&1
+				else
+					echo "Die Datei /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder/XXXXXXXXXX.sh ist bereits vorhanden!"
+				fi
 		stop_spinner $?
