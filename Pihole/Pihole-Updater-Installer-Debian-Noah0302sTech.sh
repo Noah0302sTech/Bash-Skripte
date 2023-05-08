@@ -138,9 +138,9 @@
 
 
 
-#Cron-Check
-	echo "
-Cron lief um:" >> /home/'$SUDO_USER'/Noah0302sTech/Pihole-Files/Cron-Check.txt
+#Cron-Check+
+	echo "" >> /home/'$SUDO_USER'/Noah0302sTech/Pihole-Files/Cron-Check.txt
+	echo "Cron lief um:" >> /home/'$SUDO_USER'/Noah0302sTech/Pihole-Files/Cron-Check.txt
 	date >> /home/'$SUDO_USER'/Noah0302sTech/Pihole-Files/Cron-Check.txt' > Pihole-Updater.sh
 
 	#--- Make Pihole-Updater.sh executable
