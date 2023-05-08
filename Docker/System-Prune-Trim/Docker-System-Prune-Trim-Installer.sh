@@ -1,6 +1,6 @@
 #!/bin/bash
 # Made by Noah0302sTech
-# chmod +x Docker-System-Prune-Installer-Trim-Installer.sh && sudo bash Docker-System-Prune-Installer-Trim-Installer.sh
+# chmod +x Docker-System-Prune-Trim-Installer.sh && sudo bash Docker-System-Prune-Trim-Installer.sh
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
@@ -273,11 +273,11 @@ $cronVariable root /home/$SUDO_USER/Noah0302sTech/Docker/Docker-System-Prune-Tri
 
 	#--- Move Files
 		start_spinner "Verschiebe Bash-Skript..."
-			#- Docker-System-Prune-Installer-Trim-Installer.sh
-				if [ ! -f /home/$SUDO_USER/Noah0302sTech/Docker/Installer/Docker-System-Prune-Installer-Trim-Installer.sh ]; then
-					mv /home/$SUDO_USER/Docker-System-Prune-Installer-Trim-Installer.sh /home/$SUDO_USER/Noah0302sTech/Docker/Installer/Docker-System-Prune-Installer-Trim-Installer.sh > /dev/null 2>&1
+			#- Docker-System-Prune-Trim-Installer.sh
+				if [ ! -f /home/$SUDO_USER/Noah0302sTech/Docker/Installer/Docker-System-Prune-Trim-Installer.sh ]; then
+					mv /home/$SUDO_USER/Docker-System-Prune-Trim-Installer.sh /home/$SUDO_USER/Noah0302sTech/Docker/Installer/Docker-System-Prune-Trim-Installer.sh > /dev/null 2>&1
 				else
-					echo "Die Datei /home/$SUDO_USER/Noah0302sTech/Docker/Installer/Docker-System-Prune-Installer-Trim-Installer.sh ist bereits vorhanden!"
+					echo "Die Datei /home/$SUDO_USER/Noah0302sTech/Docker/Installer/Docker-System-Prune-Trim-Installer.sh ist bereits vorhanden!"
 				fi
 			#- Docker-System-Prune-Trim.sh
 				if [ ! -f /home/$SUDO_USER/Noah0302sTech/Docker/Docker-System-Prune-Trim.sh ]; then
