@@ -137,26 +137,16 @@
 
 
 
-#----- Trim
-	start_spinner "Trimme Filesystem..."
-		fstrimOutput=$(fstrim / -v 2>&1)
-	stop_spinner $?
-	echo $fstrimOutput
-	echo
-	echo
-
-
-
 #----- Create Alias
-    if grep -q "^alias DSPtrim=" /home/$SUDO_USER/.bashrc; then
+    if grep -q "^alias DSP=" /home/$SUDO_USER/.bashrc; then
 		echo "Der Alias existiert bereits in /home/$SUDO_USER/.bashrc"
 	else
 		start_spinner "Erstelle Alias..."
 			echo "
 
 
-#Alias Docker-System-Prune and Trim
-alias DSPtrim='sudo bash /home/$SUDO_USER/Noah0302sTech/Docker/Docker-System-Prune-Trim.sh'
+#Alias Docker-System-Prune
+alias DSP='sudo bash /home/$SUDO_USER/Noah0302sTech/Docker/Docker-System-Prune.sh'
 "  >> /home/$SUDO_USER/.bashrc
 		stop_spinner $?
 	fi
@@ -171,8 +161,8 @@ alias DSPtrim='sudo bash /home/$SUDO_USER/Noah0302sTech/Docker/Docker-System-Pru
 	else
 		start_spinner "Passe MOTD an..."
 			echo "
-Docker-System-Prune + Trim:
-DSPtrim
+Docker-System-Prune:
+DSP
 " >> /etc/motd
 		stop_spinner $?
 	fi
@@ -188,13 +178,13 @@ DSPtrim
 		stop_spinner $?
 
 	#--- Downloade File
-		start_spinner "Downloade Docker-System-Prune-Trim.sh..."
-			wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Docker/System-Prune-Trim/Docker-System-Prune-Trim.sh > /dev/null 2>&1
+		start_spinner "Downloade Docker-System-Prune.sh..."
+			wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Docker/System-Prune/Docker-System-Prune.sh > /dev/null 2>&1
 		stop_spinner $?
 
-	#--- Make Docker-System-Prune-Trim.sh executable
-		start_spinner "Mache Docker-System-Prune-Trim.sh ausführbar..."
-			chmod +x Docker-System-Prune-Trim.sh > /dev/null 2>&1
+	#--- Make Docker-System-Prune.sh executable
+		start_spinner "Mache Docker-System-Prune.sh ausführbar..."
+			chmod +x Docker-System-Prune.sh > /dev/null 2>&1
 		stop_spinner $?
 	echo
 	echo
@@ -221,19 +211,18 @@ DSPtrim
 				start_spinner "Erstelle Crontab..."
 					touch /etc/cron.d/docker-System-Prune-Noah0302sTech
 					echo "#Daily Update for Pihole by Noah0302sTech
-$cronVariable root /home/$SUDO_USER/Noah0302sTech/Docker/Docker-System-Prune-Trim.sh" > /etc/cron.d/docker-System-Prune-Noah0302sTech
+$cronVariable root /home/$SUDO_USER/Noah0302sTech/Docker/Docker-System-Prune.sh" > /etc/cron.d/docker-System-Prune-Noah0302sTech
 				stop_spinner $?
 
 			#--- Echo Commands into Pihole-Updater.sh
-				start_spinner "Passe Docker-System-Prune-Trim.sh an..."
+				start_spinner "Passe Docker-System-Prune.sh an..."
 					echo '
 
 #Cron-Check
 	echo "
 	Job lief am:" >> /home/'$SUDO_USER'/Noah0302sTech/Docker/Cron-Check.txt
     date >> /home/'$SUDO_USER'/Noah0302sTech/Docker/Cron-Check.txt
-	echo $dockerPruneOutput >> /home/'$SUDO_USER'/Noah0302sTech/Docker/Cron-Check.txt
-	echo $fstrimOutput >> /home/'$SUDO_USER'/Noah0302sTech/Docker/Cron-Check.txt' >> Docker-System-Prune-Trim.sh
+	echo $dockerPruneOutput >> /home/'$SUDO_USER'/Noah0302sTech/Docker/Cron-Check.txt' >> Docker-System-Prune.sh
 				stop_spinner $?
 
 		else
@@ -279,16 +268,10 @@ $cronVariable root /home/$SUDO_USER/Noah0302sTech/Docker/Docker-System-Prune-Tri
 				else
 					echo "Die Datei /home/$SUDO_USER/Noah0302sTech/Docker/Installer/Docker-System-Prune-Installer.sh ist bereits vorhanden!"
 				fi
-			#- Docker-System-Prune-Trim.sh
-				if [ ! -f /home/$SUDO_USER/Noah0302sTech/Docker/Docker-System-Prune-Trim.sh ]; then
-					mv /home/$SUDO_USER/Docker-System-Prune-Trim.sh /home/$SUDO_USER/Noah0302sTech/Docker/Docker-System-Prune-Trim.sh > /dev/null 2>&1
-				else
-					echo "Die Datei /home/$SUDO_USER/Noah0302sTech/Docker/Docker-System-Prune-Trim.sh ist bereits vorhanden!"
-				fi
 			#- Cron-Check.txt
 				if [ ! -f /home/$SUDO_USER/Noah0302sTech/Docker/Cron-Check.txt ]; then
 					mv /home/$SUDO_USER/Cron-Check.txt /home/$SUDO_USER/Noah0302sTech/Docker/Cron-Check.txt > /dev/null 2>&1
 				else
-					echo "Die Datei /home/$SUDO_USER/Noah0302sTech/Docker/Docker-System-Prune-Trim.sh ist bereits vorhanden!"
+					echo "Die Datei /home/$SUDO_USER/Noah0302sTech/Docker/Docker-System-Prune.sh ist bereits vorhanden!"
 				fi
 		stop_spinner $?

@@ -117,7 +117,6 @@
 
 #----- Variables
 	dockerPruneOutput="Docker-System-Prune did not run!"
-	fstrimOutput="FS-Trim did not run!"
 
 
 
@@ -136,16 +135,6 @@
 	else
 		echo "Docker ist nicht installiert, überspringe Docker System Prune"
 	fi
-	echo
-	echo
-
-
-
-#----- Trim
-	start_spinner "Trimme Filesystem..."
-		fstrimOutput=$(fstrim / -v 2>&1)
-	stop_spinner $?
-	echo $fstrimOutput
 	echo
 	echo
 
