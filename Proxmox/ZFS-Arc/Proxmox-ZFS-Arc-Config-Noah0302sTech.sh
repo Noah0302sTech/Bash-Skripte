@@ -87,7 +87,7 @@
 
 	#----- Refresh Packages
 		start_spinner "Aktualisiere Package-Listen..."
-			sudo apt update -y > /dev/null 2>&1
+			apt update -y > /dev/null 2>&1
 		stop_spinner $?
 		echo
 		echo
