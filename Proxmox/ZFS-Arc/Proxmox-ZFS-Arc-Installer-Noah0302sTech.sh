@@ -221,8 +221,8 @@ options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf
 
 #Alias ZFS-Arc-Config
 alias ZFSconfig='bash /root/Noah0302sTech/Docker/System-Prune/Proxmox-ZFS-Arc-Config-Noah0302sTech.sh'
-alias zfsarcsize='cat /proc/spl/kstat/zfs/arcstats | grep -w c_min && cat /proc/spl/kstat/zfs/arcstats | grep -w c_max'
-alias zfsarcsizeused='cat /proc/spl/kstat/zfs/arcstats | grep -w size'
+alias ZFSarcsize='cat /proc/spl/kstat/zfs/arcstats | grep -w c_min && cat /proc/spl/kstat/zfs/arcstats | grep -w c_max'
+alias ZFSarcsizeused='cat /proc/spl/kstat/zfs/arcstats | grep -w size'
 "  >> /root/.bashrc
 		stop_spinner $?
 	fi
@@ -237,8 +237,9 @@ alias zfsarcsizeused='cat /proc/spl/kstat/zfs/arcstats | grep -w size'
 	else
 		start_spinner "Passe MOTD an..."
 			echo "
-ZFS-Arc-Config:
-ZFSconfig
+ZFS-Arc Konfigurieren: ZFSconfig
+ZFS-Arc-Size aktuell: ZFSarcsize
+ZFS-Arc-Size benutzt: ZFSarcsizeused
 " >> /etc/motd
 		stop_spinner $?
 	fi
