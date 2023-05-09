@@ -116,48 +116,48 @@
 #-----	-----#	#-----	-----#	#-----	-----#
 
 #----- Variables
-	folderVar=folderVar
-	subFolderVar=subFolderVar
-	shPrimaryVar=shPrimaryVar
-	shSecondaryVar=shSecondaryVar
+	folderVar=Proxmox
+	subFolderVar=ZFS-Arc
+	shPrimaryVar=Proxmox-ZFS-Arc-Installer-Noah0302sTech.sh
+	shSecondaryVar=Proxmox-ZFS-Arc-Config-Noah0302sTech.sh
 
 #----- Create Folders
 	start_spinner "Erstelle Verzeichnisse..."
-		#--- /home/$SUDO_USER/Noah0302sTech
-			if [ ! -d /home/$SUDO_USER/Noah0302sTech ]; then
-				mkdir /home/$SUDO_USER/Noah0302sTech > /dev/null 2>&1
+		#--- /root/Noah0302sTech
+			if [ ! -d /root/Noah0302sTech ]; then
+				mkdir /root/Noah0302sTech > /dev/null 2>&1
 			else
-				echo "Ordner /home/$SUDO_USER/Noah0302sTech bereits vorhanden!"
+				echo "Ordner /root/Noah0302sTech bereits vorhanden!"
 			fi
 
 		#--- Folder Variable
-			if [ ! -d /home/$SUDO_USER/Noah0302sTech/$folderVar ]; then
-				mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar > /dev/null 2>&1
+			if [ ! -d /root/Noah0302sTech/$folderVar ]; then
+				mkdir /root/Noah0302sTech/$folderVar > /dev/null 2>&1
 			else
-				echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar bereits vorhanden!"
+				echo "Ordner /root/Noah0302sTech/$folderVar bereits vorhanden!"
 			fi
 
 		#--- Sub Folder Variable
-			if [ ! -d /home/$SUDO_USER/Noah0302sTech/$subFolderVar ]; then
-				mkdir /home/$SUDO_USER/Noah0302sTech/$subFolderVar > /dev/null 2>&1
+			if [ ! -d /root/Noah0302sTech/$folderVar/$subFolderVar ]; then
+				mkdir /root/Noah0302sTech/$folderVar/$subFolderVar > /dev/null 2>&1
 			else
-				echo "Ordner /home/$SUDO_USER/Noah0302sTech/$subFolderVar bereits vorhanden!"
+				echo "Ordner /root/Noah0302sTech/$folderVar/$subFolderVar bereits vorhanden!"
 			fi
 	stop_spinner $?
 
 #----- Move Bash-Script
 	start_spinner "Verschiebe Bash-Skript..."
 		#--- Primary Script Variable
-			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$shPrimaryVar ]; then
-				mv /home/$SUDO_USER/$shPrimaryVar /home/$SUDO_USER/Noah0302sTech/$folderVar/$shPrimaryVar > /dev/null 2>&1
+			if [ ! -f /root/Noah0302sTech/$folderVar/$subFolderVar/$shPrimaryVar ]; then
+				mv /root/$shPrimaryVar /root/Noah0302sTech/$folderVar/$subFolderVar/$shPrimaryVar > /dev/null 2>&1
 			else
-				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$shPrimaryVar ist bereits vorhanden!"
+				echo "Die Datei /root/Noah0302sTech/$folderVar/$subFolderVar/$shPrimaryVar ist bereits vorhanden!"
 			fi
 
 		#--- Secondary Script Variable
-			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$shSecondaryVar ]; then
-				mv /home/$SUDO_USER/$shSecondaryVar /home/$SUDO_USER/Noah0302sTech/$folderVar/$shSecondaryVar > /dev/null 2>&1
+			if [ ! -f /root/Noah0302sTech/$folderVar/$subFolderVar/$shSecondaryVar ]; then
+				mv /root/$shSecondaryVar /root/Noah0302sTech/$folderVar/$subFolderVar/$shSecondaryVar > /dev/null 2>&1
 			else
-				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$shSecondaryVar ist bereits vorhanden!"
+				echo "Die Datei /root/Noah0302sTech/$folderVar/$subFolderVar/$shSecondaryVar ist bereits vorhanden!"
 			fi
 	stop_spinner $?
