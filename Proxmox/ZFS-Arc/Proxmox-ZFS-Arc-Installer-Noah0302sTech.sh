@@ -217,3 +217,44 @@ options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf
 	done
 	echo
 	echo
+
+
+
+
+
+#-----	-----#	#-----	-----#	#-----	-----#
+#-----	-----#	#-----	-----#	#-----	-----#
+#-----	-----#	#-----	-----#	#-----	-----#
+
+#----- Variables
+	folderVar=folderVar
+	subFolderVar=subFolderVar
+	shPrimaryVar=shPrimaryVar
+	shSecondaryVar=shSecondaryVar
+
+#----- Create Folders
+	start_spinner "Erstelle Verzeichnisse..."
+		#--- /home/$SUDO_USER/Noah0302sTech
+			if [ ! -d /home/$SUDO_USER/Noah0302sTech ]; then
+				mkdir /home/$SUDO_USER/Noah0302sTech > /dev/null 2>&1
+			else
+				echo "Ordner /home/$SUDO_USER/Noah0302sTech bereits vorhanden!"
+			fi
+
+		#--- /home/$SUDO_USER/Noah0302sTech/Proxmox
+			if [ ! -d /home/$SUDO_USER/Noah0302sTech/Proxmox ]; then
+				mkdir /home/$SUDO_USER/Noah0302sTech/Proxmox > /dev/null 2>&1
+			else
+				echo "Ordner /home/$SUDO_USER/Noah0302sTech/Proxmox bereits vorhanden!"
+			fi
+	stop_spinner $?
+
+	#--- Move Bash-Script
+		start_spinner "Verschiebe Bash-Skript..."
+			#- /home/$SUDO_USER/Noah0302sTech/Proxmox/Proxmox-ZFS-Arc-Installer-Noah0302sTech.sh
+				if [ ! -f /home/$SUDO_USER/Noah0302sTech/Proxmox/Proxmox-ZFS-Arc-Installer-Noah0302sTech.sh ]; then
+					mv /home/$SUDO_USER/Proxmox-ZFS-Arc-Installer-Noah0302sTech.sh /home/$SUDO_USER/Noah0302sTech/Proxmox/Proxmox-ZFS-Arc-Installer-Noah0302sTech.sh > /dev/null 2>&1
+				else
+					echo "Die Datei /home/$SUDO_USER/Noah0302sTech/Proxmox/Proxmox-ZFS-Arc-Installer-Noah0302sTech.sh ist bereits vorhanden!"
+				fi
+		stop_spinner $?
