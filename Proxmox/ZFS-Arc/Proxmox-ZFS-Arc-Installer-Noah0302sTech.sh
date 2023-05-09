@@ -237,9 +237,9 @@ alias ZFSarcsizeused='cat /proc/spl/kstat/zfs/arcstats | grep -w size'
 	else
 		start_spinner "Passe MOTD an..."
 			echo "
-ZFS-Arc Konfigurieren: ZFSconfig
-ZFS-Arc-Size aktuell: ZFSarcsize
-ZFS-Arc-Size benutzt: ZFSarcsizeused
+ZFS-Arc Konfigurieren:	ZFSconfig
+ZFS-Arc-Size aktuell:	ZFSarcsize
+ZFS-Arc-Size benutzt:	ZFSarcsizeused
 " >> /etc/motd
 		stop_spinner $?
 	fi
