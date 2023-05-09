@@ -263,16 +263,16 @@ options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf
 #----- Move Bash-Script
 	start_spinner "Verschiebe Bash-Skript..."
 		#--- Primary Script Variable
-			if [ ! -f /root/Noah0302sTech/$folderVar/$shPrimaryVar ]; then
-				mv /root/$shPrimaryVar /root/Noah0302sTech/$folderVar/$shPrimaryVar > /dev/null 2>&1
+			if [ ! -f /root/Noah0302sTech/$folderVar/$subFolderVar/$shPrimaryVar ]; then
+				mv /root/$shPrimaryVar /root/Noah0302sTech/$folderVar/$subFolderVar/$shPrimaryVar > /dev/null 2>&1
 			else
-				echo "Die Datei /root/Noah0302sTech/$folderVar/$shPrimaryVar ist bereits vorhanden!"
+				echo "Die Datei /root/Noah0302sTech/$folderVar/$subFolderVar/$shPrimaryVar ist bereits vorhanden!"
 			fi
 
 		#--- Secondary Script Variable
-			if [ ! -f /root/Noah0302sTech/$folderVar/$shSecondaryVar ]; then
-				mv /root/$shSecondaryVar /root/Noah0302sTech/$folderVar/$shSecondaryVar > /dev/null 2>&1
+			if [ ! -f /root/Noah0302sTech/$folderVar/$subFolderVar/$shSecondaryVar ]; then
+				mv /root/$shSecondaryVar /root/Noah0302sTech/$folderVar/$subFolderVar/$shSecondaryVar > /dev/null 2>&1
 			else
-				echo "Die Datei /root/Noah0302sTech/$folderVar/$shSecondaryVar ist bereits vorhanden!"
+				echo "Die Datei /root/Noah0302sTech/$folderVar/$subFolderVar/$shSecondaryVar ist bereits vorhanden!"
 			fi
 	stop_spinner $?
