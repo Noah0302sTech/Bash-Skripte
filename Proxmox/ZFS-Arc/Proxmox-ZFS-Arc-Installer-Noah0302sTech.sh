@@ -212,9 +212,19 @@ options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf
 
 
 #----- Download ZFS-Config-Script
-	start_spinner "Downloade Proxmox-ZFS-Arc-Config-Noah0302sTech.sh..."
-		wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Proxmox/ZFS-Arc/Proxmox-ZFS-Arc-Config-Noah0302sTech.sh > /dev/null 2>&1
-	stop_spinner $?
+	#--- Install WGET
+		start_spinner "Installiere WGET..."
+			apt install wget -y > /dev/null 2>&1
+		stop_spinner $?
+
+	#--- Download Script File
+		start_spinner "Downloade Proxmox-ZFS-Arc-Config-Noah0302sTech.sh..."
+			wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Proxmox/ZFS-Arc/Proxmox-ZFS-Arc-Config-Noah0302sTech.sh > /dev/null 2>&1
+		stop_spinner $?
+
+
+
+
 
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
@@ -265,4 +275,4 @@ options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf
 			else
 				echo "Die Datei /root/Noah0302sTech/$folderVar/$shSecondaryVar ist bereits vorhanden!"
 			fi
-	stop_spinner $?
+	stop_spinne
