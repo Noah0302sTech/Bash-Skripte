@@ -211,17 +211,57 @@ options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf
 
 
 
-#----- Download ZFS-Config-Script
+#----- Create Alias
+    if grep -q "^alias DSPtrim=" /home/$SUDO_USER/.bashrc; then
+		echo "Der Alias existiert bereits in /home/$SUDO_USER/.bashrc"
+	else
+		start_spinner "Erstelle Alias..."
+			echo "
+
+
+#Alias ZFS-Arc-Config
+alias ZFSconfig='sudo bash /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Proxmox-ZFS-Arc-Config-Noah0302sTech.sh'
+"  >> /home/$SUDO_USER/.bashrc
+		stop_spinner $?
+	fi
+	echo
+	echo
+
+
+
+#----- Create MOTD
+	if grep -q "^ZFS-Arc-Config" /etc/motd; then
+		echo "Der MOTD Eintrag exisitert bereits in /etc/motd"
+	else
+		start_spinner "Passe MOTD an..."
+			echo "
+ZFS-Arc-Config:
+ZFSconfig
+" >> /etc/motd
+		stop_spinner $?
+	fi
+	echo
+	echo
+
+
+
+#----- ZFS-Config-Script
 	#--- Install WGET
 		start_spinner "Installiere WGET..."
 			apt install wget -y > /dev/null 2>&1
 		stop_spinner $?
 
-	#--- Download Script File
+	#--- Downloade File
 		start_spinner "Downloade Proxmox-ZFS-Arc-Config-Noah0302sTech.sh..."
 			wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Proxmox/ZFS-Arc/Proxmox-ZFS-Arc-Config-Noah0302sTech.sh > /dev/null 2>&1
 		stop_spinner $?
 
+	#--- Make Proxmox-ZFS-Arc-Config-Noah0302sTech.sh executable
+		start_spinner "Mache Proxmox-ZFS-Arc-Config-Noah0302sTech.sh ausführbar..."
+			chmod +x Proxmox-ZFS-Arc-Config-Noah0302sTech.sh > /dev/null 2>&1
+		stop_spinner $?
+	echo
+	echo
 
 
 
