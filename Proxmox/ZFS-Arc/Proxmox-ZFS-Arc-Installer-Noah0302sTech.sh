@@ -253,10 +253,10 @@ options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf
 			fi
 
 		#--- Sub Folder Variable
-			if [ ! -d /root/Noah0302sTech/$subFolderVar ]; then
-				mkdir /root/Noah0302sTech/$subFolderVar > /dev/null 2>&1
+			if [ ! -d /root/Noah0302sTech/$folderVar/$subFolderVar ]; then
+				mkdir /root/Noah0302sTech/$folderVar/$subFolderVar > /dev/null 2>&1
 			else
-				echo "Ordner /root/Noah0302sTech/$subFolderVar bereits vorhanden!"
+				echo "Ordner /root/Noah0302sTech/$folderVar/$subFolderVar bereits vorhanden!"
 			fi
 	stop_spinner $?
 
@@ -275,4 +275,4 @@ options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf
 			else
 				echo "Die Datei /root/Noah0302sTech/$folderVar/$shSecondaryVar ist bereits vorhanden!"
 			fi
-	stop_spinne
+	stop_spinner $?
