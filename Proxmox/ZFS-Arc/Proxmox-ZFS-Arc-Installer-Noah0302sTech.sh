@@ -212,16 +212,16 @@ options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf
 
 
 #----- Create Alias
-    if grep -q "^alias DSPtrim=" /home/$SUDO_USER/.bashrc; then
-		echo "Der Alias existiert bereits in /home/$SUDO_USER/.bashrc"
+    if grep -q "^alias DSPtrim=" /root/.bashrc; then
+		echo "Der Alias existiert bereits in /root/.bashrc"
 	else
 		start_spinner "Erstelle Alias..."
 			echo "
 
 
 #Alias ZFS-Arc-Config
-alias ZFSconfig='sudo bash /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Proxmox-ZFS-Arc-Config-Noah0302sTech.sh'
-"  >> /home/$SUDO_USER/.bashrc
+alias ZFSconfig='sudo bash /root/Noah0302sTech/Docker/System-Prune/Proxmox-ZFS-Arc-Config-Noah0302sTech.sh'
+"  >> /root/.bashrc
 		stop_spinner $?
 	fi
 	echo
