@@ -1,6 +1,6 @@
 #!/bin/bash
 #	Made by Noah0302sTech
-#	chmod +x XXXXXXXXXX.sh && sudo bash XXXXXXXXXX.sh
+#	chmod +x $shPrimaryVar && sudo bash $shPrimaryVar
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
@@ -115,6 +115,12 @@
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
 
+#----- Variables
+	folderVar=folderVar
+	subFolderVar=subFolderVar
+	shPrimaryVar=shPrimaryVar
+	shSecondaryVar=shSecondaryVar
+
 #----- Create Folders
 	start_spinner "Erstelle Verzeichnisse..."
 		#--- /home/$SUDO_USER/Noah0302sTech
@@ -124,20 +130,34 @@
 				echo "Ordner /home/$SUDO_USER/Noah0302sTech bereits vorhanden!"
 			fi
 
-		#--- /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder
-			if [ ! -d /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder ]; then
-				mkdir /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder > /dev/null 2>&1
+		#--- Folder Variable
+			if [ ! -d /home/$SUDO_USER/Noah0302sTech/$folderVar ]; then
+				mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar > /dev/null 2>&1
 			else
-				echo "Ordner /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder bereits vorhanden!"
+				echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar bereits vorhanden!"
+			fi
+
+		#--- Sub Folder Variable
+			if [ ! -d /home/$SUDO_USER/Noah0302sTech/$subFolderVar ]; then
+				mkdir /home/$SUDO_USER/Noah0302sTech/$subFolderVar > /dev/null 2>&1
+			else
+				echo "Ordner /home/$SUDO_USER/Noah0302sTech/$subFolderVar bereits vorhanden!"
 			fi
 	stop_spinner $?
 
-	#--- Move Bash-Script
-		start_spinner "Verschiebe Bash-Skript..."
-			#- /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder/XXXXXXXXXX.sh
-				if [ ! -f /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder/XXXXXXXXXX.sh ]; then
-					mv /home/$SUDO_USER/XXXXXXXXXX.sh /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder/XXXXXXXXXX.sh > /dev/null 2>&1
-				else
-					echo "Die Datei /home/$SUDO_USER/Noah0302sTech/XXXXXXXXXX.folder/XXXXXXXXXX.sh ist bereits vorhanden!"
-				fi
-		stop_spinner $?
+#----- Move Bash-Script
+	start_spinner "Verschiebe Bash-Skript..."
+		#--- Primary Script Variable
+			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$shPrimaryVar ]; then
+				mv /home/$SUDO_USER/$shPrimaryVar /home/$SUDO_USER/Noah0302sTech/$folderVar/$shPrimaryVar > /dev/null 2>&1
+			else
+				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$shPrimaryVar ist bereits vorhanden!"
+			fi
+
+		#--- Secondary Script Variable
+			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$shSecondaryVar ]; then
+				mv /home/$SUDO_USER/$shSecondaryVar /home/$SUDO_USER/Noah0302sTech/$folderVar/$shSecondaryVar > /dev/null 2>&1
+			else
+				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$shSecondaryVar ist bereits vorhanden!"
+			fi
+	stop_spinner $?
