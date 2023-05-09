@@ -164,15 +164,6 @@ options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf
 
 
 
-#----- Move Bash Script
-	#--- Create Folder
-    mkdir ZFS-Arc
-
-		#--- Move Bash-Script
-		mv Proxmox-ZFS-Arc-Installer-Noah0302sTech.sh ZFS-Arc/Proxmox-ZFS-Arc-Installer-Noah0302sTech.sh
-
-
-
 #----- Ask for Commit
 	while true; do
 		read -p "Möchtest du die Änderungen jetzt anwenden? (Y/N)" yn
@@ -220,41 +211,58 @@ options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf
 
 
 
-
+#----- Download ZFS-Config-Script
+	start_spinner "Downloade Proxmox-ZFS-Arc-Config-Noah0302sTech.sh..."
+		wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Proxmox/ZFS-Arc/Proxmox-ZFS-Arc-Config-Noah0302sTech.sh > /dev/null 2>&1
+	stop_spinner $?
 
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
 
 #----- Variables
-	folderVar=folderVar
-	subFolderVar=subFolderVar
-	shPrimaryVar=shPrimaryVar
-	shSecondaryVar=shSecondaryVar
+	folderVar=Proxmox
+	subFolderVar=ZFS-Arc
+	shPrimaryVar=Proxmox-ZFS-Arc-Installer-Noah0302sTech.sh
+	shSecondaryVar=Proxmox-ZFS-Arc-Config-Noah0302sTech.sh
 
 #----- Create Folders
 	start_spinner "Erstelle Verzeichnisse..."
-		#--- /home/$SUDO_USER/Noah0302sTech
-			if [ ! -d /home/$SUDO_USER/Noah0302sTech ]; then
-				mkdir /home/$SUDO_USER/Noah0302sTech > /dev/null 2>&1
+		#--- /root/Noah0302sTech
+			if [ ! -d /root/Noah0302sTech ]; then
+				mkdir /root/Noah0302sTech > /dev/null 2>&1
 			else
-				echo "Ordner /home/$SUDO_USER/Noah0302sTech bereits vorhanden!"
+				echo "Ordner /root/Noah0302sTech bereits vorhanden!"
 			fi
 
-		#--- /home/$SUDO_USER/Noah0302sTech/Proxmox
-			if [ ! -d /home/$SUDO_USER/Noah0302sTech/Proxmox ]; then
-				mkdir /home/$SUDO_USER/Noah0302sTech/Proxmox > /dev/null 2>&1
+		#--- Folder Variable
+			if [ ! -d /root/Noah0302sTech/$folderVar ]; then
+				mkdir /root/Noah0302sTech/$folderVar > /dev/null 2>&1
 			else
-				echo "Ordner /home/$SUDO_USER/Noah0302sTech/Proxmox bereits vorhanden!"
+				echo "Ordner /root/Noah0302sTech/$folderVar bereits vorhanden!"
+			fi
+
+		#--- Sub Folder Variable
+			if [ ! -d /root/Noah0302sTech/$subFolderVar ]; then
+				mkdir /root/Noah0302sTech/$subFolderVar > /dev/null 2>&1
+			else
+				echo "Ordner /root/Noah0302sTech/$subFolderVar bereits vorhanden!"
 			fi
 	stop_spinner $?
 
-	#--- Move Bash-Script
-		start_spinner "Verschiebe Bash-Skript..."
-			#- /home/$SUDO_USER/Noah0302sTech/Proxmox/Proxmox-ZFS-Arc-Installer-Noah0302sTech.sh
-				if [ ! -f /home/$SUDO_USER/Noah0302sTech/Proxmox/Proxmox-ZFS-Arc-Installer-Noah0302sTech.sh ]; then
-					mv /home/$SUDO_USER/Proxmox-ZFS-Arc-Installer-Noah0302sTech.sh /home/$SUDO_USER/Noah0302sTech/Proxmox/Proxmox-ZFS-Arc-Installer-Noah0302sTech.sh > /dev/null 2>&1
-				else
-					echo "Die Datei /home/$SUDO_USER/Noah0302sTech/Proxmox/Proxmox-ZFS-Arc-Installer-Noah0302sTech.sh ist bereits vorhanden!"
-				fi
-		stop_spinner $?
+#----- Move Bash-Script
+	start_spinner "Verschiebe Bash-Skript..."
+		#--- Primary Script Variable
+			if [ ! -f /root/Noah0302sTech/$folderVar/$shPrimaryVar ]; then
+				mv /root/$shPrimaryVar /root/Noah0302sTech/$folderVar/$shPrimaryVar > /dev/null 2>&1
+			else
+				echo "Die Datei /root/Noah0302sTech/$folderVar/$shPrimaryVar ist bereits vorhanden!"
+			fi
+
+		#--- Secondary Script Variable
+			if [ ! -f /root/Noah0302sTech/$folderVar/$shSecondaryVar ]; then
+				mv /root/$shSecondaryVar /root/Noah0302sTech/$folderVar/$shSecondaryVar > /dev/null 2>&1
+			else
+				echo "Die Datei /root/Noah0302sTech/$folderVar/$shSecondaryVar ist bereits vorhanden!"
+			fi
+	stop_spinner $?
