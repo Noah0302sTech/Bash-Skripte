@@ -220,7 +220,7 @@ options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf
 
 
 #Alias ZFS-Arc-Config
-alias ZFSconfig='bash /root/Noah0302sTech/Docker/System-Prune/Proxmox-ZFS-Arc-Config-Noah0302sTech.sh'
+alias ZFSconfig='bash /root/Noah0302sTech/Proxmox/ZFS-Arc/Proxmox-ZFS-Arc-Config-Noah0302sTech.sh'
 alias ZFSarcsize='cat /proc/spl/kstat/zfs/arcstats | grep -w c_min && cat /proc/spl/kstat/zfs/arcstats | grep -w c_max'
 alias ZFSarcsizeused='cat /proc/spl/kstat/zfs/arcstats | grep -w size'
 "  >> /root/.bashrc
