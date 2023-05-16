@@ -100,10 +100,76 @@
 
 
 
-#----- XXXXXXXXXX
-	start_spinner "XXXXXXXXXX..."
-		XXXXXXXXXX > /dev/null 2>&1
-	stop_spinner $?
+#----- Variables
+	uniSrc="192.168.6.4"
+	uniPeer="192.168.6.5"
+	virtIP="192.168.6.3/24"
+	unboundPwd="Unb0und1!"
+	prio="50"
+
+
+
+#----- Prompt for custom values
+	#--- Unicast Source
+	read -p "Gib die Unicast-Source-IP an [default: $uniSrc]: " input
+	uniSrc=${input:-$uniSrc}
+	#--- Unicast Destination
+	read -p "Gib die Unicast-Destination-IP an [default: $uniPeer]: " input
+	uniPeer=${input:-$uniPeer}
+	#--- Virtual IP
+	read -p "Gib die virtuelle KeepAliveD-IP an [default: $virtIP]: " input
+	virtIP=${input:-$virtIP}
+	#--- Unbound PW
+	read -p "Gib das Unbound-Passwort an [default: $unboundPwd]: " input
+	unboundPwd=${input:-$unboundPwd}
+	#--- Priority
+	read -p "Gib die Priorität an (Höher=Primary) [default: $prio]: " input
+	prio=${input:-$prio}
+	echo
+	echo
+
+
+#----- KeepAliveD
+	#--- Install KeepAliveD
+		start_spinner "Installiere KeepAliveD..."
+			apt install keepalived -y > /dev/null 2>&1
+		stop_spinner $?
+
+	#--- Install KeepAliveD
+		start_spinner "Konfiguriere KeepAliveD-Config..."
+			echo "" > /etc/keepalived/keepalived.conf
+			echo '#Primary
+vrrp_instance VI_1 {
+  state MASTER
+  interface eth0
+  virtual_router_id 55
+  priority '$prio'
+  advert_int 1
+  unicast_src_ip '$uniSrc'
+  unicast_peer {
+    '$uniPeer'
+  }
+
+  authentication {
+    auth_type PASS
+    auth_pass '$unboundPwd'
+  }
+
+  virtual_ipaddress {
+    '$virtIP'
+  }
+}' | tee -a /etc/keepalived/keepalived.conf > /dev/null 2>&1
+			stop_spinner $?
+
+	#--- Enable
+		start_spinner "Aktiviere KeepAliveD..."
+			systemctl enable --now keepalived.service > /dev/null 2>&1
+		stop_spinner $?
+
+	#--- Status
+		start_spinner "KeepAliveD Status..."
+			systemctl status keepalived.service
+		stop_spinner $?
 	echo
 	echo
 
@@ -116,10 +182,9 @@
 #-----	-----#	#-----	-----#	#-----	-----#
 
 #----- Variables
-	folderVar=XXXXXXXXXX
-	subFolderVar=XXXXXXXXXX
-	shPrimaryVar=XXXXXXXXXX
-	shSecondaryVar=XXXXXXXXXX
+	folderVar=Pihole
+	subFolderVar=KeepAlived
+	shPrimaryVar=KeepAlived-Installer.sh
 
 #----- Create Folders
 	start_spinner "Erstelle Verzeichnisse..."
@@ -148,16 +213,9 @@
 #----- Move Bash-Script
 	start_spinner "Verschiebe Bash-Skript..."
 		#--- Primary Script Variable
-			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/KeepAliveD-Installer-Noah0302sTech.sh ]; then
-				mv /home/$SUDO_USER/KeepAliveD-Installer-Noah0302sTech.sh /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/KeepAliveD-Installer-Noah0302sTech.sh > /dev/null 2>&1
+			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$shPrimaryVar ]; then
+				mv /home/$SUDO_USER/$shPrimaryVar /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$shPrimaryVar > /dev/null 2>&1
 			else
-				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/KeepAliveD-Installer-Noah0302sTech.sh ist bereits vorhanden!"
-			fi
-
-		#--- Secondary Script Variable
-			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$shSecondaryVar ]; then
-				mv /home/$SUDO_USER/$shSecondaryVar /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$shSecondaryVar > /dev/null 2>&1
-			else
-				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$shSecondaryVar ist bereits vorhanden!"
+				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$shPrimaryVar ist bereits vorhanden!"
 			fi
 	stop_spinner $?
