@@ -125,7 +125,7 @@
 	#--- Curl Pihole-Updater
 		echo "Installiere Pihole-Updater..."
 		sleep 1
-		curl -sSL GitHubURL | bash
+		curl -sSL https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Pihole/Updater/Pihole-Updater-Installer-Debian-Noah0302sTech.sh | bash
 	
 	echo
 	echo
