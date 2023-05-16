@@ -139,7 +139,7 @@
 	#--- Curl Unbound-Installer
 		echo "Installiere Unbound..."
 		sleep 1
-		curl -sSL GitHubURL | bash
+		curl -sSL https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Pihole/Unbound/Unbound-Installer-Noah0302sTech.sh | bash
 
 	echo
 	echo
@@ -153,7 +153,7 @@
 	#--- Curl Unbound-Installer
 		echo "Installiere Unbound..."
 		sleep 1
-		curl -sSL GitHubURL | bash
+		curl -sSL https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Pihole/KeepAliveD/KeepAliveD-Installer-Noah0302sTech.sh | bash
 	echo
 	echo
 
