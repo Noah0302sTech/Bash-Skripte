@@ -1,6 +1,6 @@
 #!/bin/bash
 #	Made by Noah0302sTech
-#	chmod +x Pihole-Updater-Installer-Debian-Noah0302sTech.sh && sudo bash Pihole-Updater-Installer-Debian-Noah0302sTech.sh
+#	chmod +x Unbound-Installer-Noah0302sTech.sh && sudo bash Unbound-Installer-Noah0302sTech.sh
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
@@ -100,86 +100,64 @@
 
 
 
+#----- XXXXXXXXXX
+	start_spinner "XXXXXXXXXX..."
+		XXXXXXXXXX > /dev/null 2>&1
+	stop_spinner $?
+	echo
+	echo
+
+
+
+
+
+#-----	-----#	#-----	-----#	#-----	-----#
+#-----	-----#	#-----	-----#	#-----	-----#
+#-----	-----#	#-----	-----#	#-----	-----#
+
 #----- Variables
-	cronVariable="0 8 * * *"
+	folderVar=XXXXXXXXXX
+	subFolderVar=XXXXXXXXXX
+	shPrimaryVar=XXXXXXXXXX
+	shSecondaryVar=XXXXXXXXXX
 
-	#--- Prompt for custom values
-		read -p "Passe den Cron-Job an [default 8 Uhr täglich: $cronVariable]: " input
-		cronVariable=${input:-$cronVariable}
-	echo
-	echo
-
-
-
-#----- Create Bash-File
-	start_spinner "Erstelle Pihole-Updater Bash-File..."
-		touch Pihole-Updater.sh
-		touch Cron-Check.txt
-	stop_spinner $?
-
-	#--- Echo Commands into Pihole-Updater.sh
-		echo '#!/bin/bash
-
-#Pihole Update
-	echo "Update Pihole..."
-		sleep 1
-		pihole -up
-	echo
-	echo
-
-
-
-#Pihole Gravity
-	echo "Update Gravity..."
-		sleep 1
-		pihole -g
-	echo
-	echo
-
-
-
-#Cron-Check+
-	echo "" >> /home/'$SUDO_USER'/Noah0302sTech/Pihole-Files/Cron-Check.txt
-	echo "Cron lief um:" >> /home/'$SUDO_USER'/Noah0302sTech/Pihole-Files/Cron-Check.txt
-	date >> /home/'$SUDO_USER'/Noah0302sTech/Pihole-Files/Cron-Check.txt' > Pihole-Updater.sh
-
-	#--- Make Pihole-Updater.sh executable
-		start_spinner "Mache Pihole-Updater.sh ausführbar..."
-			chmod +x Pihole-Updater.sh
-		stop_spinner $?
-	echo
-	echo
-
-
-
-#----- Create Crontab
-	start_spinner "Erstelle Crontab..."
-		touch /etc/cron.d/pihole-updater-Noah0302sTech
-		echo "#Daily Update for Pihole by Noah0302sTech
-$cronVariable root /home/$SUDO_USER/Noah0302sTech/Pihole-Files/Pihole-Updater.sh" >> /etc/cron.d/pihole-updater-Noah0302sTech
-	stop_spinner $?
-	echo
-	echo
-
-
-
-
-
-#-----	-----#	#-----	-----#	#-----	-----#
-#-----	-----#	#-----	-----#	#-----	-----#
-#-----	-----#	#-----	-----#	#-----	-----#
 #----- Create Folders
 	start_spinner "Erstelle Verzeichnisse..."
-		mkdir /home/$SUDO_USER/Noah0302sTech
-		mkdir /home/$SUDO_USER/Noah0302sTech/Pihole-Files
-		mkdir /home/$SUDO_USER/Noah0302sTech/Pihole-Files/Installer
+		#--- /home/$SUDO_USER/Noah0302sTech
+			if [ ! -d /home/$SUDO_USER/Noah0302sTech ]; then
+				mkdir /home/$SUDO_USER/Noah0302sTech > /dev/null 2>&1
+			else
+				echo "Ordner /home/$SUDO_USER/Noah0302sTech bereits vorhanden!"
+			fi
+
+		#--- Folder Variable
+			if [ ! -d /home/$SUDO_USER/Noah0302sTech/$folderVar ]; then
+				mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar > /dev/null 2>&1
+			else
+				echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar bereits vorhanden!"
+			fi
+
+		#--- Sub Folder Variable
+			if [ ! -d /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar ]; then
+				mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar > /dev/null 2>&1
+			else
+				echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar bereits vorhanden!"
+			fi
 	stop_spinner $?
 
-	#--- Move Bash-Script
-		start_spinner "Verschiebe Bash-Skript..."
-			mv /home/$SUDO_USER/Pihole-Updater.sh /home/$SUDO_USER/Noah0302sTech/Pihole-Files/Pihole-Updater.sh
-			mv /home/$SUDO_USER/Cron-Check.txt /home/$SUDO_USER/Noah0302sTech/Pihole-Files/Cron-Check.txt
-			mv /home/$SUDO_USER/Pihole-Updater-Installer-Debian-Noah0302sTech.sh /home/$SUDO_USER/Noah0302sTech/Pihole-Files/Installer/Pihole-Updater-Installer-Debian-Noah0302sTech.sh
-		stop_spinner $?
-	echo
-	echo
+#----- Move Bash-Script
+	start_spinner "Verschiebe Bash-Skript..."
+		#--- Primary Script Variable
+			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$shPrimaryVar ]; then
+				mv /home/$SUDO_USER/$shPrimaryVar /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$shPrimaryVar > /dev/null 2>&1
+			else
+				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$shPrimaryVar ist bereits vorhanden!"
+			fi
+
+		#--- Secondary Script Variable
+			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$shSecondaryVar ]; then
+				mv /home/$SUDO_USER/$shSecondaryVar /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$shSecondaryVar > /dev/null 2>&1
+			else
+				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$shSecondaryVar ist bereits vorhanden!"
+			fi
+	stop_spinner $?
