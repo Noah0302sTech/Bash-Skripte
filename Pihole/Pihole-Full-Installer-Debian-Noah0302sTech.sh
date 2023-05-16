@@ -125,7 +125,8 @@
 	#--- Curl Pihole-Updater
 		echo "Installiere Pihole-Updater..."
 		sleep 1
-		curl -sSL https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Pihole/Updater/Pihole-Updater-Installer-Debian-Noah0302sTech.sh | bash
+		wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Pihole/Updater/Pihole-Updater-Installer-Debian-Noah0302sTech.sh
+		bash ./Pihole-Updater-Installer-Debian-Noah0302sTech.sh
 	
 	echo
 	echo
@@ -139,7 +140,8 @@
 	#--- Curl Unbound-Installer
 		echo "Installiere Unbound..."
 		sleep 1
-		curl -sSL https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Pihole/Unbound/Unbound-Installer-Noah0302sTech.sh | bash
+		wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Pihole/Unbound/Unbound-Installer-Noah0302sTech.sh
+		bash ./Unbound-Installer-Noah0302sTech.sh
 
 	echo
 	echo
@@ -153,7 +155,8 @@
 	#--- Curl Unbound-Installer
 		echo "Installiere Unbound..."
 		sleep 1
-		curl -sSL https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Pihole/KeepAliveD/KeepAliveD-Installer-Noah0302sTech.sh | bash
+		wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Pihole/KeepAliveD/KeepAliveD-Installer-Noah0302sTech.sh
+		bash ./KeepAliveD-Installer-Noah0302sTech.sh
 	echo
 	echo
 
