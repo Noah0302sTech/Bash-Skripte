@@ -112,8 +112,8 @@
 
 #----- Prompt for custom values
 	#--- Interface Name
-		read -p "Gib die Unicast-Source-IP an [default: $uniSrc]: " input
-		uniSrc=${input:-$uniSrc}
+		read -p "Gib den Interface-Namen an [default: $ifaceName]: " input
+		ifaceName=${input:-$ifaceName}
 
 	#--- Unicast Source
 		read -p "Gib die Unicast-Source-IP an [default: $uniSrc]: " input
