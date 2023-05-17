@@ -101,6 +101,7 @@
 
 
 #----- Variables
+	ifaceName="eth0"
 	uniSrc="192.168.6.4"
 	uniPeer="192.168.6.5"
 	virtIP="192.168.6.3/24"
@@ -110,21 +111,29 @@
 
 
 #----- Prompt for custom values
+	#--- Interface Name
+		read -p "Gib die Unicast-Source-IP an [default: $uniSrc]: " input
+		uniSrc=${input:-$uniSrc}
+
 	#--- Unicast Source
-	read -p "Gib die Unicast-Source-IP an [default: $uniSrc]: " input
-	uniSrc=${input:-$uniSrc}
+		read -p "Gib die Unicast-Source-IP an [default: $uniSrc]: " input
+		uniSrc=${input:-$uniSrc}
+
 	#--- Unicast Destination
-	read -p "Gib die Unicast-Destination-IP an [default: $uniPeer]: " input
-	uniPeer=${input:-$uniPeer}
+		read -p "Gib die Unicast-Destination-IP an [default: $uniPeer]: " input
+		uniPeer=${input:-$uniPeer}
+
 	#--- Virtual IP
-	read -p "Gib die virtuelle KeepAliveD-IP an [default: $virtIP]: " input
-	virtIP=${input:-$virtIP}
+		read -p "Gib die virtuelle KeepAliveD-IP an [default: $virtIP]: " input
+		virtIP=${input:-$virtIP}
+
 	#--- Unbound PW
-	read -p "Gib das Unbound-Passwort an [default: $unboundPwd]: " input
-	unboundPwd=${input:-$unboundPwd}
+		read -p "Gib das Unbound-Passwort an [default: $unboundPwd]: " input
+		unboundPwd=${input:-$unboundPwd}
+
 	#--- Priority
-	read -p "Gib die Priorität an (Höher=Primary) [default: $prio]: " input
-	prio=${input:-$prio}
+		read -p "Gib die Priorität an (Höher=Primary) [default: $prio]: " input
+		prio=${input:-$prio}
 	echo
 	echo
 
@@ -141,7 +150,7 @@
 			echo '#Primary
 vrrp_instance VI_1 {
   state MASTER
-  interface eth0
+  interface '$ifaceName'
   virtual_router_id 55
   priority '$prio'
   advert_int 1
