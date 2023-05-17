@@ -99,19 +99,26 @@
 
 
 
+
+#----- Install Curl
+	start_spinner "Installiere Curl..."
+		apt install curl -y > /dev/null 2>&1
+	stop_spinner $?
+
+
+
 #----- Install Pihole
 	echo "Pihole....."
 	sleep 3
-
-	#--- Install Curl
-		start_spinner "Installiere Curl..."
-			apt install curl -y > /dev/null 2>&1
-		stop_spinner $?
 
 	#--- Curl Pihole
 		echo "Installiere Pihole..."
 		sleep 1
 		curl -sSL https://install.pi-hole.net | bash
+
+	#--- Change Pihole Password
+		echo "Gib ein neuen Pihole-Passwort ein:"
+		pihole -a -p
 	echo
 	echo
 	echo
@@ -120,7 +127,7 @@
 
 
 #----- Install Pihole-Updater
-	echo "Updater....."
+	echo "Pihole-Updater....."
 	sleep 3
 
 	#--- Curl Pihole-Updater
@@ -141,9 +148,9 @@
 	sleep 3
 
 	#--- Curl Unbound-Installer
-		echo "Installiere Unbound..."
-		sleep 1
-		wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Pihole/Unbound/Unbound-Installer-Noah0302sTech.sh
+		start_spinner "Installiere Unbound..."
+			wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Pihole/Unbound/Unbound-Installer-Noah0302sTech.sh
+		stop_spinner $?
 		bash ./Unbound-Installer-Noah0302sTech.sh
 	echo
 	echo
@@ -158,9 +165,9 @@
 	sleep 3
 
 	#--- Curl Unbound-Installer
-		echo "Installiere Unbound..."
-		sleep 1
-		wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Pihole/KeepAliveD/KeepAliveD-Installer-Noah0302sTech.sh
+		start_spinner "Installiere KeepAliveD..."
+			wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Pihole/KeepAliveD/KeepAliveD-Installer-Noah0302sTech.sh
+		stop_spinner $?
 		bash ./KeepAliveD-Installer-Noah0302sTech.sh
 	echo
 	echo
