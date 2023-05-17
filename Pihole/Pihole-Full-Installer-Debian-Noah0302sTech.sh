@@ -180,6 +180,12 @@
 	folderVar=Pihole
 		subFolderVar=Full-Installer
 			shPrimaryVar=Pihole-Full-Installer-Debian-Noah0302sTech.sh
+		subFolder2Var=Updater
+			sh2Var=Pihole-Updater-Installer-Debian-Noah0302sTech.sh
+		subFolder3Var=Unbound
+			sh3Var=Unbound-Installer-Noah0302sTech.sh
+		subFolder4Var=KeepAlived
+			sh4Var=KeepAliveD-Installer-Noah0302sTech.sh
 
 #----- Create Folders
 	start_spinner "Erstelle Verzeichnisse..."
@@ -203,6 +209,27 @@
 			else
 				echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar bereits vorhanden!"
 			fi
+
+		#--- Sub Folder2 Variable
+			if [ ! -d /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolder2Var ]; then
+				mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolder2Var > /dev/null 2>&1
+			else
+				echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolder2Var bereits vorhanden!"
+			fi
+
+		#--- Sub Folder3 Variable
+			if [ ! -d /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolder3Var ]; then
+				mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolder3Var > /dev/null 2>&1
+			else
+				echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolder3Var bereits vorhanden!"
+			fi
+
+		#--- Sub Folder4 Variable
+			if [ ! -d /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolder4Var ]; then
+				mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolder4Var > /dev/null 2>&1
+			else
+				echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolder4Var bereits vorhanden!"
+			fi
 	stop_spinner $?
 
 #----- Move Bash-Script
@@ -212,5 +239,26 @@
 				mv /home/$SUDO_USER/$shPrimaryVar /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$shPrimaryVar > /dev/null 2>&1
 			else
 				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$shPrimaryVar ist bereits vorhanden!"
+			fi
+
+		#--- sh2Var Script Variable
+			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$sh2Var ]; then
+				mv /home/$SUDO_USER/$sh2Var /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$sh2Var > /dev/null 2>&1
+			else
+				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$sh2Var ist bereits vorhanden!"
+			fi
+
+		#--- sh3Var Script Variable
+			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$sh3Var ]; then
+				mv /home/$SUDO_USER/$sh3Var /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$sh3Var > /dev/null 2>&1
+			else
+				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$sh3Var ist bereits vorhanden!"
+			fi
+
+		#--- sh4Var Script Variable
+			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$sh4Var ]; then
+				mv /home/$SUDO_USER/$sh4Var /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$sh4Var > /dev/null 2>&1
+			else
+				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$sh4Var ist bereits vorhanden!"
 			fi
 	stop_spinner $?
