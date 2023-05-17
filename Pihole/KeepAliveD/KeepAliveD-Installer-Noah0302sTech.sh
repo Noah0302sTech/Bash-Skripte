@@ -102,9 +102,9 @@
 
 #----- Variables
 	ifaceName="eth0"
-	uniSrc="192.168.6.4"
-	uniPeer="192.168.6.5"
-	virtIP="192.168.6.3/24"
+	uniSrc="192.168.6.8"
+	uniPeer="192.168.6.9"
+	virtIP="192.168.6.10"
 	unboundPwd="Unb0und1!"
 	prio="50"
 
