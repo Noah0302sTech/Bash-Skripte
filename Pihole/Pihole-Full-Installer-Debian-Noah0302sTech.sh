@@ -149,7 +149,7 @@
 
 	#--- Curl Unbound-Installer
 		start_spinner "Installiere Unbound..."
-			wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Pihole/Unbound/Unbound-Installer-Noah0302sTech.sh
+			wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Pihole/Unbound/Unbound-Installer-Noah0302sTech.sh > /dev/null 2>&1
 		stop_spinner $?
 		bash ./Unbound-Installer-Noah0302sTech.sh
 	echo
@@ -166,7 +166,7 @@
 
 	#--- Curl Unbound-Installer
 		start_spinner "Installiere KeepAliveD..."
-			wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Pihole/KeepAliveD/KeepAliveD-Installer-Noah0302sTech.sh
+			wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Pihole/KeepAliveD/KeepAliveD-Installer-Noah0302sTech.sh > /dev/null 2>&1
 		stop_spinner $?
 		bash ./KeepAliveD-Installer-Noah0302sTech.sh
 	echo
