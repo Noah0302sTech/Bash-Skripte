@@ -242,23 +242,23 @@
 			fi
 
 		#--- sh2Var Script Variable
-			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$sh2Var ]; then
-				mv /home/$SUDO_USER/$sh2Var /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$sh2Var > /dev/null 2>&1
+			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolder2Var/$sh2Var ]; then
+				mv /home/$SUDO_USER/$sh2Var /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolder2Var/$sh2Var > /dev/null 2>&1
 			else
-				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$sh2Var ist bereits vorhanden!"
+				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolder2Var/$sh2Var ist bereits vorhanden!"
 			fi
 
 		#--- sh3Var Script Variable
-			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$sh3Var ]; then
-				mv /home/$SUDO_USER/$sh3Var /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$sh3Var > /dev/null 2>&1
+			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolder3Var/$sh3Var ]; then
+				mv /home/$SUDO_USER/$sh3Var /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolder3Var/$sh3Var > /dev/null 2>&1
 			else
-				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$sh3Var ist bereits vorhanden!"
+				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolder3Var/$sh3Var ist bereits vorhanden!"
 			fi
 
 		#--- sh4Var Script Variable
-			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$sh4Var ]; then
-				mv /home/$SUDO_USER/$sh4Var /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$sh4Var > /dev/null 2>&1
+			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolder4Var/$sh4Var ]; then
+				mv /home/$SUDO_USER/$sh4Var /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolder4Var/$sh4Var > /dev/null 2>&1
 			else
-				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$sh4Var ist bereits vorhanden!"
+				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolder4Var/$sh4Var ist bereits vorhanden!"
 			fi
 	stop_spinner $?
