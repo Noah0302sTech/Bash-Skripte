@@ -162,6 +162,8 @@ $cronVariable root /root/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashEx
 
 
 
+
+
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
