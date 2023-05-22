@@ -139,7 +139,7 @@
 #Debug
 	echo "Proxmox-Updater Cron-Job ran @" >> /root/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck
 	date >> /root/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck
-	echo "$upgradeOutput" >> /root/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck
+	echo "'$upgradeOutput'" >> /root/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck
 	echo '' >> /root/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck" >> /root/Proxmox-UpdateUpgrade-Noah0302sTech.sh
 
 	#--- Make Proxmox-UpdateUpgrade-Installer-Noah0302sTech.sh executable
