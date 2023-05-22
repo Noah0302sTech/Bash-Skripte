@@ -99,7 +99,8 @@
 			folder1=Update-Upgrade
 				folder2=Installer
 					shPrimaryVar=Proxmox-UpdateUpgrade-Installer-Noah0302sTech.sh
-				shSecondaryVar=Cron-Check.txt
+					shSecondaryVar=Proxmox-UpdateUpgrade-Noah0302sTech.sh
+				cronCheck=Chron-Check.txt
 
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
@@ -192,16 +193,23 @@ $cronVariable root /root/Noah0302sTech/$folderVar/Proxmox-UpdateUpgrade-Noah0302
 #----- Move Bash-Script
 	start_spinner "Verschiebe Bash-Skript..."
 		#--- Primary Script Variable
-			if [ ! -f /root/Noah0302sTech/$folderVar/$folder1/$shPrimaryVar ]; then
-				mv /root/$shPrimaryVar /root/Noah0302sTech/$folderVar/$folder1/$shPrimaryVar > /dev/null 2>&1
+			if [ ! -f /root/Noah0302sTech/$folderVar/$folder1/$folder2/$shPrimaryVar ]; then
+				mv /root/$shPrimaryVar /root/Noah0302sTech/$folderVar/$folder1/$folder2/$shPrimaryVar > /dev/null 2>&1
 			else
-				echo "Die Datei /root/Noah0302sTech/$folderVar/$folder1/$shPrimaryVar ist bereits vorhanden!"
+				echo "Die Datei /root/Noah0302sTech/$folderVar/$folder1/$folder2/$shPrimaryVar ist bereits vorhanden!"
 			fi
 
 		#--- Secondary Script Variable
 			if [ ! -f /root/Noah0302sTech/$folderVar/$folder1/$shSecondaryVar ]; then
-				mv /root/$shSecondaryVar /root/Noah0302sTech/$folderVar/$folder1/$shSecondaryVar > /dev/null 2>&1
+				mv /root/$shSecondaryVar /root/Noah0302sTech/$folderVar/$folder1/$folder2/$shSecondaryVar > /dev/null 2>&1
 			else
-				echo "Die Datei /root/Noah0302sTech/$folderVar/$folder1/$shSecondaryVar ist bereits vorhanden!"
+				echo "Die Datei /root/Noah0302sTech/$folderVar/$folder1/$folder2/$shSecondaryVar ist bereits vorhanden!"
+			fi
+
+		#--- Cron Variable
+			if [ ! -f /root/Noah0302sTech/$folderVar/$folder1/$cronCheck ]; then
+				mv /root/$cronCheck /root/Noah0302sTech/$folderVar/$folder1/$cronCheck > /dev/null 2>&1
+			else
+				echo "Die Datei /root/Noah0302sTech/$folderVar/$folder1/$cronCheck ist bereits vorhanden!"
 			fi
 	stop_spinner $?
