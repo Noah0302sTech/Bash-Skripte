@@ -129,6 +129,11 @@
 	echo
 	echo
 
+	#--- Create Proxmox-UpdateUpgrade-Installer-Noah0302sTech.sh executable
+		start_spinner "Erstelle Proxmox-UpdateUpgrade-Noah0302sTech.sh..."
+			touch /root/Proxmox-UpdateUpgrade-Noah0302sTech.sh
+		stop_spinner $?
+
 	#--- Echo Commands into Proxmox-UpdateUpgrade-Noah0302sTech.sh
 		echo "#!/bin/bash
 # Made by Noah0302sTech
