@@ -94,7 +94,7 @@
 
 
 	#----- Variables
-		url=
+		url="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Proxmox/Update-Upgrade/Proxmox-UpdateUpgrade-Noah0302sTech.sh"
 		folderVar=Proxmox
 			folder1=Update-Upgrade
 				folder2=Installer
@@ -128,12 +128,14 @@
 	echo
 	echo
 
-	#--- Echo Commands into Proxmox-UpdateUpgrade-Installer-Noah0302sTech.sh
-		wget URL
+	#--- Echo Commands into Proxmox-UpdateUpgrade-Noah0302sTech.sh
+		start_spinner "Downloade Proxmox-UpdateUpgrade-Noah0302sTech.sh..."
+			wget $url
+		stop_spinner $?
 
 	#--- Make Proxmox-UpdateUpgrade-Installer-Noah0302sTech.sh executable
-		start_spinner "Mache Proxmox-UpdateUpgrade-Installer-Noah0302sTech.sh ausführbar..."
-			chmod +x /root/Proxmox-UpdateUpgrade-Installer-Noah0302sTech.sh
+		start_spinner "Mache Proxmox-UpdateUpgrade-Noah0302sTech.sh ausführbar..."
+			chmod +x /root/Proxmox-UpdateUpgrade-Noah0302sTech.sh
 		stop_spinner $?
 	echo
 	echo
@@ -144,7 +146,7 @@
 	start_spinner "Erstelle Crontab..."
 		touch /etc/cron.d/apt-Update-Upgrade-Noah0302sTech
 		echo "#Update && Upgrade for APT by Noah0302sTech
-$cronVariable root /root/Noah0302sTech/$folderVar/Proxmox-UpdateUpgrade-Installer-Noah0302sTech.sh" > /etc/cron.d/apt-Update-Upgrade-Noah0302sTech
+$cronVariable root /root/Noah0302sTech/$folderVar/Proxmox-UpdateUpgrade-Noah0302sTech.sh" > /etc/cron.d/apt-Update-Upgrade-Noah0302sTech
 	stop_spinner $?
 	echo
 	echo
