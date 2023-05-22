@@ -212,7 +212,7 @@ options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf
 
 
 #----- Create Alias
-    if grep -q "^alias DSPtrim=" /root/.bashrc; then
+    if grep -q "^alias ZFSconfig" /root/.bashrc; then
 		echo "Der Alias existiert bereits in /root/.bashrc"
 	else
 		start_spinner "Erstelle Alias..."
@@ -232,7 +232,7 @@ alias ZFSarcsizeused='cat /proc/spl/kstat/zfs/arcstats | grep -w size'
 
 
 #----- Create MOTD
-	if grep -q "^ZFS-Arc-Config" /etc/motd; then
+	if grep -q "^ZFS-Arc Konfigurieren" /etc/motd; then
 		echo "Der MOTD Eintrag exisitert bereits in /etc/motd"
 	else
 		start_spinner "Passe MOTD an..."
