@@ -153,9 +153,9 @@
 
 #----- Create Crontab
 	start_spinner "Erstelle Crontab..."
-		touch /etc/cron.d/apt-Update-Upgrade-Noah0302sTech
+		touch /etc/cron.d/apt-UpdateUpgrade-Noah0302sTech
 		echo "#Update && Upgrade for APT by Noah0302sTech
-$cronVariable root /root/Noah0302sTech/$folderVar/Proxmox-UpdateUpgrade-Noah0302sTech.sh" > /etc/cron.d/apt-Update-Upgrade-Noah0302sTech
+$cronVariable root /root/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashExecuter" > /etc/cron.d/apt-UpdateUpgrade-Noah0302sTech
 	stop_spinner $?
 	echo
 	echo
@@ -168,63 +168,63 @@ $cronVariable root /root/Noah0302sTech/$folderVar/Proxmox-UpdateUpgrade-Noah0302
 
 #----- Create Folders
 	start_spinner "Erstelle Verzeichnisse..."
-		#--- /home/$SUDO_USER/Noah0302sTech
-			if [ ! -d /home/$SUDO_USER/Noah0302sTech ]; then
-				mkdir /home/$SUDO_USER/Noah0302sTech > /dev/null 2>&1
+		#--- /root/Noah0302sTech
+			if [ ! -d /root/Noah0302sTech ]; then
+				mkdir /root/Noah0302sTech > /dev/null 2>&1
 			else
-				echo "Ordner /home/$SUDO_USER/Noah0302sTech bereits vorhanden!"
+				echo "Ordner /root/Noah0302sTech bereits vorhanden!"
 			fi
 
 			#--- Folder
-				if [ ! -d /home/$SUDO_USER/Noah0302sTech/$folderVar ]; then
-					mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar > /dev/null 2>&1
+				if [ ! -d /root/Noah0302sTech/$folderVar ]; then
+					mkdir /root/Noah0302sTech/$folderVar > /dev/null 2>&1
 				else
-					echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar bereits vorhanden!"
+					echo "Ordner /root/Noah0302sTech/$folderVar bereits vorhanden!"
 				fi
 
 			#--- Sub Folder
-				if [ ! -d /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar ]; then
-					mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar > /dev/null 2>&1
+				if [ ! -d /root/Noah0302sTech/$folderVar/$subFolderVar ]; then
+					mkdir /root/Noah0302sTech/$folderVar/$subFolderVar > /dev/null 2>&1
 				else
-					echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar bereits vorhanden!"
+					echo "Ordner /root/Noah0302sTech/$folderVar/$subFolderVar bereits vorhanden!"
 				fi
 
 				#--- Folder1
-					if [ ! -d /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1 ]; then
-						mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1 > /dev/null 2>&1
+					if [ ! -d /root/Noah0302sTech/$folderVar/$subFolderVar/$folder1 ]; then
+						mkdir /root/Noah0302sTech/$folderVar/$subFolderVar/$folder1 > /dev/null 2>&1
 					else
-						echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1 bereits vorhanden!"
+						echo "Ordner /root/Noah0302sTech/$folderVar/$subFolderVar/$folder1 bereits vorhanden!"
 					fi
 
 
 				#--- Folder2
-					if [ ! -d /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2 ]; then
-						mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2 > /dev/null 2>&1
+					if [ ! -d /root/Noah0302sTech/$folderVar/$subFolderVar/$folder2 ]; then
+						mkdir /root/Noah0302sTech/$folderVar/$subFolderVar/$folder2 > /dev/null 2>&1
 					else
-						echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2 bereits vorhanden!"
+						echo "Ordner /root/Noah0302sTech/$folderVar/$subFolderVar/$folder2 bereits vorhanden!"
 					fi
 	stop_spinner $?
 
 #----- Move Bash-Script
 	start_spinner "Verschiebe Bash-Skript..."
 		#--- Bash Installer
-			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$bashInstaller ]; then
-				mv /home/$SUDO_USER/$shPrimaryVar /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$bashInstaller > /dev/null 2>&1
+			if [ ! -f /root/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$bashInstaller ]; then
+				mv /root/$shPrimaryVar /root/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$bashInstaller > /dev/null 2>&1
 			else
-				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$bashInstaller ist bereits vorhanden!"
+				echo "Die Datei /root/Noah0302sTech/$folderVar/$subFolderVar/$bashInstaller ist bereits vorhanden!"
 			fi
 
 		#--- Bash Executer
-			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashExecuter ]; then
-				mv /home/$SUDO_USER/$shSecondaryVar /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashExecuter > /dev/null 2>&1
+			if [ ! -f /root/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashExecuter ]; then
+				mv /root/$shSecondaryVar /root/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashExecuter > /dev/null 2>&1
 			else
-				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashExecuter ist bereits vorhanden!"
+				echo "Die Datei /root/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashExecuter ist bereits vorhanden!"
 			fi
 
 		#--- Cron Check
-			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck ]; then
-				mv /home/$SUDO_USER/$shSecondaryVar /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck > /dev/null 2>&1
+			if [ ! -f /root/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck ]; then
+				mv /root/$shSecondaryVar /root/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck > /dev/null 2>&1
 			else
-				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck ist bereits vorhanden!"
+				echo "Die Datei /root/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck ist bereits vorhanden!"
 			fi
 	stop_spinner $?
