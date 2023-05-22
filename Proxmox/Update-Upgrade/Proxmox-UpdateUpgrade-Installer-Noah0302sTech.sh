@@ -124,23 +124,23 @@
 
 
 #----- Prompt for custom values
-	read -p "Passe den Cron-Job an [default 8 Uhr täglich: $cronVariable]: " input
+	read -p "Passe den Cron-Job an [default 6 Uhr täglich: $cronVariable]: " input
 	cronVariable=${input:-$cronVariable}
 	echo
 	echo
 
 	#--- Download Proxmox-UpdateUpgrade-Noah0302sTech.sh
 		start_spinner "Downloade Proxmox-UpdateUpgrade-Noah0302sTech.sh..."
-			wget $url -y > /dev/null 2>&1
+			wget $url > /dev/null 2>&1
 		stop_spinner $?
 
 	#--- Echo Commands into Proxmox-UpdateUpgrade-Noah0302sTech.sh
 		echo "
 #Debug
-	echo "Proxmox-Updater Cron-Job ran @" >> /root/Noah0302sTech/$folderVar/Cron-Debug.txt
-	date >> /root/Noah0302sTech/$folderVar/Cron-Debug.txt 
-	echo '$upgradeOutput' >> /root/Noah0302sTech/$folderVar/Cron-Debug.txt 
-	echo '' >> /root/Noah0302sTech/$folderVar/Cron-Debug.txt" >> /root/Proxmox-UpdateUpgrade-Noah0302sTech.sh
+	echo "Proxmox-Updater Cron-Job ran @" >> /root/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck
+	date >> /root/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck
+	echo "$upgradeOutput" >> /root/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck
+	echo '' >> /root/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck" >> /root/Proxmox-UpdateUpgrade-Noah0302sTech.sh
 
 	#--- Make Proxmox-UpdateUpgrade-Installer-Noah0302sTech.sh executable
 		start_spinner "Mache Proxmox-UpdateUpgrade-Noah0302sTech.sh ausführbar..."
