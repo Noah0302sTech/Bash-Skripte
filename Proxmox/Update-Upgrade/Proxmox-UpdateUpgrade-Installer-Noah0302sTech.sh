@@ -128,10 +128,18 @@
 	echo
 	echo
 
-	#--- Echo Commands into Proxmox-UpdateUpgrade-Noah0302sTech.sh
+	#--- Download Proxmox-UpdateUpgrade-Noah0302sTech.sh
 		start_spinner "Downloade Proxmox-UpdateUpgrade-Noah0302sTech.sh..."
 			wget $url
 		stop_spinner $?
+
+	#--- Echo Commands into Proxmox-UpdateUpgrade-Noah0302sTech.sh
+		echo "
+#Debug
+	echo "Proxmox-Updater Cron-Job ran @" >> /root/Noah0302sTech/$folderVar/Cron-Debug.txt
+	date >> /root/Noah0302sTech/$folderVar/Cron-Debug.txt 
+	echo '$upgradeOutput' >> /root/Noah0302sTech/$folderVar/Cron-Debug.txt 
+	echo '' >> /root/Noah0302sTech/$folderVar/Cron-Debug.txt" >> /root/Proxmox-UpdateUpgrade-Noah0302sTech.sh
 
 	#--- Make Proxmox-UpdateUpgrade-Installer-Noah0302sTech.sh executable
 		start_spinner "Mache Proxmox-UpdateUpgrade-Noah0302sTech.sh ausführbar..."
