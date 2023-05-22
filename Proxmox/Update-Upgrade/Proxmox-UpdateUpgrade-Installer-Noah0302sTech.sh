@@ -209,21 +209,21 @@ $cronVariable root /root/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashEx
 	start_spinner "Verschiebe Bash-Skript..."
 		#--- Bash Installer
 			if [ ! -f /root/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$bashInstaller ]; then
-				mv /root/$shPrimaryVar /root/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$bashInstaller > /dev/null 2>&1
+				mv /root/$bashInstaller /root/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$bashInstaller > /dev/null 2>&1
 			else
 				echo "Die Datei /root/Noah0302sTech/$folderVar/$subFolderVar/$bashInstaller ist bereits vorhanden!"
 			fi
 
 		#--- Bash Executer
 			if [ ! -f /root/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashExecuter ]; then
-				mv /root/$shSecondaryVar /root/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashExecuter > /dev/null 2>&1
+				mv /root/$bashExecuter /root/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashExecuter > /dev/null 2>&1
 			else
 				echo "Die Datei /root/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashExecuter ist bereits vorhanden!"
 			fi
 
 		#--- Cron Check
 			if [ ! -f /root/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck ]; then
-				mv /root/$shSecondaryVar /root/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck > /dev/null 2>&1
+				mv /root/$cronCheck /root/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck > /dev/null 2>&1
 			else
 				echo "Die Datei /root/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck ist bereits vorhanden!"
 			fi
