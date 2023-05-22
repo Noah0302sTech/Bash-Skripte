@@ -129,13 +129,13 @@
 	echo
 	echo
 
-	#--- Download Proxmox-UpdateUpgrade-Noah0302sTech.sh
-		start_spinner "Downloade Proxmox-UpdateUpgrade-Noah0302sTech.sh..."
-			wget $url > /dev/null 2>&1
-		stop_spinner $?
-
 	#--- Echo Commands into Proxmox-UpdateUpgrade-Noah0302sTech.sh
-		echo "
+		echo "#!/bin/bash
+# Made by Noah0302sTech
+
+#Update
+	"'upgradeOutput=$(apt-get update && apt-get dist-upgrade -y 2>&1)'"
+
 #Debug
 	echo "Proxmox-Updater Cron-Job ran @" >> /root/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck
 	date >> /root/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck
