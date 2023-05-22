@@ -131,7 +131,7 @@
 
 	#--- Download Proxmox-UpdateUpgrade-Noah0302sTech.sh
 		start_spinner "Downloade Proxmox-UpdateUpgrade-Noah0302sTech.sh..."
-			wget $url
+			wget $url -y > /dev/null 2>&1
 		stop_spinner $?
 
 	#--- Echo Commands into Proxmox-UpdateUpgrade-Noah0302sTech.sh
