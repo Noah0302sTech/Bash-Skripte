@@ -117,12 +117,12 @@
 	stop_spinner $?
 
 	#--- Echo Commands into Pihole-Updater.sh
-		echo '#!/bin/bash
+		echo "#!/bin/bash
 
 #Pihole Update
 	echo "Update Pihole..."
 		sleep 1
-		pihole -up
+		"'piholeUpdateOutput=$(pihole -up 2>&1)'"
 	echo
 	echo
 
@@ -131,16 +131,18 @@
 #Pihole Gravity
 	echo "Update Gravity..."
 		sleep 1
-		pihole -g
+		"'piholeGravityOutput=$(pihole -g 2>&1)'"
 	echo
 	echo
 
-
-
-#Cron-Check
-	echo "" >> /home/'$SUDO_USER'/Noah0302sTech/'$folderVar'/'$subFolderVar'/Cron-Check.txt
-	echo "Cron lief am:" >> /home/'$SUDO_USER'/Noah0302sTech/'$folderVar'/'$subFolderVar'/Cron-Check.txt
-	date >> /home/'$SUDO_USER'/Noah0302sTech/'$folderVar'/'$subFolderVar'/Cron-Check.txt' > Pihole-Updater.sh
+#Debug
+	echo "'Pihole-Updater Cron-Job ran @'" >> /root/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt
+	date >> /root/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt
+	echo 'Pihole Update' >> /root/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt
+	echo "'$piholeUpdateOutput'" >> /root/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt
+	echo 'Gravity Update' >> /root/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt
+	echo "'$piholeGravityOutput'" >> /root/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt
+	echo '' >> /root/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt" > /root/Proxmox-UpdateUpgrade-Noah0302sTech.sh
 
 	#--- Make Pihole-Updater.sh executable
 		start_spinner "Mache Pihole-Updater.sh ausführbar..."
