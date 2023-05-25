@@ -150,8 +150,8 @@ options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf
 
 #----- Variables
 	zfsMultiplier=1073741824
-	zfsMinimum=1.0
-	zfsMaximum=8.0
+	zfsMinimum=1
+	zfsMaximum=1
 
 
 
