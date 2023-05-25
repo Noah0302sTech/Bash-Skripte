@@ -92,6 +92,14 @@
 		echo
 		echo
 
+	#----- Variables
+		url="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Proxmox/ZFS-Arc/Proxmox-ZFS-Arc-Config-Noah0302sTech.sh"
+		folderVar=Proxmox
+			subFolderVar=ZFS-Arc
+				folder1=Installer
+					bashInstaller=Proxmox-ZFS-Arc-Installer-Noah0302sTech.sh
+				bashExecuter=Proxmox-ZFS-Arc-Config-Noah0302sTech.sh
+
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
@@ -142,15 +150,15 @@ options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf
 
 #----- Variables
 	zfsMultiplier=1073741824
-	zfsMinimum=1.0
-	zfsMaximum=8.0
+	zfsMinimum=1
+	zfsMaximum=8
 
 
 
 #----- Prompt for custom values
-	read -p "Gib ZFS-Arc-Minimum in GB an [default: $zfsMinimum]: " input
+	read -p "Gib ZFS-Arc-Minimum in GB an [default: $zfsMinimum.0]: " input
 	zfsMinimum=${input:-$zfsMinimum}
-	read -p "Gib ZFS-Arc-Maximum in GB an [default: $zfsMaximum]: " input
+	read -p "Gib ZFS-Arc-Maximum in GB an [default: $zfsMaximum.0]: " input
 	zfsMaximum=${input:-$zfsMinimum}
 	echo
 	echo
@@ -256,7 +264,7 @@ ZFS-Arc-Size benutzt:	ZFSarcsizeused
 
 	#--- Downloade File
 		start_spinner "Downloade Proxmox-ZFS-Arc-Config-Noah0302sTech.sh..."
-			wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Proxmox/ZFS-Arc/Proxmox-ZFS-Arc-Config-Noah0302sTech.sh > /dev/null 2>&1
+			wget $url > /dev/null 2>&1
 		stop_spinner $?
 
 	#--- Make Proxmox-ZFS-Arc-Config-Noah0302sTech.sh executable
@@ -273,49 +281,50 @@ ZFS-Arc-Size benutzt:	ZFSarcsizeused
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
 
-#----- Variables
-	folderVar=Proxmox
-	subFolderVar=ZFS-Arc
-	shPrimaryVar=Proxmox-ZFS-Arc-Installer-Noah0302sTech.sh
-	shSecondaryVar=Proxmox-ZFS-Arc-Config-Noah0302sTech.sh
-
 #----- Create Folders
 	start_spinner "Erstelle Verzeichnisse..."
-		#--- /root/Noah0302sTech
-			if [ ! -d /root/Noah0302sTech ]; then
-				mkdir /root/Noah0302sTech > /dev/null 2>&1
+		#--- /home/$SUDO_USER/Noah0302sTech
+			if [ ! -d /home/$SUDO_USER/Noah0302sTech ]; then
+				mkdir /home/$SUDO_USER/Noah0302sTech > /dev/null 2>&1
 			else
-				echo "Ordner /root/Noah0302sTech bereits vorhanden!"
+				echo "Ordner /home/$SUDO_USER/Noah0302sTech bereits vorhanden!"
 			fi
 
-		#--- Folder Variable
-			if [ ! -d /root/Noah0302sTech/$folderVar ]; then
-				mkdir /root/Noah0302sTech/$folderVar > /dev/null 2>&1
-			else
-				echo "Ordner /root/Noah0302sTech/$folderVar bereits vorhanden!"
-			fi
+			#--- Folder
+				if [ ! -d /home/$SUDO_USER/Noah0302sTech/$folderVar ]; then
+					mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar > /dev/null 2>&1
+				else
+					echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar bereits vorhanden!"
+				fi
 
-		#--- Sub Folder Variable
-			if [ ! -d /root/Noah0302sTech/$folderVar/$subFolderVar ]; then
-				mkdir /root/Noah0302sTech/$folderVar/$subFolderVar > /dev/null 2>&1
-			else
-				echo "Ordner /root/Noah0302sTech/$folderVar/$subFolderVar bereits vorhanden!"
-			fi
+			#--- Sub Folder
+				if [ ! -d /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar ]; then
+					mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar > /dev/null 2>&1
+				else
+					echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar bereits vorhanden!"
+				fi
+
+				#--- Folder1
+					if [ ! -d /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1 ]; then
+						mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1 > /dev/null 2>&1
+					else
+						echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1 bereits vorhanden!"
+					fi
 	stop_spinner $?
 
 #----- Move Bash-Script
 	start_spinner "Verschiebe Bash-Skript..."
-		#--- Primary Script Variable
-			if [ ! -f /root/Noah0302sTech/$folderVar/$subFolderVar/$shPrimaryVar ]; then
-				mv /root/$shPrimaryVar /root/Noah0302sTech/$folderVar/$subFolderVar/$shPrimaryVar > /dev/null 2>&1
+		#--- Bash Installer
+			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$bashInstaller ]; then
+				mv /home/$SUDO_USER/$shPrimaryVar /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$bashInstaller > /dev/null 2>&1
 			else
-				echo "Die Datei /root/Noah0302sTech/$folderVar/$subFolderVar/$shPrimaryVar ist bereits vorhanden!"
+				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$bashInstaller ist bereits vorhanden!"
 			fi
 
-		#--- Secondary Script Variable
-			if [ ! -f /root/Noah0302sTech/$folderVar/$subFolderVar/$shSecondaryVar ]; then
-				mv /root/$shSecondaryVar /root/Noah0302sTech/$folderVar/$subFolderVar/$shSecondaryVar > /dev/null 2>&1
+		#--- Bash Executer
+			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$bashExecuter ]; then
+				mv /home/$SUDO_USER/$shSecondaryVar /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$bashExecuter > /dev/null 2>&1
 			else
-				echo "Die Datei /root/Noah0302sTech/$folderVar/$subFolderVar/$shSecondaryVar ist bereits vorhanden!"
+				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$bashExecuter ist bereits vorhanden!"
 			fi
 	stop_spinner $?

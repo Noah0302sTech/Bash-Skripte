@@ -140,15 +140,15 @@ options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf
 
 #----- Variables
 	zfsMultiplier=1073741824
-	zfsMinimum=1.0
-	zfsMaximum=8.0
+	zfsMinimum=1
+	zfsMaximum=8
 
 
 
 #----- Prompt for custom values
-	read -p "Gib ZFS-Arc-Minimum in GB an [default: $zfsMinimum]: " input
+	read -p "Gib ZFS-Arc-Minimum in GB an [default: $zfsMinimum.0]: " input
 	zfsMinimum=${input:-$zfsMinimum}
-	read -p "Gib ZFS-Arc-Maximum in GB an [default: $zfsMaximum]: " input
+	read -p "Gib ZFS-Arc-Maximum in GB an [default: $zfsMaximum.0]: " input
 	zfsMaximum=${input:-$zfsMinimum}
 	echo
 	echo
