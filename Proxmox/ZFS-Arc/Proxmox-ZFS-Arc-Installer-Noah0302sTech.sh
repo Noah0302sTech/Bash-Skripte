@@ -173,8 +173,8 @@ options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf
 
 
 #----- Ask for Commit
-	echo Minimum: $zfsMinimumRounded
-	echo Macimum: $zfsMaximumRounded
+	echo Minimum: $zfsMinimumCalculated
+	echo Maximum: $zfsMaximumCalculated
 	while true; do
 		read -p "Möchtest du die Änderungen jetzt anwenden? (Y/N)" yn
 		case $yn in
