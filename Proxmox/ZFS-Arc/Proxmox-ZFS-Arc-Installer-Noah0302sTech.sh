@@ -173,6 +173,8 @@ options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf
 
 
 #----- Ask for Commit
+	echo Minimum: $zfsMinimumRounded
+	echo Macimum: $zfsMaximumRounded
 	while true; do
 		read -p "Möchtest du die Änderungen jetzt anwenden? (Y/N)" yn
 		case $yn in
@@ -316,14 +318,14 @@ ZFS-Arc-Size benutzt:	ZFSarcsizeused
 	start_spinner "Verschiebe Bash-Skript..."
 		#--- Bash Installer
 			if [ ! -f /root/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$bashInstaller ]; then
-				mv /root/$shPrimaryVar /root/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$bashInstaller > /dev/null 2>&1
+				mv /root/$bashInstaller /root/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$bashInstaller > /dev/null 2>&1
 			else
 				echo "Die Datei /root/Noah0302sTech/$folderVar/$subFolderVar/$bashInstaller ist bereits vorhanden!"
 			fi
 
 		#--- Bash Executer
 			if [ ! -f /root/Noah0302sTech/$folderVar/$subFolderVar/$bashExecuter ]; then
-				mv /root/$shSecondaryVar /root/Noah0302sTech/$folderVar/$subFolderVar/$bashExecuter > /dev/null 2>&1
+				mv /root/$bashExecuter /root/Noah0302sTech/$folderVar/$subFolderVar/$bashExecuter > /dev/null 2>&1
 			else
 				echo "Die Datei /root/Noah0302sTech/$folderVar/$subFolderVar/$bashExecuter ist bereits vorhanden!"
 			fi
