@@ -2,99 +2,111 @@
 # Made by Noah0302sTech
 # chmod +x MinecraftServer-Install-Debian-Noah0302sTech.sh && sudo bash MinecraftServer-Install-Debian-Noah0302sTech.sh
 
-
-
-#----- Check for administrative privileges
-  if [[ $EUID -ne 0 ]]; then
-    echo "Das Skript muss mit Admin-Privilegien ausgeführt werden! (sudo)"
-    exit 1
-  fi
-
-
-
-#----- Source of Spinner-Function: https://github.com/tlatsas/bash-spinner
-    function _spinner() {
-        # $1 start/stop
-        #
-        # on start: $2 display message
-        # on stop : $2 process exit status
-        #           $3 spinner function pid (supplied from stop_spinner)
-
-        local on_success="DONE"
-        local on_fail="FAIL"
-        local white="\e[1;37m"
-        local green="\e[1;32m"
-        local red="\e[1;31m"
-        local nc="\e[0m"
-
-        case $1 in
-            start)
-                # calculate the column where spinner and status msg will be displayed
-                let column=$(tput cols)-${#2}-8
-                # display message and position the cursor in $column column
-                echo -ne ${2}
-                printf "%${column}s"
-
-                # start spinner
-                i=1
-                sp='\|/-'
-                delay=${SPINNER_DELAY:-0.15}
-
-                while :
-                do
-                    printf "\b${sp:i++%${#sp}:1}"
-                    sleep $delay
-                done
-                ;;
-            stop)
-                if [[ -z ${3} ]]; then
-                    echo "spinner is not running.."
-                    exit 1
-                fi
-
-                kill $3 > /dev/null 2>&1
-
-                # inform the user uppon success or failure
-                echo -en "\b["
-                if [[ $2 -eq 0 ]]; then
-                    echo -en "${green}${on_success}${nc}"
-                else
-                    echo -en "${red}${on_fail}${nc}"
-                fi
-                echo -e "]"
-                ;;
-            *)
-                echo "invalid argument, try {start/stop}"
-                exit 1
-                ;;
-        esac
-    }
-
-    function start_spinner {
-        # $1 : msg to display
-        _spinner "start" "${1}" &
-        # set global spinner pid
-        _sp_pid=$!
-        disown
-    }
-
-    function stop_spinner {
-        # $1 : command exit status
-        _spinner "stop" $1 $_sp_pid
-        unset _sp_pid
-    }
+#---------- Initial Checks & Functions
+	#----- Check for administrative privileges
+		if [[ $EUID -ne 0 ]]; then
+			echo "Das Skript muss mit Admin-Privilegien ausgeführt werden! (sudo)"
+			exit 1
+		fi
 
 
 
+	#----- Source of Spinner-Function: https://github.com/tlatsas/bash-spinner
+			function _spinner() {
+				# $1 start/stop
+				#
+				# on start: $2 display message
+				# on stop : $2 process exit status
+				#           $3 spinner function pid (supplied from stop_spinner)
+
+				local on_success="DONE"
+				local on_fail="FAIL"
+				local white="\e[1;37m"
+				local green="\e[1;32m"
+				local red="\e[1;31m"
+				local nc="\e[0m"
+
+				case $1 in
+					start)
+						# calculate the column where spinner and status msg will be displayed
+						let column=$(tput cols)-${#2}-8
+						# display message and position the cursor in $column column
+						echo -ne ${2}
+						printf "%${column}s"
+
+						# start spinner
+						i=1
+						sp='\|/-'
+						delay=${SPINNER_DELAY:-0.15}
+
+						while :
+						do
+							printf "\b${sp:i++%${#sp}:1}"
+							sleep $delay
+						done
+						;;
+					stop)
+						if [[ -z ${3} ]]; then
+							echo "spinner is not running.."
+							exit 1
+						fi
+
+						kill $3 > /dev/null 2>&1
+
+						# inform the user uppon success or failure
+						echo -en "\b["
+						if [[ $2 -eq 0 ]]; then
+							echo -en "${green}${on_success}${nc}"
+						else
+							echo -en "${red}${on_fail}${nc}"
+						fi
+						echo -e "]"
+						;;
+					*)
+						echo "invalid argument, try {start/stop}"
+						exit 1
+						;;
+				esac
+			}
+
+			function start_spinner {
+				# $1 : msg to display
+				_spinner "start" "${1}" &
+				# set global spinner pid
+				_sp_pid=$!
+				disown
+			}
+
+			function stop_spinner {
+				# $1 : command exit status
+				_spinner "stop" $1 $_sp_pid
+				unset _sp_pid
+			}
 
 
-#----- Refresh Packages
-	start_spinner "Aktualisiere Package-Listen..."
-    	sudo apt update -y > /dev/null 2>&1
-	stop_spinner $?
 
-	echo
-	echo
+	#----- Refresh Packages
+		start_spinner "Aktualisiere Package-Listen..."
+			apt update -y > /dev/null 2>&1
+		stop_spinner $?
+		echo
+		echo
+
+	#----- Variables
+		folderVar=Minecraft
+			folder1=Installer
+				bashInstaller=MinecraftServer-Install-Debian-Noah0302sTech.sh
+			folder2=Minecraft-Server
+				#All Server Files
+			folder3=Commands
+				#Commands
+
+#-----	-----#	#-----	-----#	#-----	-----#
+#-----	-----#	#-----	-----#	#-----	-----#
+#-----	-----#	#-----	-----#	#-----	-----#
+
+
+
 
 
 #----- WGET
@@ -129,12 +141,44 @@
 
 
 #----- Minecraft-Server Dir and Download Jar
-	#--- Create directory
-		start_spinner "Erstelle Minecraft-Directory..."
-			mkdir /home/$SUDO_USER/Minecraft-Server  > /dev/null 2>&1
-			cd /home/$SUDO_USER/Minecraft-Server
+	#--- Create Folders
+		start_spinner "Erstelle Verzeichnisse..."
+			#--- /home/$SUDO_USER/Noah0302sTech
+				if [ ! -d /home/$SUDO_USER/Noah0302sTech ]; then
+					mkdir /home/$SUDO_USER/Noah0302sTech > /dev/null 2>&1
+				else
+					echo "Ordner /home/$SUDO_USER/Noah0302sTech bereits vorhanden!"
+				fi
+
+				#--- Folder
+					if [ ! -d /home/$SUDO_USER/Noah0302sTech/$folderVar ]; then
+						mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar > /dev/null 2>&1
+					else
+						echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar bereits vorhanden!"
+					fi
+
+
+					#--- Folder1
+						if [ ! -d /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder1 ]; then
+							mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder1 > /dev/null 2>&1
+						else
+							echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder1 bereits vorhanden!"
+						fi
+
+					#--- Folder2
+						if [ ! -d /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder2 ]; then
+							mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder2 > /dev/null 2>&1
+						else
+							echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder2 bereits vorhanden!"
+						fi
+
+					#--- Folder3
+						if [ ! -d /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder3 ]; then
+							mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder3 > /dev/null 2>&1
+						else
+							echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder3 bereits vorhanden!"
+						fi
 		stop_spinner $?
-		echo
 
 	#--- Prompt user for the Server.Jar download URL or use the default if left blank
 		read -p "Füge die Download-URL für die Minecraft-Server-Version ein (Leer für 1.19.4): " minecraftserver_url
@@ -145,7 +189,8 @@
 		echo
 
 	#--- Download selcted Minecraft-Server-Version
-		start_spinner "Downloade jerver.jar, bitte warten..."
+		start_spinner "Downloade server.jar, bitte warten..."
+			cd /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder2
 			wget -O "server.jar" "$minecraftserver_url" > /dev/null 2>&1
 		stop_spinner $?
 		echo
@@ -179,20 +224,20 @@
 		
 		#- Summary of Values
 			echo "Gewählte RAM-Settings -Xms"$min"M -Xmx"$max"M"
-			touch /home/$SUDO_USER/Minecraft-Server/MC-Server-Start-Noah0302sTech.sh
+			touch /home/$SUDO_USER/Noah0302sTech/Minecraft/Minecraft-Server/MC-Server-Start-Noah0302sTech.sh
 			echo
 
 		#- Create Skript and make is executable
 			start_spinner "Start.Skript wird erstellt..."
-				echo "java -Xms"$min"M -Xmx"$max"M -jar server.jar nogui" > /home/$SUDO_USER/Minecraft-Server/MC-Server-Start-Noah0302sTech.sh
-				chmod +x /home/$SUDO_USER/Minecraft-Server/MC-Server-Start-Noah0302sTech.sh
+				echo "java -Xms"$min"M -Xmx"$max"M -jar server.jar nogui" > /home/$SUDO_USER/Noah0302sTech/Minecraft/Minecraft-Server/MC-Server-Start-Noah0302sTech.sh
+				chmod +x /home/$SUDO_USER/Noah0302sTech/Minecraft/Minecraft-Server/MC-Server-Start-Noah0302sTech.sh
 			stop_spinner $?
 			echo
 
 	#--- Start Server and accept EULA
 		#- Start Server
 			start_spinner "Server wird das erste Mal gestartet..."
-				/home/$SUDO_USER/Minecraft-Server/MC-Server-Start-Noah0302sTech.sh > /dev/null 2>&1
+				/home/$SUDO_USER/Noah0302sTech/Minecraft/Minecraft-Server/MC-Server-Start-Noah0302sTech.sh > /dev/null 2>&1
 			stop_spinner $?
 			echo
 
@@ -212,7 +257,17 @@
 	echo "Starte Minecraft-Server..."
 	echo "Server mit 'stop' nach Erstellung der Welt beenden"
 	sleep 5
-	screen /home/$SUDO_USER/Minecraft-Server/MC-Server-Start-Noah0302sTech.sh
+	screen /home/$SUDO_USER/Noah0302sTech/Minecraft/Minecraft-Server/MC-Server-Start-Noah0302sTech.sh
+
+	echo
+	echo
+
+
+
+#----- Change permissions of MC-Folders
+	start_spinner "Permissions für Minecraft-Direcories anpassen..."
+		sudo chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/Noah0302sTech/$folderVar > /dev/null 2>&1
+	stop_spinner $?
 
 	echo
 	echo
@@ -233,12 +288,12 @@ ListenFIFO=%t/minecraftserver.stdin"  > /etc/systemd/system/minecraftserver.sock
 	#--- Create Service
 		sudo touch /etc/systemd/system/minecraftserver.service
 		sudo echo "[Unit]
-Description=Minecraft Server
+Description=Minecraft Server - Noah0302sTech
 
 [Service]
 Type=simple
-WorkingDirectory=/home/$SUDO_USER/Minecraft-Server
-ExecStart=java -Xms"$min"M -Xmx"$max"M -jar /home/$SUDO_USER/Minecraft-Server/server.jar nogui
+WorkingDirectory=/home/$SUDO_USER/Noah0302sTech/Minecraft/Minecraft-Server
+ExecStart=java -Xms"$min"M -Xmx"$max"M -jar /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder2/server.jar nogui
 User=$SUDO_USER
 Restart=on-failure
 Sockets=minecraftserver.socket
@@ -264,33 +319,33 @@ WantedBy=multi-user.target"  > /etc/systemd/system/minecraftserver.service
 
 #----- Create Minecraft-Server-Commands Directory
 	start_spinner "Minecaft-Command-Verzeichnis wird erstellt..."
-		mkdir /home/$SUDO_USER/Minecraft-Server-Commands > /dev/null 2>&1
+		mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder3/ > /dev/null 2>&1
 	stop_spinner $?
 
 	#--- Move Installer File
-				mv MinecraftServer-Install-Debian-Noah0302sTech.sh /home/$SUDO_USER/Minecraft-Server/ > /dev/null 2>&1
+				mv MinecraftServer-Install-Debian-Noah0302sTech.sh /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder1 > /dev/null 2>&1
 
 	#--- Downloading Command-Skripts
 		start_spinner "Server-Command Skripte werden heruntergeladen..."
 			#- Start Minecraft Server
-				sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Minecraft/Minecraft%20Commands/MC-Server-Start-Noah0302sTech.sh -P /home/$SUDO_USER/Minecraft-Server-Commands > /dev/null 2>&1
-				sudo chmod +x /home/$SUDO_USER/Minecraft-Server-Commands/MC-Server-Start-Noah0302sTech.sh > /dev/null 2>&1
+				sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Minecraft/Minecraft%20Commands/MC-Server-Start-Noah0302sTech.sh -P /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder3 > /dev/null 2>&1
+				sudo chmod +x /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder3/MC-Server-Start-Noah0302sTech.sh > /dev/null 2>&1
 
 			#- Stop Minecraft Server
-				sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Minecraft/Minecraft%20Commands/MC-Server-Stop-Noah0302sTech.sh -P /home/$SUDO_USER/Minecraft-Server-Commands > /dev/null 2>&1
-				sudo chmod +x /home/$SUDO_USER/Minecraft-Server-Commands/MC-Server-Stop-Noah0302sTech.sh > /dev/null 2>&1
+				sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Minecraft/Minecraft%20Commands/MC-Server-Stop-Noah0302sTech.sh -P /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder3 > /dev/null 2>&1
+				sudo chmod +x /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder3/MC-Server-Stop-Noah0302sTech.sh > /dev/null 2>&1
 
 			#- Restart Minecraft Server
-				sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Minecraft/Minecraft%20Commands/MC-Server-Restart-Noah0302sTech.sh -P /home/$SUDO_USER/Minecraft-Server-Commands > /dev/null 2>&1
-				sudo chmod +x /home/$SUDO_USER/Minecraft-Server-Commands/MC-Server-Restart-Noah0302sTech.sh > /dev/null 2>&1
+				sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Minecraft/Minecraft%20Commands/MC-Server-Restart-Noah0302sTech.sh -P /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder3 > /dev/null 2>&1
+				sudo chmod +x /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder3/MC-Server-Restart-Noah0302sTech.sh > /dev/null 2>&1
 
 			#- Command Minecraft Server
-				sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Minecraft/Minecraft%20Commands/MC-Server-Command-Noah0302sTech.sh -P /home/$SUDO_USER/Minecraft-Server-Commands > /dev/null 2>&1
-				sudo chmod +x /home/$SUDO_USER/Minecraft-Server-Commands/MC-Server-Command-Noah0302sTech.sh > /dev/null 2>&1
+				sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Minecraft/Minecraft%20Commands/MC-Server-Command-Noah0302sTech.sh -P /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder3 > /dev/null 2>&1
+				sudo chmod +x /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder3/MC-Server-Command-Noah0302sTech.sh > /dev/null 2>&1
 
 			#- Command Host Restart 
-				sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Minecraft/Minecraft%20Commands/MC-Host-Restart-Noah0302sTech.sh -P /home/$SUDO_USER/Minecraft-Server-Commands > /dev/null 2>&1
-				sudo chmod +x /home/$SUDO_USER/Minecraft-Server-Commands/MC-Host-Restart-Noah0302sTech.sh > /dev/null 2>&1
+				sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Minecraft/Minecraft%20Commands/MC-Host-Restart-Noah0302sTech.sh -P /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder3 > /dev/null 2>&1
+				sudo chmod +x /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder3/MC-Host-Restart-Noah0302sTech.sh > /dev/null 2>&1
 
 		stop_spinner $?
 	
@@ -302,23 +357,12 @@ WantedBy=multi-user.target"  > /etc/systemd/system/minecraftserver.service
 #----- Create Bash-Alias
 	echo "
 #Minecraft-Server Commands
-alias reboot='sudo bash /home/$SUDO_USER/Minecraft-Server-Commands/MC-Host-Restart-Noah0302sTech.sh'
+alias reboot='sudo bash /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder3/MC-Host-Restart-Noah0302sTech.sh'
 alias mcstatus='sudo systemctl status minecraftserver.service'
-alias mcrestart='sudo bash /home/$SUDO_USER/Minecraft-Server-Commands/MC-Server-Restart-Noah0302sTech.sh'
-alias mcstart='sudo bash /home/$SUDO_USER/Minecraft-Server-Commands/MC-Server-Start-Noah0302sTech.sh'
-alias mcstop='sudo bash /home/$SUDO_USER/Minecraft-Server-Commands/MC-Server-Stop-Noah0302sTech.sh'
-alias mccommand='sudo bash /home/$SUDO_USER/Minecraft-Server-Commands/MC-Server-Command-Noah0302sTech.sh'"  >> /home/$SUDO_USER/.bashrc
-
-
-
-#----- Change permissions of MC-Folders
-	start_spinner "Permissions für Minecraft-Direcories anpassen..."
-		sudo chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/Minecraft-Server > /dev/null 2>&1
-		sudo chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/Minecraft-Server-Commands > /dev/null 2>&1
-	stop_spinner $?
-
-	echo
-	echo
+alias mcrestart='sudo bash /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder3/MC-Server-Restart-Noah0302sTech.sh'
+alias mcstart='sudo bash /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder3/MC-Server-Start-Noah0302sTech.sh'
+alias mcstop='sudo bash /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder3/MC-Server-Stop-Noah0302sTech.sh'
+alias mccommand='sudo bash /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder3/MC-Server-Command-Noah0302sTech.sh'"  >> /home/$SUDO_USER/.bashrc
 
 
 
@@ -361,3 +405,21 @@ reboot
 	echo
 	echo
 	printf "\xE2\x9C\x94 \n"
+
+
+
+
+
+#-----	-----#	#-----	-----#	#-----	-----#
+#-----	-----#	#-----	-----#	#-----	-----#
+#-----	-----#	#-----	-----#	#-----	-----#
+
+#----- Move Bash-Script
+	start_spinner "Verschiebe Bash-Skript..."
+		#--- Bash Installer
+			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder1/$bashInstaller ]; then
+				mv /home/$SUDO_USER/$bashInstaller /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder1/$bashInstaller > /dev/null 2>&1
+			else
+				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$bashInstaller ist bereits vorhanden!"
+			fi
+	stop_spinner $?
