@@ -317,11 +317,6 @@ WantedBy=multi-user.target"  > /etc/systemd/system/minecraftserver.service
 
 
 
-#----- Create Minecraft-Server-Commands Directory
-	start_spinner "Minecaft-Command-Verzeichnis wird erstellt..."
-		mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder3/ > /dev/null 2>&1
-	stop_spinner $?
-
 	#--- Move Installer File
 				mv MinecraftServer-Install-Debian-Noah0302sTech.sh /home/$SUDO_USER/Noah0302sTech/$folderVar/$folder1 > /dev/null 2>&1
 
