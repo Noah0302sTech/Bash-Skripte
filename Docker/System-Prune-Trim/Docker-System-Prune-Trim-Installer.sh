@@ -220,7 +220,7 @@ DSPtrim
 			#--- Create Cron-Job
 				start_spinner "Erstelle Crontab..."
 					touch /etc/cron.d/docker-System-Prune-Noah0302sTech
-					echo "#Daily Update for Pihole by Noah0302sTech
+					echo "#Docker System Prune & Trim by Noah0302sTech
 $cronVariable root /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Docker-System-Prune-Trim.sh" > /etc/cron.d/docker-System-Prune-Noah0302sTech
 				stop_spinner $?
 
