@@ -139,7 +139,7 @@
 
 #----- Trim
 	start_spinner "Trimme Filesystem..."
-		fstrimOutput=$(fstrim / -v 2>&1)
+		fstrimOutput=$(/sbin/fstrim -av 2>&1)
 	stop_spinner $?
 	echo $fstrimOutput
 	echo
@@ -157,6 +157,7 @@
 
 #Alias Docker-System-Prune and Trim
 alias DSPtrim='sudo bash /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Docker-System-Prune-Trim.sh'
+alias ccDocker='cat /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Cron-Check.txt'
 "  >> /home/$SUDO_USER/.bashrc
 		stop_spinner $?
 	fi
@@ -172,7 +173,9 @@ alias DSPtrim='sudo bash /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Dock
 		start_spinner "Passe MOTD an..."
 			echo "
 Docker-System-Prune + Trim:
-DSPtrim
+	DSPtrim
+Cron-Check Docker:
+	ccDocker
 " >> /etc/motd
 		stop_spinner $?
 	fi

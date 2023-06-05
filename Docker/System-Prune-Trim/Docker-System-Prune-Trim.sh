@@ -143,7 +143,7 @@
 
 #----- Trim
 	start_spinner "Trimme Filesystem..."
-		fstrimOutput=$(fstrim / -v 2>&1)
+		fstrimOutput=$(/sbin/fstrim -av 2>&1)
 	stop_spinner $?
 	echo $fstrimOutput
 	echo
