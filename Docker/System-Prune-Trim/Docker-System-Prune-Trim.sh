@@ -116,8 +116,8 @@
 
 
 #----- Variables
-	dockerPruneOutput="Docker-System-Prune did not run!"
-	fstrimOutput="FS-Trim did not run!"
+	dockerPruneOutput="Docker-System-Prune did not run! Laufen alle Docker-Container?"
+	fstrimOutput="FS-Trim did not run! Unterstützt dein Filesystem den Trim-Command?"
 
 
 
