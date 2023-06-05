@@ -1,5 +1,5 @@
 #!/bin/bash
-# Made by Noah0302sTech!
+# Made by Noah0302sTech
 # chmod +x Docker-System-Prune-Trim.sh && sudo bash Docker-System-Prune-Trim.sh
 
 #---------- Initial Checks & Functions
