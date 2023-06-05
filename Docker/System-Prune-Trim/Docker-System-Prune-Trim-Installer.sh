@@ -102,51 +102,6 @@
 
 
 
-#----- APT
-	#--- Update
-		start_spinner "Update Package-Listen..."
-			apt update -y > /dev/null 2>&1
-		stop_spinner $?
-
-	#--- Autoremove
-		start_spinner "Autoremove Packages..."
-			apt autoremove -y > /dev/null 2>&1
-		stop_spinner $?
-	echo
-	echo
-
-
-
-#----- Docker
-	if command -v docker &> /dev/null
-	then
-		if [[ -z "$(docker ps -q -f status=exited)" ]]; then
-			start_spinner "Alle Docker Container laufen, führe Docker-System-Prune aus..."
-				dockerPruneOutput=$(docker system prune -f 2>&1)
-			stop_spinner $?
-			echo $dockerPruneOutput
-		else
-			echo "Es wurden gestoppte Container gefunden:"
-			docker ps -f "status=exited"
-		fi	
-	else
-		echo "Docker ist nicht installiert, überspringe Docker System Prune"
-	fi
-	echo
-	echo
-
-
-
-#----- Trim
-	start_spinner "Trimme Filesystem..."
-		fstrimOutput=$(/sbin/fstrim -av 2>&1)
-	stop_spinner $?
-	echo $fstrimOutput
-	echo
-	echo
-
-
-
 #----- Create Alias
     if grep -q "^alias DSPtrim=" /home/$SUDO_USER/.bashrc; then
 		echo "Der Alias existiert bereits in /home/$SUDO_USER/.bashrc"
@@ -242,6 +197,47 @@ $cronVariable root /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Docker-Sys
 		else
 			echo "Cron-Job wurde nicht erstellt."
 		fi
+
+
+
+#----- Ask for Execute
+	while IFS= read -n1 -r -p "Möchtest du DSPtrim jetzt ausführen? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+	case $REPLY in
+		y)  echo
+			#--- Docker
+				if command -v docker &> /dev/null
+				then
+					if [[ -z "$(docker ps -q -f status=exited)" ]]; then
+						start_spinner "Alle Docker Container laufen, führe Docker-System-Prune aus..."
+							dockerPruneOutput=$(docker system prune -f 2>&1)
+						stop_spinner $?
+						echo $dockerPruneOutput
+					else
+						echo "Es wurden gestoppte Container gefunden:"
+						docker ps -f "status=exited"
+					fi	
+				else
+					echo "Docker ist nicht installiert, überspringe Docker System Prune"
+				fi
+				echo
+				echo
+
+			#--- Trim
+				start_spinner "Trimme Filesystem..."
+					fstrimOutput=$(/sbin/fstrim -av 2>&1)
+				stop_spinner $?
+				echo $fstrimOutput
+				echo
+				echo
+
+			break;;
+		n)  echo
+			
+			break;;
+		*)  echo
+			echo "Antoworte mit y oder n";;
+	esac
+	done
 
 
 
