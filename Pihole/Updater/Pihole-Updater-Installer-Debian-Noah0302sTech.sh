@@ -176,7 +176,7 @@ $cronVariable root /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/Pihol
 
 
 #----- Create Alias
-    if grep -q "^alias piholeCC=" /home/$SUDO_USER/.bashrc; then
+    if grep -q "^alias ccPiholeUpdater=" /home/$SUDO_USER/.bashrc; then
 		echo "Der Alias existiert bereits in /home/$SUDO_USER/.bashrc"
 	else
 		start_spinner "Erstelle Alias..."
@@ -184,7 +184,7 @@ $cronVariable root /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/Pihol
 
 
 #Init
-alias piholeCC='cat /home/$SUDO_USER/Noah0302sTech/Pihole/Updater/Cron-Check.txt'
+alias ccPiholeUpdater='cat /home/$SUDO_USER/Noah0302sTech/Pihole/Updater/Cron-Check.txt'
 "  >> /home/$SUDO_USER/.bashrc
 		stop_spinner $?
 	fi
@@ -199,8 +199,8 @@ alias piholeCC='cat /home/$SUDO_USER/Noah0302sTech/Pihole/Updater/Cron-Check.txt
 	else
 		start_spinner "Passe MOTD an..."
 			echo "
-Init
-Check Pihole MOTD:	piholeCC
+Pihole
+Cron-Check Pihole:	ccPiholeUpdater
 " >> /etc/motd
 		stop_spinner $?
 	fi
