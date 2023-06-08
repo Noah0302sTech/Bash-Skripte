@@ -194,7 +194,7 @@ alias ccPiholeUpdater='cat /home/$SUDO_USER/Noah0302sTech/Pihole/Updater/Cron-Ch
 
 
 #----- Create MOTD
-	if grep -q "^Init" /etc/motd; then
+	if grep -q "^Pihole" /etc/motd; then
 		echo "Der MOTD Eintrag exisitert bereits in /etc/motd"
 	else
 		start_spinner "Passe MOTD an..."
