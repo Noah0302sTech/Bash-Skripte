@@ -1,9 +1,10 @@
 #!/bin/bash
-# Made by Noah0302sTech
-# chmod +x Omada-Install-Deb11-Noah0302sTech.sh && sudo bash Omada-Install-Deb11-Noah0302sTech.sh
+#	Made by Noah0302sTech
+#	chmod +x Omada-Install-Deb11-Noah0302sTech.sh && sudo bash Omada-Install-Deb11-Noah0302sTech.sh
 
 #TODO:	Check downloaded File, if its a .deb
 #		Add Folder Structure
+#		Add Java-Updater
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
@@ -200,7 +201,7 @@
 	#--- Prompt user for the Omada download URL or use the default if left blank
 		read -t 10 -p "Füge die Download-URL für Omada_SDN_Controller_vX.X.X_Linux_x64.deb hier ein (Leer oder warte 10 Sekunden für v5.9.9): " omada_url
 		if [ -z "$omada_url" ]; then
-		omada_url="https://static.tp-link.com/upload/software/2023/202302/20230227/Omada_SDN_Controller_v5.9.9_Linux_x64.deb"
+			omada_url="https://static.tp-link.com/upload/software/2023/202303/20230321/Omada_SDN_Controller_v5.9.31_Linux_x64.deb"
 		fi
 		echo "Gewählte Version: $omada_url"
 
