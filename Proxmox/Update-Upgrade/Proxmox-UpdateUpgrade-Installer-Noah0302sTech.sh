@@ -167,6 +167,40 @@ $cronVariable root /root/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashEx
 
 
 
+#----- Create Alias
+    if grep -q "^alias ccAPT=" /root/.bashrc; then
+		echo "Der Alias existiert bereits in /root/.bashrc"
+	else
+		start_spinner "Erstelle Alias..."
+			echo "
+
+
+#Init
+alias ccAPT='cat /root/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck'
+"  >> /root/.bashrc
+		stop_spinner $?
+	fi
+	echo
+	echo
+
+
+
+#----- Create MOTD
+	if grep -q "^Proxmox" /etc/motd; then
+		echo "Der MOTD Eintrag exisitert bereits in /etc/motd"
+	else
+		start_spinner "Passe MOTD an..."
+			echo "
+Proxmox
+Cron-Check APT:	ccAPT
+" >> /etc/motd
+		stop_spinner $?
+	fi
+	echo
+	echo
+
+
+
 
 
 #-----	-----#	#-----	-----#	#-----	-----#
