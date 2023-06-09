@@ -1,6 +1,6 @@
 #!/bin/bash
-# Made by Noah0302sTech
-# chmod +x Pihole-Full-Installer-Debian-Noah0302sTech.sh && sudo bash Pihole-Full-Installer-Debian-Noah0302sTech.sh
+#	Made by Noah0302sTech
+#	chmod +x Pihole-Full-Installer-Debian-Noah0302sTech.sh && sudo bash Pihole-Full-Installer-Debian-Noah0302sTech.sh
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
@@ -117,6 +117,7 @@
 		curl -sSL https://install.pi-hole.net | bash
 
 	#--- Change Pihole Password
+		echo
 		echo "Gib ein neuen Pihole-Passwort ein:"
 		pihole -a -p
 	echo
@@ -128,13 +129,23 @@
 
 #----- Install Pihole-Updater
 	echo "Pihole-Updater....."
-	sleep 3
 
-	#--- Curl Pihole-Updater
-		start_spinner "Installiere Pihole-Updater..."
-			wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Pihole/Updater/Pihole-Updater-Installer-Debian-Noah0302sTech.sh > /dev/null 2>&1
-		stop_spinner $?
-		bash ./Pihole-Updater-Installer-Debian-Noah0302sTech.sh
+	while IFS= read -n1 -r -p "Möchtest du Pihole-Updater installieren? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+	case $REPLY in
+		y)  #--- Curl Pihole-Updater
+				start_spinner "Installiere Pihole-Updater..."
+					wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Pihole/Updater/Pihole-Updater-Installer-Debian-Noah0302sTech.sh > /dev/null 2>&1
+				stop_spinner $?
+				bash ./Pihole-Updater-Installer-Debian-Noah0302sTech.sh
+
+			break;;
+		n)  echo
+			
+			break;;
+		*)  echo
+			echo "Antoworte mit y oder n";;
+	esac
+	done
 	echo
 	echo
 	echo
@@ -145,13 +156,23 @@
 
 #----- Install Unbound
 	echo "Unbound....."
-	sleep 3
 
-	#--- Curl Unbound-Installer
-		start_spinner "Installiere Unbound..."
-			wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Pihole/Unbound/Unbound-Installer-Noah0302sTech.sh > /dev/null 2>&1
-		stop_spinner $?
-		bash ./Unbound-Installer-Noah0302sTech.sh
+	while IFS= read -n1 -r -p "Möchtest du Unbound installieren? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+	case $REPLY in
+		y)  #--- Curl Unbound-Installer
+				start_spinner "Installiere Unbound..."
+					wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Pihole/Unbound/Unbound-Installer-Noah0302sTech.sh > /dev/null 2>&1
+				stop_spinner $?
+				bash ./Unbound-Installer-Noah0302sTech.sh
+
+			break;;
+		n)  echo
+			
+			break;;
+		*)  echo
+			echo "Antoworte mit y oder n";;
+	esac
+	done
 	echo
 	echo
 	echo
@@ -162,13 +183,23 @@
 
 #----- Install KeepAliveD
 	echo "KeepAliveD....."
-	sleep 3
 
-	#--- Curl Unbound-Installer
-		start_spinner "Installiere KeepAliveD..."
-			wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Pihole/KeepAliveD/KeepAliveD-Installer-Noah0302sTech.sh > /dev/null 2>&1
-		stop_spinner $?
-		bash ./KeepAliveD-Installer-Noah0302sTech.sh
+	while IFS= read -n1 -r -p "Möchtest du KeepAliveD installieren? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+	case $REPLY in
+		y)  #--- Curl Unbound-Installer
+				start_spinner "Installiere KeepAliveD..."
+					wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Pihole/KeepAliveD/KeepAliveD-Installer-Noah0302sTech.sh > /dev/null 2>&1
+				stop_spinner $?
+				bash ./KeepAliveD-Installer-Noah0302sTech.sh
+
+			break;;
+		n)  echo
+			
+			break;;
+		*)  echo
+			echo "Antoworte mit y oder n";;
+	esac
+	done
 	echo
 	echo
 	echo
