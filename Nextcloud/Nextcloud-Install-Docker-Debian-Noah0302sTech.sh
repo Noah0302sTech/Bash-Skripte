@@ -1,6 +1,6 @@
 #!/bin/bash
 #	Made by Noah0302sTech
-#	chmod +x Nextcloud-Install-Docker-Debian-Noah0302sTech.sh && sudo bash Nextcloud-Install-Docker-Debian-Noah0302sTech.sh
+#	chmod +x Nextcloud-Install-Docker-Debian-Noah0302sTech.sh && bash Nextcloud-Install-Docker-Debian-Noah0302sTech.sh
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
@@ -100,24 +100,24 @@
 #----- Docker
 	#--- Install Docker
 		start_spinner "Installiere docker.io..."
-		sudo apt install -y docker.io > /dev/null 2>&1
+		apt install -y docker.io > /dev/null 2>&1
 		stop_spinner $?
 		echo
 
 	#--- Install Docker Compose
 		start_spinner "Installiere Docker-Compose..."
-		sudo apt install -y docker-compose > /dev/null 2>&1
+		apt install -y docker-compose > /dev/null 2>&1
 		stop_spinner $?
 		echo
 
 	#--- Add User to Docker-Group
 		start_spinner "Füge $SUDO_USER zu Docker-Gruppe hinzu..."
-		sudo usermod -aG docker $SUDO_USER > /dev/null 2>&1
+		usermod -aG docker $SUDO_USER > /dev/null 2>&1
 		stop_spinner $?
 
 	#--- Install Apparmor (Only needed on specific Systems like Hetzner VServer)
 		start_spinner "Installiere Apparmor, falls benötigt..."
-		sudo apt install apparmor -y > /dev/null 2>&1
+		apt install apparmor -y > /dev/null 2>&1
 		stop_spinner $?
 
 	echo
@@ -127,7 +127,7 @@
 
 #----- Create a folder for Nextcloud
 	start_spinner "Erstelle Nextcloud-Ordner..."
-		sudo mkdir /home/$SUDO_USER/nextcloud
+		mkdir /home/$SUDO_USER/nextcloud
 		if [ -d /home/$SUDO_USER/nextcloud ]; then
 		cd /home/$SUDO_USER/nextcloud
 		else
@@ -159,7 +159,7 @@
 
 #----- Create a Docker Compose file
 	start_spinner "Erstelle Docker-Compose-File..."
-		sudo touch docker-compose.yml
+		touch docker-compose.yml
 		echo "version: '3'
 services:
   db:
@@ -198,7 +198,7 @@ volumes:
 	start_spinner "Starte Nextcloud-Server..."
 		docker-compose up -d > /dev/null 2>&1
 	stop_spinner $?
-	sudo docker ps
+	docker ps
 
 	echo
 	echo
@@ -208,12 +208,12 @@ volumes:
 #----- Configure the Nextcloud Server
 	start_spinner "Erstelle Nextcloud-Config-Skript..."
 		cd /home/$SUDO_USER
-		sudo apt install wget -y > /dev/null 2>&1
-		sudo wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Nextcloud/NextcloudConfig-Docker-Noah0302sTech.sh > /dev/null 2>&1
-		sudo chmod +x NextcloudConfig-Docker-Noah0302sTech.sh
+		apt install wget -y > /dev/null 2>&1
+		wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Nextcloud/Nextcloud-Config-Docker-Noah0302sTech.sh > /dev/null 2>&1
+		chmod +x NextcloudConfig-Docker-Noah0302sTech.sh
 	stop_spinner $?
 	echo "Um NACH DER INSTALLATION die Nextcloud-Config anzupassen, starte das Nextcloud-Config-Skript mit:"
-	echo "sudo ./NextcloudConfig-Docker-Noah0302sTech.sh"
+	echo "sudo bash NextcloudConfig-Docker-Noah0302sTech.sh"
 
 	echo
 	echo
