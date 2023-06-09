@@ -138,10 +138,10 @@
 #Debug
 	echo "'Pihole-Updater Cron-Job ran @'" >> /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt
 	date >> /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt
-	echo 'Pihole Update' >> /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt
-	echo "'$piholeUpdateOutput'" >> /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt
-	echo 'Gravity Update' >> /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt
-	echo "'$piholeGravityOutput'" >> /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt
+	echo "Update Pihole..." >> /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt
+		echo "'$piholeUpdateOutput'" >> /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt
+	echo "Update Gravity..." >> /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt
+		echo "'$piholeGravityOutput'" >> /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt
 	echo '' >> /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt" > /home/$SUDO_USER/$shSecondaryVar
 
 	#--- Make Pihole-Updater.sh executable
@@ -167,7 +167,8 @@
 	
 	#--- Adjust Schedule
 		start_spinner "Passe Crontab an..."
-			echo "#Daily Update for Pihole by Noah0302sTech
+			echo "#Update for Pihole by Noah0302sTech
+"'PATH="/usr/local/bin:/usr/bin:/bin"'"
 $cronVariable root /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/Pihole-Updater.sh" > /etc/cron.d/pihole-updater-Noah0302sTech
 		stop_spinner $?
 	echo
