@@ -2,4 +2,4 @@
 
 Ansammlung meiner Bash Skripte, die gerade in Bearbeitung sind!
 
-Viele Skripte werden noch nicht funktionieren!
+Achtung, die Skripte werden ggf. noch nicht funktionieren!
