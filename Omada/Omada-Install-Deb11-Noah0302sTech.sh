@@ -224,3 +224,7 @@
 
 	echo
 	echo
+
+
+
+#----- Install Java-Updater

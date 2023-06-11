@@ -1,0 +1,201 @@
+#!/bin/bash
+#	Made by Noah0302sTech
+#	chmod +x Java-Updater-Installer-Debian-Noah0302sTech.sh && sudo bash Java-Updater-Installer-Debian-Noah0302sTech.sh
+
+#---------- Initial Checks & Functions
+	#----- Check for administrative privileges
+		if [[ $EUID -ne 0 ]]; then
+			echo "Das Skript muss mit Admin-Privilegien ausgeführt werden! (sudo)"
+			exit 1
+		fi
+
+
+
+	#----- Source of Spinner-Function: https://github.com/tlatsas/bash-spinner
+			function _spinner() {
+				# $1 start/stop
+				#
+				# on start: $2 display message
+				# on stop : $2 process exit status
+				#           $3 spinner function pid (supplied from stop_spinner)
+
+				local on_success="DONE"
+				local on_fail="FAIL"
+				local white="\e[1;37m"
+				local green="\e[1;32m"
+				local red="\e[1;31m"
+				local nc="\e[0m"
+
+				case $1 in
+					start)
+						# calculate the column where spinner and status msg will be displayed
+						let column=$(tput cols)-${#2}-8
+						# display message and position the cursor in $column column
+						echo -ne ${2}
+						printf "%${column}s"
+
+						# start spinner
+						i=1
+						sp='\|/-'
+						delay=${SPINNER_DELAY:-0.15}
+
+						while :
+						do
+							printf "\b${sp:i++%${#sp}:1}"
+							sleep $delay
+						done
+						;;
+					stop)
+						if [[ -z ${3} ]]; then
+							echo "spinner is not running.."
+							exit 1
+						fi
+
+						kill $3 > /dev/null 2>&1
+
+						# inform the user uppon success or failure
+						echo -en "\b["
+						if [[ $2 -eq 0 ]]; then
+							echo -en "${green}${on_success}${nc}"
+						else
+							echo -en "${red}${on_fail}${nc}"
+						fi
+						echo -e "]"
+						;;
+					*)
+						echo "invalid argument, try {start/stop}"
+						exit 1
+						;;
+				esac
+			}
+
+			function start_spinner {
+				# $1 : msg to display
+				_spinner "start" "${1}" &
+				# set global spinner pid
+				_sp_pid=$!
+				disown
+			}
+
+			function stop_spinner {
+				# $1 : command exit status
+				_spinner "stop" $1 $_sp_pid
+				unset _sp_pid
+			}
+
+
+
+	#----- Refresh Packages
+		start_spinner "Aktualisiere Package-Listen..."
+			apt update -y > /dev/null 2>&1
+		stop_spinner $?
+		echo
+		echo
+
+	#----- Variables
+		folderVar=Omada
+			subFolderVar=Updater
+				folder1=Updater-Installer
+					bashInstaller=Java-Updater-Installer-Debian-Noah0302sTech.sh
+				folder2=Updater
+					bashExecuter=Java-Updater-Debian-Noah0302sTech.sh
+				cronCheck=Cron-Check.txt
+		bashInstallerPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$bashInstaller"
+		bashExecuterPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashExecuter"
+		cronCheckPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck"
+
+#-----	-----#	#-----	-----#	#-----	-----#
+#-----	-----#	#-----	-----#	#-----	-----#
+#-----	-----#	#-----	-----#	#-----	-----#
+
+
+
+
+#----- Create Java Update-Script
+	start_spinner "Erstelle Updater-Skript..."
+		touch /home/$SUDO_USER/$bashExecuter
+		touch /home/$SUDO_USER/$cronCheck
+		echo "#Init" > /home/$SUDO_USER/$cronCheck
+		echo "'#!/bin/bash
+#	Made by Noah0302sTech
+
+#Update Java
+	echo "deb http://deb.debian.org/debian/ sid main" | sudo tee -a /etc/apt/sources.list
+	apt update
+	DEBIAN_FRONTEND=noninteractive apt install openjdk-8-jre-headless -y
+	sed -i "\%^deb http://deb.debian.org/debian/ sid main%d" /etc/apt/sources.list
+
+#Debug
+	echo "'Java-Updater Cron-Job ran @'" >> $cronCheckPath
+	date >> $cronCheckPath
+	echo "Update Java..." >> $cronCheckPath
+		echo "'$JavaUpdateOutput'" >> $cronCheckPath
+	echo "Update Gravity..." >> $cronCheckPath
+		echo "'$JavaGravityOutput'" >> $cronCheckPath
+	echo '' >> $cronCheckPath" > /home/$SUDO_USER/$bashExecuter
+	stop_spinner $?
+
+	#--- Make Java-Updater.sh executable
+        start_spinner "Mache Java-Updater.sh ausführbar..."
+            chmod +x /home/$SUDO_USER/$bashExecuter
+        stop_spinner $?
+    
+    echo
+    echo
+
+
+
+#----- Create Crontab
+	start_spinner "Erstelle Crontab..."
+		touch /etc/cron.d/java-Updater-Noah0302sTech
+	stop_spinner $?
+
+	#--- Variables
+		cronVariable="0 0 * * 1"
+
+		#- Prompt for custom values
+			read -p "Passe den Cron-Job an [default Montags 0 Uhr: $cronVariable]: " input
+			cronVariable=${input:-$cronVariable}
+	
+	#--- Adjust Schedule
+		start_spinner "Passe Crontab an..."
+			echo "#Update for Java by Noah0302sTech
+"'PATH="/usr/local/bin:/usr/bin:/bin"'"
+$cronVariable root $bashExecuterPath" > /etc/cron.d/java-Updater-Noah0302sTech
+		stop_spinner $?
+	echo
+	echo
+
+
+
+#----- Create Alias
+    if grep -q "^alias ccJavaUpdater=" /home/$SUDO_USER/.bashrc; then
+		echo "Der Alias existiert bereits in /home/$SUDO_USER/.bashrc"
+	else
+		start_spinner "Erstelle Alias..."
+			echo "
+
+
+#Omada
+alias ccJavaUpdater='cat $cronCheckPath'
+"  >> /home/$SUDO_USER/.bashrc
+		stop_spinner $?
+	fi
+	echo
+	echo
+
+
+
+#----- Create MOTD
+	if grep -q "^Pihole" /etc/motd; then
+		echo "Der MOTD Eintrag exisitert bereits in /etc/motd"
+	else
+		start_spinner "Passe MOTD an..."
+			echo "
+Omada
+Cron-Check Java-Updater:	ccJavaUpdater
+" >> /etc/motd
+		stop_spinner $?
+	fi
+	echo
+	echo
