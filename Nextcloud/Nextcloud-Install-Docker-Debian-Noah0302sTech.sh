@@ -206,14 +206,12 @@ volumes:
 
 
 #----- Configure the Nextcloud Server
-	start_spinner "Erstelle Nextcloud-Config-Skript..."
-		cd /home/$SUDO_USER
-		apt install wget -y > /dev/null 2>&1
-		wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Nextcloud/Nextcloud-Config-Docker-Noah0302sTech.sh > /dev/null 2>&1
-		chmod +x NextcloudConfig-Docker-Noah0302sTech.sh
-	stop_spinner $?
-	echo "Um NACH DER INSTALLATION die Nextcloud-Config anzupassen, starte das Nextcloud-Config-Skript mit:"
-	echo "sudo bash NextcloudConfig-Docker-Noah0302sTech.sh"
-
-	echo
-	echo
+	#--- This does not work yet with the new NC-Docker Image! I will try to fix this soon...
+	#start_spinner "Erstelle Nextcloud-Config-Skript..."
+	#	cd /home/$SUDO_USER
+	#	apt install wget -y > /dev/null 2>&1
+	#	wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Nextcloud/Nextcloud-Config-Docker-Noah0302sTech.sh > /dev/null 2>&1
+	#	chmod +x NextcloudConfig-Docker-Noah0302sTech.sh
+	#stop_spinner $?
+	#echo "Um NACH DER INSTALLATION die Nextcloud-Config anzupassen, starte das Nextcloud-Config-Skript mit:"
+	#echo "sudo bash NextcloudConfig-Docker-Noah0302sTech.sh"
