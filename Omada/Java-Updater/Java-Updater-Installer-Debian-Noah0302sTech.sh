@@ -119,19 +119,17 @@
 		echo "'#!/bin/bash
 #	Made by Noah0302sTech
 
-#Update Java
-	echo "deb http://deb.debian.org/debian/ sid main" | sudo tee -a /etc/apt/sources.list
-	apt update
-	DEBIAN_FRONTEND=noninteractive apt install openjdk-8-jre-headless -y
-	sed -i "\%^deb http://deb.debian.org/debian/ sid main%d" /etc/apt/sources.list
+#Java Update
+	echo "Update Java..."
+		"'javaUpdateOutput=$(DEBIAN_FRONTEND=noninteractive apt install openjdk-8-jre-headless -y 2>&1)'"
+	echo
+	echo
 
 #Debug
 	echo "'Java-Updater Cron-Job ran @'" >> $cronCheckPath
 	date >> $cronCheckPath
 	echo "Update Java..." >> $cronCheckPath
-		echo "'$JavaUpdateOutput'" >> $cronCheckPath
-	echo "Update Gravity..." >> $cronCheckPath
-		echo "'$JavaGravityOutput'" >> $cronCheckPath
+		echo "'$javaUpdateOutput'" >> $cronCheckPath
 	echo '' >> $cronCheckPath" > /home/$SUDO_USER/$bashExecuter
 	stop_spinner $?
 
