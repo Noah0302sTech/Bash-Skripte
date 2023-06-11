@@ -246,7 +246,7 @@
 			if [ -z "$omada_url" ]; then
 				omada_url="https://static.tp-link.com/upload/software/2023/202303/20230321/Omada_SDN_Controller_v5.9.31_Linux_x64.deb"
 				break
-			elif [[ $omada_url == "https://static.tp-link.com/upload/software\*.deb" ]]; then
+			elif [[ $omada_url =~ ^https://static\.tp-link\.com/upload/software/.*\.deb$ ]]; then
 				break
 			else
 				echo "Falschen Download-Link eingegeben! Das Skript unterstützt nur '.deb', NICHT '.tag.gz' oder '.zip'!"
