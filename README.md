@@ -1,5 +1,5 @@
-# Bash-Skripte
+# Test-Bash-Skripte
 
-Ansammlung meiner Bash Skripte, die ich auf meinem Youtube-Kanal (https://www.youtube.com/@Noah0302sTech) vorstelle.
+Ansammlung meiner Bash Skripte, die gerade in Bearbeitung sind!
 
-Falls ihr Verbesserungsvorschläge für meine Skripts habt, schreibt mir gerne.
+Viele Skripte werden noch nicht funktionieren!
