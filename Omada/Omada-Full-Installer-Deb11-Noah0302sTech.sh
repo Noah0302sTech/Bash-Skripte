@@ -164,6 +164,7 @@
 					start_spinner "Installiere Java-Updater..."
 						wget $javaUpdaterUrl > /dev/null 2>&1
 					stop_spinner $?
+					chmod +x Java-Updater-Installer-Debian-Noah0302sTech.sh
 					bash ./Java-Updater-Installer-Debian-Noah0302sTech.sh
 				break;;
 
