@@ -331,6 +331,7 @@
 						else
 							echo "Ordner $updaterExecuterFolderPath bereits vorhanden!"
 						fi
+	stop_spinner $?
 
 #----- Move Files
 	start_spinner "Verschiebe Files..."
