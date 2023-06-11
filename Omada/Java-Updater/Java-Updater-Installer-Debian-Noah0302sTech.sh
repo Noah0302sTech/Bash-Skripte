@@ -126,7 +126,7 @@
 		touch /home/$SUDO_USER/$updaterExecuter
 		touch /home/$SUDO_USER/$cronCheck
 		echo "#Init after Install" > /home/$SUDO_USER/$cronCheck
-		echo "" > /home/$SUDO_USER/$cronCheck
+		echo "" >> /home/$SUDO_USER/$cronCheck
 		echo "#!/bin/bash
 #	Made by Noah0302sTech
 
