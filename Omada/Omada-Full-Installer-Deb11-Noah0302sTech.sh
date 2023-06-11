@@ -133,7 +133,7 @@
 		#-		Note: I add the Debian-Unstable-Repo, since OpenJDK-8 does not come with the Standard-Debian-11-Repository.
 		#-		Sadly the Omada-Controller does not yet support newer OpenJDK Versions, so I have to do it that way...
 		#-		Hopefully I can skip this step with future Releases!
-		echo
+		echo "----- Java -----"
 		start_spinner "Füge Sid-Main-Repo hinzu, bitte warten..."
 			echo "deb http://deb.debian.org/debian/ sid main" | tee -a /etc/apt/sources.list > /dev/null 2>&1
 		stop_spinner $?
@@ -184,6 +184,7 @@
 
 
 #----- Install jsvc curl gnupg2
+	echo "----- jsvc curl gnupg2 -----"
 	#--- Refresh Packages
 		start_spinner "Aktualisiere Package-Listen, bitte warten..."
 			apt update > /dev/null 2>&1
@@ -200,6 +201,7 @@
 
 
 #----- Install MongoDB
+	echo "----- MongoDB -----"
 	#--- Add apt key
 		start_spinner "Füge MongoDB Apt-Key hinzu, bitte warten..."
 			curl -fsSL https://www.mongodb.org/static/pgp/server-4.4.asc | apt-key add -  > /dev/null 2>&1
@@ -232,6 +234,7 @@
 
 
 #----- Install Omada
+	echo "----- Omada -----"
 	#--- Prompt user for the Omada download URL or use the default if left blank
 		read -t 10 -p "Füge die Download-URL für Omada_SDN_Controller_vX.X.X_Linux_x64.deb hier ein (Leer oder warte 10 Sekunden für v5.9.9): " omada_url
 		if [ -z "$omada_url" ]; then
@@ -281,7 +284,7 @@
 				updaterInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1"
 					updaterInstallerPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$bashInstaller"
 				updaterExecuterFolderPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2"
-					updaterExecuterPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$bashInstaller"
+					updaterExecuterPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$updaterExecuter"
 				cronCheckPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck"
 
 #----- Create Folders
@@ -328,11 +331,18 @@
 							echo "Ordner $updaterExecuterFolderPath bereits vorhanden!"
 						fi
 
-#----- Move Bash-Script
-	start_spinner "Verschiebe Bash-Skript..."
+#----- Move Files
+	start_spinner "Verschiebe Files..."
 		#--- Omada-Full-Installer-Deb11-Noah0302sTech.sh
 			if [ ! -f $omadaFullInstallerFolderPath ]; then
 				mv /home/$SUDO_USER/$fullInstaller $omadaFullInstallerFolderPath > /dev/null 2>&1
+			else
+				echo "Die Datei $omadaFullInstallerFolderPath ist bereits vorhanden!"
+			fi
+
+		#--- Omada-Deb-File
+			if [ ! -f $omadaFullInstallerFolderPath ]; then
+				mv /home/$SUDO_USER/*.deb $omadaFullInstallerFolderPath > /dev/null 2>&1
 			else
 				echo "Die Datei $omadaFullInstallerFolderPath ist bereits vorhanden!"
 			fi
