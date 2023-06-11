@@ -300,6 +300,13 @@
 					echo "Ordner $omadaFolderPath bereits vorhanden!"
 				fi
 
+				#--- Omada-Full-Installer Folder
+					if [ ! -d $omadaFullInstallerFolderPath ]; then
+						mkdir $omadaFullInstallerFolderPath > /dev/null 2>&1
+					else
+						echo "Ordner $omadaFullInstallerFolderPath bereits vorhanden!"
+					fi
+
 				#--- Java-Updater Folder
 					if [ ! -d $javaUpdaterFolderPath ]; then
 						mkdir $javaUpdaterFolderPath > /dev/null 2>&1

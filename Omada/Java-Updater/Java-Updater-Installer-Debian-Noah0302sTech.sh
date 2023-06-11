@@ -93,16 +93,26 @@
 		echo
 
 	#----- Variables
+		javaUpdaterUrl="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Omada/Java-Updater/Java-Updater-Installer-Debian-Noah0302sTech.sh"
+
 		folderVar=Omada
+			fullInstallerFolder=Omada-Full-Installer
+				fullInstaller=Omada-Full-Installer-Deb11-Noah0302sTech.sh
 			subFolderVar=Java-Updater
 				folder1=Updater-Installer
 					bashInstaller=Java-Updater-Installer-Debian-Noah0302sTech.sh
-				folder2=Updater
-					bashExecuter=Java-Updater-Debian-Noah0302sTech.sh
+				folder2=Updater-Executer
+					updaterExecuter=Java-Updater-Debian-Noah0302sTech.sh
 				cronCheck=Cron-Check.txt
-		bashInstallerPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$bashInstaller"
-		bashExecuterPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashExecuter"
-		cronCheckPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck"
+
+		omadaFolderPath="/home/$SUDO_USER/Noah0302sTech/$folderVar"
+			omadaFullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$fullInstallerFolder"
+			javaUpdaterFolderPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar"
+				updaterInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1"
+					updaterInstallerPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$bashInstaller"
+				updaterExecuterFolderPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2"
+					updaterExecuterPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$bashInstaller"
+				cronCheckPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck"
 
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
@@ -113,7 +123,7 @@
 
 #----- Create Java Update-Script
 	start_spinner "Erstelle Updater-Skript..."
-		touch /home/$SUDO_USER/$bashExecuter
+		touch /home/$SUDO_USER/$updaterExecuter
 		touch /home/$SUDO_USER/$cronCheck
 		echo "#Init" > /home/$SUDO_USER/$cronCheck
 		echo "'#!/bin/bash
@@ -130,12 +140,12 @@
 	date >> $cronCheckPath
 	echo "Update Java..." >> $cronCheckPath
 		echo "'$javaUpdateOutput'" >> $cronCheckPath
-	echo '' >> $cronCheckPath" > /home/$SUDO_USER/$bashExecuter
+	echo '' >> $cronCheckPath" > /home/$SUDO_USER/$updaterExecuter
 	stop_spinner $?
 
 	#--- Make Java-Updater.sh executable
         start_spinner "Mache Java-Updater.sh ausführbar..."
-            chmod +x /home/$SUDO_USER/$bashExecuter
+            chmod +x /home/$SUDO_USER/$updaterExecuter
         stop_spinner $?
     
     echo
@@ -159,7 +169,7 @@
 		start_spinner "Passe Crontab an..."
 			echo "#Update for Java by Noah0302sTech
 "'PATH="/usr/local/bin:/usr/bin:/bin"'"
-$cronVariable root $bashExecuterPath" > /etc/cron.d/java-Updater-Noah0302sTech
+$cronVariable root $updaterExecuterPath" > /etc/cron.d/java-Updater-Noah0302sTech
 		stop_spinner $?
 	echo
 	echo
