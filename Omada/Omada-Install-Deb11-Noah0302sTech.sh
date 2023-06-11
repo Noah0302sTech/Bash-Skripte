@@ -157,13 +157,14 @@
 						wget $javaUpdaterUrl > /dev/null 2>&1
 					stop_spinner $?
 					bash ./Java-Updater-Installer-Debian-Noah0302sTech.sh
+				break;;
 
-				break;;
 			n)  echo
-				
 				break;;
+
 			*)  echo
 				echo "Antoworte mit y oder n";;
+
 		esac
 		done
 		echo
