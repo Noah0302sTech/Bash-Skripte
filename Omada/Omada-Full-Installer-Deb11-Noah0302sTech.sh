@@ -242,11 +242,11 @@
 	echo "----- Omada -----"
 	#--- Prompt user for the Omada download URL or use the default if left blank
 		while true; do
-			read -t 30 -p "Füge die Download-URL für Omada_SDN_Controller_vX.X.X_Linux_x64.deb hier ein (Leer oder warte 30 Sekunden für v5.9.9): " omada_url
+			read -t 30 -p "Füge die Download-URL für Omada_SDN_Controller_vX.X.X_Linux_x64.deb hier ein (Leer oder warte 30 Sekunden für v5.9.31): " omada_url
 			if [ -z "$omada_url" ]; then
 				omada_url="https://static.tp-link.com/upload/software/2023/202303/20230321/Omada_SDN_Controller_v5.9.31_Linux_x64.deb"
 				break
-			elif [[ $omada_url == *.deb ]]; then
+			elif [[ $omada_url == "https://static.tp-link.com/upload/software/*.deb" ]]; then
 				break
 			else
 				echo "Falschen Download-Link eingegeben! Das Skript unterstützt nur '.deb', NICHT '.tag.gz' oder '.zip'!"
