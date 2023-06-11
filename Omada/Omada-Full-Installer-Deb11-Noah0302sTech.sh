@@ -103,6 +103,7 @@
 
 		folderVar=Omada
 			fullInstallerFolder=Omada-Full-Installer
+				fullInstaller=Omada-Full-Installer-Deb11-Noah0302sTech.sh
 			subFolderVar=Java-Updater
 				folder1=Updater-Installer
 					bashInstaller=Java-Updater-Installer-Debian-Noah0302sTech.sh
@@ -262,6 +263,18 @@
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
 
+		javaUpdaterUrl="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Omada/Java-Updater/Java-Updater-Installer-Debian-Noah0302sTech.sh"
+
+		folderVar=Omada
+			fullInstallerFolder=Omada-Full-Installer
+				fullInstaller=Omada-Full-Installer-Deb11-Noah0302sTech.sh
+			subFolderVar=Java-Updater
+				folder1=Updater-Installer
+					bashInstaller=Java-Updater-Installer-Debian-Noah0302sTech.sh
+				folder2=Updater-Executer
+					updaterExecuter=Java-Updater-Debian-Noah0302sTech.sh
+				cronCheck=Cron-Check.txt
+
 		omadaFolderPath="/home/$SUDO_USER/Noah0302sTech/$folderVar"
 			omadaFullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$fullInstallerFolder"
 			javaUpdaterFolderPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar"
@@ -312,28 +325,28 @@
 	start_spinner "Verschiebe Bash-Skript..."
 		#--- Omada-Full-Installer-Deb11-Noah0302sTech.sh
 			if [ ! -f $omadaFullInstallerFolderPath ]; then
-				mv /home/$SUDO_USER/$shPrimaryVar $omadaFullInstallerFolderPath > /dev/null 2>&1
+				mv /home/$SUDO_USER/$fullInstaller $omadaFullInstallerFolderPath > /dev/null 2>&1
 			else
 				echo "Die Datei $omadaFullInstallerFolderPath ist bereits vorhanden!"
 			fi
 
 			#--- Java-Updater-Installer-Debian-Noah0302sTech.sh
 				if [ ! -f $updaterInstallerPath ]; then
-					mv /home/$SUDO_USER/$sh2Var $updaterInstallerPath > /dev/null 2>&1
+					mv /home/$SUDO_USER/$bashInstaller $updaterInstallerPath > /dev/null 2>&1
 				else
 					echo "Die Datei $updaterInstallerPath ist bereits vorhanden!"
 				fi
 
 			#--- Java-Updater-Debian-Noah0302sTech.sh
 				if [ ! -f $updaterExecuterPath ]; then
-					mv /home/$SUDO_USER/$sh3Var $updaterExecuterPath > /dev/null 2>&1
+					mv /home/$SUDO_USER/$updaterExecuter $updaterExecuterPath > /dev/null 2>&1
 				else
 					echo "Die Datei $updaterExecuterPath ist bereits vorhanden!"
 				fi
 
 			#--- Cron-Check.txt
 				if [ ! -f $cronCheckPath ]; then
-					mv /home/$SUDO_USER/$sh4Var $cronCheckPath > /dev/null 2>&1
+					mv /home/$SUDO_USER/$cronCheck $cronCheckPath > /dev/null 2>&1
 				else
 					echo "Die Datei $cronCheckPath ist bereits vorhanden!"
 				fi
