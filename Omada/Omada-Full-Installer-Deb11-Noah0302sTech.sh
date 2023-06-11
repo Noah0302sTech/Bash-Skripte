@@ -1,6 +1,7 @@
 #!/bin/bash
 #	Made by Noah0302sTech
 #	chmod +x Omada-Full-Installer-Deb11-Noah0302sTech.sh && sudo bash Omada-Full-Installer-Deb11-Noah0302sTech.sh
+#	curl -sSL https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Omada/Omada-Full-Installer-Deb11-Noah0302sTech.sh | sudo bash
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
@@ -241,7 +242,7 @@
 	echo "----- Omada -----"
 	#--- Prompt user for the Omada download URL or use the default if left blank
 		while true; do
-			read -t 10 -p "Füge die Download-URL für Omada_SDN_Controller_vX.X.X_Linux_x64.deb hier ein (Leer oder warte 10 Sekunden für v5.9.9): " omada_url
+			read -t 30 -p "Füge die Download-URL für Omada_SDN_Controller_vX.X.X_Linux_x64.deb hier ein (Leer oder warte 30 Sekunden für v5.9.9): " omada_url
 			if [ -z "$omada_url" ]; then
 				omada_url="https://static.tp-link.com/upload/software/2023/202303/20230321/Omada_SDN_Controller_v5.9.31_Linux_x64.deb"
 				break
