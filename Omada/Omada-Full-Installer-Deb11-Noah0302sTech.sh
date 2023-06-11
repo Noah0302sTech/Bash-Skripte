@@ -261,7 +261,6 @@
 		stop_spinner $?
 
 	#--- Install downloaded Omada-Version
-		echo
 		#start_spinner "Installiere Omada-Controller, bitte warten..."
 		apt install ./*.deb
 		#stop_spinner $?
