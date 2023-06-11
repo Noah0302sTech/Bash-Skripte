@@ -97,7 +97,7 @@
 
 
 	#----- Variables
-		javaUpdaterUrl="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Omada/Java-Updater/Java-Updater-Installer-Debian-Noah0302sTech.sh"
+		javaUpdaterUrl="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Omada/Java-Updater/Java-Updater-Installer-Debian-Noah0302sTech.sh"
 
 		folderVar=Omada
 			fullInstallerFolder=Omada-Full-Installer
