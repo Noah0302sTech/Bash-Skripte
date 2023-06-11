@@ -1,6 +1,6 @@
 #!/bin/bash
 #	Made by Noah0302sTech
-#	chmod +x Nextcloud-Install-Docker-Debian-Noah0302sTech.sh && bash Nextcloud-Install-Docker-Debian-Noah0302sTech.sh
+#	chmod +x Nextcloud-Install-Docker-Debian-Noah0302sTech.sh && sudo bash Nextcloud-Install-Docker-Debian-Noah0302sTech.sh
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
@@ -92,6 +92,19 @@
 		echo
 		echo
 
+
+
+	#----- Variables
+		url="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Nextcloud/Nextcloud-Config-Docker-Noah0302sTech.sh"
+		folderVar=Docker
+			subFolderVar=Nextcloud
+				folder1=Installer
+					bashInstaller=Nextcloud-Install-Docker-Debian-Noah0302sTech.sh
+				folder2=Configurator
+					bashExecuter=Nextcloud-Config-Docker-Noah0302sTech.sh
+				folder3=Docker-Compose
+					composeFile=docker-compose.yml
+
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
@@ -124,21 +137,6 @@
 	echo
 
 
-
-#----- Create a folder for Nextcloud
-	start_spinner "Erstelle Nextcloud-Ordner..."
-		mkdir /home/$SUDO_USER/nextcloud
-		if [ -d /home/$SUDO_USER/nextcloud ]; then
-		cd /home/$SUDO_USER/nextcloud
-		else
-		echo "Fehler beim Erstellen des Ordners!"
-		exit 1
-		fi
-		cd /home/$SUDO_USER/nextcloud > /dev/null 2>&1
-	stop_spinner $?
-
-	echo
-	echo
 
 
 
@@ -207,13 +205,90 @@ volumes:
 
 #----- Configure the Nextcloud Server
 	start_spinner "Erstelle Nextcloud-Config-Skript..."
-		cd /home/$SUDO_USER
 		apt install wget -y > /dev/null 2>&1
-		wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Nextcloud/Nextcloud-Config-Docker-Noah0302sTech.sh > /dev/null 2>&1
-		chmod +x NextcloudConfig-Docker-Noah0302sTech.sh
+		wget $url > /dev/null 2>&1
+		chmod +x Nextcloud-Config-Docker-Noah0302sTech.sh
 	stop_spinner $?
 	echo "Um NACH DER INSTALLATION die Nextcloud-Config anzupassen, starte das Nextcloud-Config-Skript mit:"
-	echo "sudo bash NextcloudConfig-Docker-Noah0302sTech.sh"
+	echo "sudo bash /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashExecuter"
 
 	echo
 	echo
+
+
+
+
+
+#-----	-----#	#-----	-----#	#-----	-----#
+#-----	-----#	#-----	-----#	#-----	-----#
+#-----	-----#	#-----	-----#	#-----	-----#
+
+#----- Create Folders
+	start_spinner "Erstelle Verzeichnisse..."
+		#--- /home/$SUDO_USER/Noah0302sTech
+			if [ ! -d /home/$SUDO_USER/Noah0302sTech ]; then
+				mkdir /home/$SUDO_USER/Noah0302sTech > /dev/null 2>&1
+			else
+				echo "Ordner /home/$SUDO_USER/Noah0302sTech bereits vorhanden!"
+			fi
+
+			#--- Folder
+				if [ ! -d /home/$SUDO_USER/Noah0302sTech/$folderVar ]; then
+					mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar > /dev/null 2>&1
+				else
+					echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar bereits vorhanden!"
+				fi
+
+			#--- Sub Folder
+				if [ ! -d /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar ]; then
+					mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar > /dev/null 2>&1
+				else
+					echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar bereits vorhanden!"
+				fi
+
+				#--- Folder1
+					if [ ! -d /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1 ]; then
+						mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1 > /dev/null 2>&1
+					else
+						echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1 bereits vorhanden!"
+					fi
+
+
+				#--- Folder2
+					if [ ! -d /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2 ]; then
+						mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2 > /dev/null 2>&1
+					else
+						echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2 bereits vorhanden!"
+					fi
+
+				#--- Folder3
+					if [ ! -d /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder3 ]; then
+						mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder3 > /dev/null 2>&1
+					else
+						echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder3 bereits vorhanden!"
+					fi
+	stop_spinner $?
+
+#----- Move Bash-Script
+	start_spinner "Verschiebe Bash-Skript..."
+		#--- Bash Installer
+			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$bashInstaller ]; then
+				mv /home/$SUDO_USER/$bashInstaller /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$bashInstaller > /dev/null 2>&1
+			else
+				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$bashInstaller ist bereits vorhanden!"
+			fi
+
+		#--- Bash Executer
+			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashExecuter ]; then
+				mv /home/$SUDO_USER/$bashExecuter /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashExecuter > /dev/null 2>&1
+			else
+				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashExecuter ist bereits vorhanden!"
+			fi
+
+		#--- Docker Compose
+			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder3/$composeFile ]; then
+				mv /home/$SUDO_USER/$composeFile /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder3/$composeFile > /dev/null 2>&1
+			else
+				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder3/$composeFile ist bereits vorhanden!"
+			fi
+	stop_spinner $?
