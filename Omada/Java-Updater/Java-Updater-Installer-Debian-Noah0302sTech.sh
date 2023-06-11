@@ -94,7 +94,7 @@
 
 	#----- Variables
 		folderVar=Omada
-			subFolderVar=Updater
+			subFolderVar=Java-Updater
 				folder1=Updater-Installer
 					bashInstaller=Java-Updater-Installer-Debian-Noah0302sTech.sh
 				folder2=Updater
