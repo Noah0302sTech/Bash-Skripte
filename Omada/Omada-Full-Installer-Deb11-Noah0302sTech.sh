@@ -3,8 +3,6 @@
 #	chmod +x Omada-Full-Installer-Deb11-Noah0302sTech.sh && sudo bash Omada-Full-Installer-Deb11-Noah0302sTech.sh
 
 #TODO:	Check downloaded File, if its a .deb
-#		Add Folder Structure
-#		Add Java-Updater
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
