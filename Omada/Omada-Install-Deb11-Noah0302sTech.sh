@@ -96,6 +96,22 @@
 		echo
 		echo
 
+
+
+	#----- Variables
+		javaUpdaterUrl="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Omada/Java-Updater/Java-Updater-Installer-Debian-Noah0302sTech.sh"
+
+		folderVar=Omada
+			subFolderVar=Updater
+				folder1=Updater-Installer
+					bashInstaller=Java-Updater-Installer-Debian-Noah0302sTech.sh
+				folder2=Updater
+					bashExecuter=Java-Updater-Debian-Noah0302sTech.sh
+				cronCheck=Cron-Check.txt
+		bashInstallerPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$bashInstaller"
+		bashExecuterPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashExecuter"
+		cronCheckPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck"
+
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
@@ -132,9 +148,29 @@
 		start_spinner "Entferne Sid-Main-Repo, bitte warten..."
 			sed -i '\%^deb http://deb.debian.org/debian/ sid main%d' /etc/apt/sources.list > /dev/null 2>&1
 		stop_spinner $?
-		
-	echo
-	echo
+
+	#--- Install Java-Updater
+		while IFS= read -n1 -r -p "Möchtest du Java-Updater installieren? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+		case $REPLY in
+			y)  #--- Curl Java-Updater
+					start_spinner "Installiere Java-Updater..."
+						wget $javaUpdaterUrl > /dev/null 2>&1
+					stop_spinner $?
+					bash ./Java-Updater-Installer-Debian-Noah0302sTech.sh
+
+				break;;
+			n)  echo
+				
+				break;;
+			*)  echo
+				echo "Antoworte mit y oder n";;
+		esac
+		done
+		echo
+		echo
+		echo
+		echo
+		echo
 
 
 
