@@ -131,14 +131,14 @@
 
 #Java Update
 	echo "Update Java..."
-		"'javaUpdateOutput=$(DEBIAN_FRONTEND=noninteractive apt-get install openjdk-8-jre-headless -y 2>&1)'"
+	"'javaUpdateOutput=$(DEBIAN_FRONTEND=noninteractive apt-get install openjdk-8-jre-headless -y 2>&1)'"
 	echo
 	echo
 
 #Debug
-	echo "'		Java-Updater Cron-Job ran @'" >> $cronCheckPath
+	echo "'Java-Updater Cron-Job ran @'" >> $cronCheckPath
 	date >> $cronCheckPath
-		echo "'$javaUpdateOutput'" >> $cronCheckPath
+	echo "'$javaUpdateOutput'" >> $cronCheckPath
 	echo '' >> $cronCheckPath" > /home/$SUDO_USER/$updaterExecuter
 	stop_spinner $?
 
@@ -146,9 +146,6 @@
         start_spinner "Mache Java-Updater.sh ausführbar..."
             chmod +x /home/$SUDO_USER/$updaterExecuter
         stop_spinner $?
-    
-    echo
-    echo
 
 
 
@@ -170,8 +167,6 @@
 "'PATH="/usr/local/bin:/usr/bin:/bin"'"
 $cronVariable root $updaterExecuterPath" > /etc/cron.d/java-Updater-Noah0302sTech
 		stop_spinner $?
-	echo
-	echo
 
 
 
@@ -188,8 +183,6 @@ alias ccJavaUpdater='cat $cronCheckPath'
 "  >> /home/$SUDO_USER/.bashrc
 		stop_spinner $?
 	fi
-	echo
-	echo
 
 
 
@@ -204,5 +197,3 @@ Cron-Check Java-Updater:	ccJavaUpdater
 " >> /etc/motd
 		stop_spinner $?
 	fi
-	echo
-	echo
