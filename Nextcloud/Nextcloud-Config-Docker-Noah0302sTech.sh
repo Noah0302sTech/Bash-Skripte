@@ -2,6 +2,7 @@
 # Made by Noah0302sTech
 # chmod +x Nextcloud-Config-Docker-Noah0302sTech.sh && sudo bash Nextcloud-Config-Docker-Noah0302sTech.sh
 
+#TEST
 
 
 #----- Check for administrative privileges
