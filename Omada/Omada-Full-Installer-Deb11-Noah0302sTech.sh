@@ -176,9 +176,7 @@
 
 		esac
 		done
-		echo
-		echo
-		echo
+
 		echo
 		echo
 
