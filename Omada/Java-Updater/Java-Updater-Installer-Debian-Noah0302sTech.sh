@@ -111,7 +111,7 @@
 				updaterInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1"
 					updaterInstallerPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$bashInstaller"
 				updaterExecuterFolderPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2"
-					updaterExecuterPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$bashInstaller"
+					updaterExecuterPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$updaterExecuter"
 				cronCheckPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck"
 
 #-----	-----#	#-----	-----#	#-----	-----#
@@ -126,7 +126,7 @@
 		touch /home/$SUDO_USER/$updaterExecuter
 		touch /home/$SUDO_USER/$cronCheck
 		echo "#Init" > /home/$SUDO_USER/$cronCheck
-		echo "'#!/bin/bash
+		echo "#!/bin/bash
 #	Made by Noah0302sTech
 
 #Java Update
