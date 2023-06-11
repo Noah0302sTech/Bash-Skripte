@@ -131,7 +131,7 @@
 
 #Java Update
 	echo "Update Java..."
-		"'javaUpdateOutput=$(DEBIAN_FRONTEND=noninteractive apt install openjdk-8-jre-headless -y 2>&1)'"
+		"'javaUpdateOutput=$(DEBIAN_FRONTEND=noninteractive apt-get install openjdk-8-jre-headless -y 2>&1)'"
 	echo
 	echo
 
