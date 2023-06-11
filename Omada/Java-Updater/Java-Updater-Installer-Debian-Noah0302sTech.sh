@@ -136,9 +136,8 @@
 	echo
 
 #Debug
-	echo "'Java-Updater Cron-Job ran @'" >> $cronCheckPath
+	echo "'		Java-Updater Cron-Job ran @'" >> $cronCheckPath
 	date >> $cronCheckPath
-	echo "Update Java..." >> $cronCheckPath
 		echo "'$javaUpdateOutput'" >> $cronCheckPath
 	echo '' >> $cronCheckPath" > /home/$SUDO_USER/$updaterExecuter
 	stop_spinner $?
