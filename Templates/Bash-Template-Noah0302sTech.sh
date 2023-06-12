@@ -97,15 +97,15 @@
 	#----- Variables
 		urlVar="https://raw.githubusercontent.com/Noah0302sTech/"
 
-		parentFolder=Omada
-			fullInstallerFolder=Omada-Full-Installer
-				fullInstaller=Omada-Full-Installer-Deb11-Noah0302sTech.sh
-			subFolder=Java-Updater
-				folder1=Updater-Installer
-					bashInstaller=Java-Updater-Installer-Debian-Noah0302sTech.sh
-				folder2=Updater-Executer
-					updaterExecuter=Java-Updater-Debian-Noah0302sTech.sh
-				cronCheck=Cron-Check.txt
+		parentFolder="XXXXXXXXXX"
+			fullInstallerFolder="XXXXXXXXXX"
+				fullInstaller="XXXXXXXXXX"
+			subFolder="XXXXXXXXXX"
+				folder1="XXXXXXXXXX"
+					bashInstaller="XXXXXXXXXX"
+				folder2="XXXXXXXXXX"
+					updaterExecuter="XXXXXXXXXX"
+				cronCheck="XXXXXXXXXX"
 
 		parentFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder"
 			fullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder"
