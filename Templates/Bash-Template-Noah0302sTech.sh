@@ -109,6 +109,7 @@
 
 		parentFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder"
 			fullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder"
+				fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder/$fullInstaller"
 			subFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder"
 				folder1Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1"
 					updaterInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1/$bashInstaller"
@@ -148,35 +149,35 @@
 				echo "Ordner /home/$SUDO_USER/Noah0302sTech bereits vorhanden!"
 			fi
 
-			#--- Omada-Folder
+			#--- Parent Folder
 				if [ ! -d $parentFolderPath ]; then
 					mkdir $parentFolderPath > /dev/null 2>&1
 				else
 					echo "Ordner $parentFolderPath bereits vorhanden!"
 				fi
 
-				#--- Omada-Full-Installer Folder
+				#--- Full-Installer Folder
 					if [ ! -d $fullInstallerFolderPath ]; then
 						mkdir $fullInstallerFolderPath > /dev/null 2>&1
 					else
 						echo "Ordner $fullInstallerFolderPath bereits vorhanden!"
 					fi
 
-				#--- Java-Updater Folder
+				#--- Sub Folder
 					if [ ! -d $subFolderPath ]; then
 						mkdir $subFolderPath > /dev/null 2>&1
 					else
 						echo "Ordner $subFolderPath bereits vorhanden!"
 					fi
 
-					#--- Updater-Installer Folder
+					#--- Folder 1
 						if [ ! -d $folder1Path ]; then
 							mkdir $folder1Path > /dev/null 2>&1
 						else
 							echo "Ordner $folder1Path bereits vorhanden!"
 						fi
 
-					#--- Updater-Executer Folder
+					#--- Folder2
 						if [ ! -d $folder2Path ]; then
 							mkdir $folder2Path > /dev/null 2>&1
 						else
@@ -186,28 +187,21 @@
 
 #----- Move Files
 	start_spinner "Verschiebe Files..."
-		#--- Omada-Full-Installer-Deb11-Noah0302sTech.sh
+		#--- Full-Installer
 			if [ ! -f $fullInstallerFolderPath ]; then
 				mv /home/$SUDO_USER/$fullInstaller $fullInstallerFolderPath > /dev/null 2>&1
 			else
 				echo "Die Datei $fullInstallerFolderPath ist bereits vorhanden!"
 			fi
 
-		#--- Omada-Deb-File
-			if [ ! -f $fullInstallerFolderPath ]; then
-				mv /home/$SUDO_USER/*.deb $fullInstallerFolderPath > /dev/null 2>&1
-			else
-				echo "Die Datei $fullInstallerFolderPath ist bereits vorhanden!"
-			fi
-
-			#--- Java-Updater-Installer-Debian-Noah0302sTech.sh
+			#--- Updater-Installer
 				if [ ! -f $updaterInstallerPath ]; then
 					mv /home/$SUDO_USER/$bashInstaller $updaterInstallerPath > /dev/null 2>&1
 				else
 					echo "Die Datei $updaterInstallerPath ist bereits vorhanden!"
 				fi
 
-			#--- Java-Updater-Debian-Noah0302sTech.sh
+			#--- Update-Executer
 				if [ ! -f $updaterExecuterPath ]; then
 					mv /home/$SUDO_USER/$updaterExecuter $updaterExecuterPath > /dev/null 2>&1
 				else
