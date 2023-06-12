@@ -187,9 +187,9 @@ $cronVariable root /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Docker-Sys
 					echo '
 
 #Cron-Check
-	echo "
-	Job lief am:" >> /home/'$SUDO_USER'/Noah0302sTech/Docker/System-Prune/Cron-Check.txt
-    date >> /home/'$SUDO_USER'/Noah0302sTech/Docker/System-Prune/Cron-Check.txt
+	echo "" >> /home/'$SUDO_USER'/Noah0302sTech/Docker/System-Prune/Cron-Check.txt
+	echo "Job lief am:" >> /home/'$SUDO_USER'/Noah0302sTech/Docker/System-Prune/Cron-Check.txt
+	date >> /home/'$SUDO_USER'/Noah0302sTech/Docker/System-Prune/Cron-Check.txt
 	echo $dockerPruneOutput >> /home/'$SUDO_USER'/Noah0302sTech/Docker/System-Prune/Cron-Check.txt
 	echo $fstrimOutput >> /home/'$SUDO_USER'/Noah0302sTech/Docker/System-Prune/Cron-Check.txt' >> Docker-System-Prune-Trim.sh
 				stop_spinner $?
