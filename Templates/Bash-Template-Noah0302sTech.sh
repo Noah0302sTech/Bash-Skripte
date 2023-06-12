@@ -82,7 +82,6 @@
 				_spinner "stop" $1 $_sp_pid
 				unset _sp_pid
 			}
-	#----- Source of Spinner-Function: https://github.com/tlatsas/bash-spinner -----#
 
 
 
