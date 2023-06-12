@@ -11,7 +11,7 @@
 
 
 
-	#----- Source of Spinner-Function: https://github.com/tlatsas/bash-spinner
+	#----- Source of Spinner-Function: https://github.com/tlatsas/bash-spinner -----#
 			function _spinner() {
 				# $1 start/stop
 				#
@@ -92,15 +92,30 @@
 		echo
 		echo
 
+
+
 	#----- Variables
-		url="XXXXXXXXXX"
-		folderVar=XXXXXXXXXX
-			subFolderVar=XXXXXXXXXX
-				folder1=XXXXXXXXXX
-					bashInstaller=XXXXXXXXXX
-				folder2=XXXXXXXXXX
-					bashExecuter=XXXXXXXXXX
-				cronCheck=XXXXXXXXXX
+		urlVar="https://raw.githubusercontent.com/Noah0302sTech/"
+
+		parentFolder="XXXXXXXXXX"
+			fullInstallerFolder="XXXXXXXXXX"
+				fullInstaller="XXXXXXXXXX"
+			subFolder="XXXXXXXXXX"
+				folder1="XXXXXXXXXX"
+					bashInstaller="XXXXXXXXXX"
+				folder2="XXXXXXXXXX"
+					updaterExecuter="XXXXXXXXXX"
+				cronCheck="XXXXXXXXXX"
+
+		parentFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder"
+			fullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder"
+				fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder/$fullInstaller"
+			subFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder"
+				folder1Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1"
+					updaterInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1/$bashInstaller"
+				folder2Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2"
+					updaterExecuterPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2/$updaterExecuter"
+				cronCheckPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$cronCheck"
 
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
@@ -127,56 +142,76 @@
 
 #----- Create Folders
 	start_spinner "Erstelle Verzeichnisse..."
-		#--- /home/$SUDO_USER/Noah0302sTech
+		#--- Noah0302sTech
 			if [ ! -d /home/$SUDO_USER/Noah0302sTech ]; then
 				mkdir /home/$SUDO_USER/Noah0302sTech > /dev/null 2>&1
 			else
 				echo "Ordner /home/$SUDO_USER/Noah0302sTech bereits vorhanden!"
 			fi
 
-			#--- Folder
-				if [ ! -d /home/$SUDO_USER/Noah0302sTech/$folderVar ]; then
-					mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar > /dev/null 2>&1
+			#--- Parent Folder
+				if [ ! -d $parentFolderPath ]; then
+					mkdir $parentFolderPath > /dev/null 2>&1
 				else
-					echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar bereits vorhanden!"
+					echo "Ordner $parentFolderPath bereits vorhanden!"
 				fi
 
-			#--- Sub Folder
-				if [ ! -d /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar ]; then
-					mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar > /dev/null 2>&1
-				else
-					echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar bereits vorhanden!"
-				fi
-
-				#--- Folder1
-					if [ ! -d /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1 ]; then
-						mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1 > /dev/null 2>&1
+				#--- Full-Installer Folder
+					if [ ! -d $fullInstallerFolderPath ]; then
+						mkdir $fullInstallerFolderPath > /dev/null 2>&1
 					else
-						echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1 bereits vorhanden!"
+						echo "Ordner $fullInstallerFolderPath bereits vorhanden!"
 					fi
 
-
-				#--- Folder2
-					if [ ! -d /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2 ]; then
-						mkdir /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2 > /dev/null 2>&1
+				#--- Sub Folder
+					if [ ! -d $subFolderPath ]; then
+						mkdir $subFolderPath > /dev/null 2>&1
 					else
-						echo "Ordner /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2 bereits vorhanden!"
+						echo "Ordner $subFolderPath bereits vorhanden!"
 					fi
+
+					#--- Folder 1
+						if [ ! -d $folder1Path ]; then
+							mkdir $folder1Path > /dev/null 2>&1
+						else
+							echo "Ordner $folder1Path bereits vorhanden!"
+						fi
+
+					#--- Folder2
+						if [ ! -d $folder2Path ]; then
+							mkdir $folder2Path > /dev/null 2>&1
+						else
+							echo "Ordner $folder2Path bereits vorhanden!"
+						fi
 	stop_spinner $?
 
-#----- Move Bash-Script
-	start_spinner "Verschiebe Bash-Skript..."
-		#--- Bash Installer
-			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$bashInstaller ]; then
-				mv /home/$SUDO_USER/$bashInstaller /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$bashInstaller > /dev/null 2>&1
+#----- Move Files
+	start_spinner "Verschiebe Files..."
+		#--- Full-Installer
+			if [ ! -f $fullInstallerFolderPath ]; then
+				mv /home/$SUDO_USER/$fullInstaller $fullInstallerFolderPath > /dev/null 2>&1
 			else
-				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$bashInstaller ist bereits vorhanden!"
+				echo "Die Datei $fullInstallerFolderPath ist bereits vorhanden!"
 			fi
 
-		#--- Bash Executer
-			if [ ! -f /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashExecuter ]; then
-				mv /home/$SUDO_USER/$bashExecuter /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashExecuter > /dev/null 2>&1
-			else
-				echo "Die Datei /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashExecuter ist bereits vorhanden!"
-			fi
+			#--- Updater-Installer
+				if [ ! -f $updaterInstallerPath ]; then
+					mv /home/$SUDO_USER/$bashInstaller $updaterInstallerPath > /dev/null 2>&1
+				else
+					echo "Die Datei $updaterInstallerPath ist bereits vorhanden!"
+				fi
+
+			#--- Update-Executer
+				if [ ! -f $updaterExecuterPath ]; then
+					mv /home/$SUDO_USER/$updaterExecuter $updaterExecuterPath > /dev/null 2>&1
+				else
+					echo "Die Datei $updaterExecuterPath ist bereits vorhanden!"
+				fi
+
+			#--- Cron-Check.txt
+				if [ ! -f $cronCheckPath ]; then
+					mv /home/$SUDO_USER/$cronCheck $cronCheckPath > /dev/null 2>&1
+				else
+					echo "Die Datei $cronCheckPath ist bereits vorhanden!"
+				fi
 	stop_spinner $?
