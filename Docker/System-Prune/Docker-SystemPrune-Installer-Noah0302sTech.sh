@@ -105,18 +105,18 @@
 
 		parentFolder="Docker"
 			subFolder="Docker-System-Prune"
-				folder1="System-Prune-Executer"
-					bashExecuter="Docker-SystemPrune-Executer-Noah0302sTech.sh"
-				folder2="Full-Installer"
+				fullInstaller="Full-Installer"
 					fullInstaller="Docker-SystemPrune-Installer-Noah0302sTech.sh"
+				folder2="System-Prune-Executer"
+					bashExecuter="Docker-SystemPrune-Executer-Noah0302sTech.sh"
 				cronCheck="Cron-Check.txt"
 
 		parentFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder"
 			subFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder"
-				folder1Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1"
-					bashExecuterPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1/$bashExecuter"
-				folder2Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1"
-					bashInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2/$fullInstaller"
+				fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$fullInstaller"
+					fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$fullInstaller/$bashExecuter"
+				folder2Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2"
+					bashExecuterPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2/$fullInstaller"
 				cronCheckPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$cronCheck"
 
 #-----	-----#	#-----	-----#	#-----	-----#
@@ -167,7 +167,7 @@
 					echo "Erstelle Crontab..."
 					touch /etc/cron.d/docker-System-Prune-Noah0302sTech
 					echo "#Docker System Prune & Trim by Noah0302sTech
-$cronVariable root $bashExecuterPath" > /etc/cron.d/docker-System-Prune-Noah0302sTech
+$cronVariable root $fullInstallerPath" > /etc/cron.d/docker-System-Prune-Noah0302sTech
 				stop_spinner $?
 
 			#--- Echo Commands into Pihole-Updater.sh
@@ -292,13 +292,6 @@ Cron-Check Docker:
 						echo "Ordner $parentFolderPath bereits vorhanden!"
 					fi
 
-					#--- Full-Installer Folder
-						if [ ! -d $fullInstallerFolderPath ]; then
-							mkdir $fullInstallerFolderPath > /dev/null 2>&1
-						else
-							echo "Ordner $fullInstallerFolderPath bereits vorhanden!"
-						fi
-
 					#--- Docker-System-Prune
 						if [ ! -d $subFolderPath ]; then
 							mkdir $subFolderPath > /dev/null 2>&1
@@ -306,48 +299,42 @@ Cron-Check Docker:
 							echo "Ordner $subFolderPath bereits vorhanden!"
 						fi
 
-						#--- Folder 1
-							if [ ! -d $folder1Path ]; then
-								mkdir $folder1Path > /dev/null 2>&1
+						#--- Full-Installer
+							if [ ! -d $fullInstallerPath ]; then
+								mkdir $fullInstallerPath > /dev/null 2>&1
 							else
-								echo "Ordner $folder1Path bereits vorhanden!"
+								echo "Ordner $fullInstallerPath bereits vorhanden!"
 							fi
 
-						#--- Folder2
+						#--- System-Prune-Executer
 							if [ ! -d $folder2Path ]; then
 								mkdir $folder2Path > /dev/null 2>&1
 							else
 								echo "Ordner $folder2Path bereits vorhanden!"
 							fi
+
 		stop_spinner $?
 
 	#----- Move Files
 		start_spinner "Verschiebe Files..."
-			#--- Full-Installer
-				if [ ! -f $fullInstallerFolderPath ]; then
-					mv /home/$SUDO_USER/$fullInstaller $fullInstallerFolderPath > /dev/null 2>&1
-				else
-					echo "Die Datei $fullInstallerFolderPath ist bereits vorhanden!"
-				fi
-
-				#--- Updater-Installer
-					if [ ! -f $updaterInstallerPath ]; then
-						mv /home/$SUDO_USER/$bashInstaller $updaterInstallerPath > /dev/null 2>&1
+				#--- Full-Installer
+					if [ ! -f $fullInstallerPath ]; then
+						mv /home/$SUDO_USER/$fullInstaller $fullInstallerFolderPath > /dev/null 2>&1
 					else
-						echo "Die Datei $updaterInstallerPath ist bereits vorhanden!"
+						echo "Die Datei $fullInstaller ist bereits in $fullInstallerFolderPath vorhanden!"
 					fi
 
 				#--- Update-Executer
-					if [ ! -f $updaterExecuterPath ]; then
-						mv /home/$SUDO_USER/$updaterExecuter $updaterExecuterPath > /dev/null 2>&1
+					if [ ! -f $bashExecuterPath ]; then
+						mv /home/$SUDO_USER/$bashExecuter $folder2Path > /dev/null 2>&1
 					else
-						echo "Die Datei $updaterExecuterPath ist bereits vorhanden!"
+						echo "Die Datei $bashExecuter ist bereits in $folder2Path vorhanden!"
 					fi
 
-				#--- Cron-Check.txt
-					if [ ! -f $cronCheckPath ]; then
-						mv /home/$SUDO_USER/$cronCheck $cronCheckPath > /dev/null 2>&1
-					else
-						echo "Die Datei $cronCheckPath ist bereits vorhanden!"
-					fi
+			#--- Cron-Check.txt
+				if [ ! -f $cronCheckPath ]; then
+					mv /home/$SUDO_USER/$cronCheck $cronCheckPath > /dev/null 2>&1
+				else
+					echo "Die Datei $cronCheck ist bereits in $cronCheckPath vorhanden!"
+				fi
 		stop_spinner $?
