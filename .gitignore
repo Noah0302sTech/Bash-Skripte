@@ -1,1 +1,11 @@
-.DS_Store
+# Ignore sensitive information
+*.key
+*.pem
+*.env
+*.config
+
+# Ignore user-specific files
+*.log
+*.swp
+*.DS_Store
+Thumbs.db
