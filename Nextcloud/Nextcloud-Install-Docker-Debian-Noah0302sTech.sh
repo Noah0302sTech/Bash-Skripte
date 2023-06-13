@@ -11,7 +11,7 @@
 
 
 
-	#----- Source of Spinner-Function: https://github.com/tlatsas/bash-spinner
+	#----- Source of Spinner-Function: https://github.com/tlatsas/bash-spinner -----#
 			function _spinner() {
 				# $1 start/stop
 				#
@@ -85,6 +85,15 @@
 
 
 
+	#----- End of -----#
+			function echoEnd {
+				echo
+				echo
+				echo
+			}
+
+
+
 	#----- Refresh Packages
 		start_spinner "Aktualisiere Package-Listen..."
 			apt update -y > /dev/null 2>&1
@@ -92,74 +101,70 @@
 		echo
 		echo
 
+
+
+	#----- Variables
+		urlVar="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Nextcloud/Nextcloud-Configurator/Nextcloud-Config-Docker-Noah0302sTech.sh"
+
+		parentFolder="Nextcloud"
+			fullInstallerFolder="Installer"
+				fullInstaller="Nextcloud-Install-Docker-Debian-Noah0302sTech.sh"
+				dockerFile="docker-compose.yml"
+			subFolder="Configurator"
+				bashConfigurator="Nextcloud-Config-Docker-Noah0302sTech.sh"
+
+		parentFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder"
+			fullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder"
+				fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder/$fullInstaller"
+				fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder/$dockerFile"
+			subFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder"
+					updaterInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1/$bashConfigurator"
+
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
+
+
+
 
 
 #----- Docker
 	#--- Install Docker
 		start_spinner "Installiere docker.io..."
-		apt install -y docker.io > /dev/null 2>&1
+			apt install docker.io -y > /dev/null 2>&1
 		stop_spinner $?
-		echo
 
 	#--- Install Docker Compose
 		start_spinner "Installiere Docker-Compose..."
-		apt install -y docker-compose > /dev/null 2>&1
+			apt install docker-compose -y > /dev/null 2>&1
 		stop_spinner $?
-		echo
 
 	#--- Add User to Docker-Group
 		start_spinner "Füge $SUDO_USER zu Docker-Gruppe hinzu..."
-		usermod -aG docker $SUDO_USER > /dev/null 2>&1
+			usermod -aG docker $SUDO_USER > /dev/null 2>&1
 		stop_spinner $?
 
 	#--- Install Apparmor (Only needed on specific Systems like Hetzner VServer)
 		start_spinner "Installiere Apparmor, falls benötigt..."
-		apt install apparmor -y > /dev/null 2>&1
+			apt install apparmor -y > /dev/null 2>&1
 		stop_spinner $?
-
-	echo
-	echo
+	echoEnd
 
 
+#----- Docker-Compose
+	#--- Set default values for Docker-Compose
+		MYSQL_ROOT_PASSWORD=sqlrootpassword
+		MYSQL_PASSWORD=sqlpassword
 
-#----- Create a folder for Nextcloud
-	start_spinner "Erstelle Nextcloud-Ordner..."
-		mkdir /home/$SUDO_USER/nextcloud
-		if [ -d /home/$SUDO_USER/nextcloud ]; then
-		cd /home/$SUDO_USER/nextcloud
-		else
-		echo "Fehler beim Erstellen des Ordners!"
-		exit 1
-		fi
-		cd /home/$SUDO_USER/nextcloud > /dev/null 2>&1
-	stop_spinner $?
+	#--- Prompt user for custom values
+		read -p "MariaDB-Root-Passwort eigeben [default: $MYSQL_ROOT_PASSWORD]: " input
+		MYSQL_ROOT_PASSWORD=${input:-$MYSQL_ROOT_PASSWORD}
+		read -p "MariaDB-Passwort eigeben [default: $MYSQL_PASSWORD]: " input
+		MYSQL_PASSWORD=${input:-$MYSQL_PASSWORD}
 
-	echo
-	echo
-
-
-
-#----- Set default values for Docker-Compose
-	MYSQL_ROOT_PASSWORD=sqlrootpassword
-	MYSQL_PASSWORD=sqlpassword
-
-#----- Prompt user for custom values
-	read -p "MariaDB-Root-Passwort eigeben [default: $MYSQL_ROOT_PASSWORD]: " input
-	MYSQL_ROOT_PASSWORD=${input:-$MYSQL_ROOT_PASSWORD}
-	read -p "MariaDB-Passwort eigeben [default: $MYSQL_PASSWORD]: " input
-	MYSQL_PASSWORD=${input:-$MYSQL_PASSWORD}
-	
-	echo
-	echo
-
-
-
-#----- Create a Docker Compose file
-	start_spinner "Erstelle Docker-Compose-File..."
-		touch docker-compose.yml
+	#--- Create a Docker Compose file
+		start_spinner "Erstelle Docker-Compose-File..."
+			touch docker-compose.yml > /dev/null 2>&1
 		echo "version: '3'
 services:
   db:
@@ -187,10 +192,8 @@ services:
 volumes:
   nextcloud_data:
 " >> docker-compose.yml
-	stop_spinner $?
-
-	echo
-	echo
+		stop_spinner $?
+	echoEnd
 
 
 
@@ -199,19 +202,79 @@ volumes:
 		docker-compose up -d > /dev/null 2>&1
 	stop_spinner $?
 	docker ps
-
-	echo
-	echo
+	echoEnd
 
 
 
 #----- Configure the Nextcloud Server
-	#--- This does not work yet with the new NC-Docker Image! I will try to fix this soon...
-	#start_spinner "Erstelle Nextcloud-Config-Skript..."
-	#	cd /home/$SUDO_USER
-	#	apt install wget -y > /dev/null 2>&1
-	#	wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Nextcloud/Nextcloud-Config-Docker-Noah0302sTech.sh > /dev/null 2>&1
-	#	chmod +x NextcloudConfig-Docker-Noah0302sTech.sh
-	#stop_spinner $?
-	#echo "Um NACH DER INSTALLATION die Nextcloud-Config anzupassen, starte das Nextcloud-Config-Skript mit:"
-	#echo "sudo bash NextcloudConfig-Docker-Noah0302sTech.sh"
+	start_spinner "Erstelle Nextcloud-Config-Skript..."
+		apt install wget -y > /dev/null 2>&1
+		wget $urlVar > /dev/null 2>&1
+		chmod +x $bashConfigurator > /dev/null 2>&1
+	stop_spinner $?
+	echo "Um NACH DER INSTALLATION die Nextcloud-Config anzupassen, starte das Nextcloud-Config-Skript mit:"
+	echo "sudo bash /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashExecuter"
+	echoEnd
+
+
+
+
+
+#-----	-----#	#-----	-----#	#-----	-----#
+#-----	-----#	#-----	-----#	#-----	-----#
+#-----	-----#	#-----	-----#	#-----	-----#
+
+#----- Create Folders
+	start_spinner "Erstelle Verzeichnisse..."
+		#--- Noah0302sTech
+			if [ ! -d /home/$SUDO_USER/Noah0302sTech ]; then
+				mkdir /home/$SUDO_USER/Noah0302sTech > /dev/null 2>&1
+			else
+				echo "Ordner /home/$SUDO_USER/Noah0302sTech bereits vorhanden!"
+			fi
+
+			#--- Nextcloud
+				if [ ! -d $parentFolderPath ]; then
+					mkdir $parentFolderPath > /dev/null 2>&1
+				else
+					echo "Ordner $parentFolderPath bereits vorhanden!"
+				fi
+
+				#--- Nextcloud-Installer
+					if [ ! -d $fullInstallerFolderPath ]; then
+						mkdir $fullInstallerFolderPath > /dev/null 2>&1
+					else
+						echo "Ordner $fullInstallerFolderPath bereits vorhanden!"
+					fi
+
+				#--- Nextcloud-Configurator
+					if [ ! -d $subFolderPath ]; then
+						mkdir $subFolderPath > /dev/null 2>&1
+					else
+						echo "Ordner $subFolderPath bereits vorhanden!"
+					fi
+	stop_spinner $?
+
+#----- Move Files
+	start_spinner "Verschiebe Files..."
+		#--- Full-Installer
+			if [ ! -f $fullInstallerFolderPath ]; then
+				mv /home/$SUDO_USER/$fullInstaller $fullInstallerFolderPath > /dev/null 2>&1
+			else
+				echo "Die Datei $fullInstallerFolderPath ist bereits vorhanden!"
+			fi
+
+		#--- Docker-Compose
+			if [ ! -f $fullInstallerPath ]; then
+				mv /home/$SUDO_USER/$dockerFile $fullInstallerPath > /dev/null 2>&1
+			else
+				echo "Die Datei '$dockerFile' ist bereits vorhanden!"
+			fi
+
+			#--- Nextcloud-Configurator
+				if [ ! -f $updaterInstallerPath ]; then
+					mv /home/$SUDO_USER/$bashConfigurator $updaterInstallerPath > /dev/null 2>&1
+				else
+					echo "Die Datei '$bashConfigurator' ist bereits vorhanden!"
+				fi
+	stop_spinner $?
