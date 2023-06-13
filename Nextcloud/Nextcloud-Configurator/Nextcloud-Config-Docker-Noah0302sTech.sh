@@ -134,7 +134,8 @@
 #----- Restart Docker
 	while IFS= read -n1 -r -p "Möchtest du die Docker-Container jetzt neustarten, um die Änderungen zu übernehmen? Y/N: " && [[ $REPLY != q ]]; do
 	case $REPLY in
-		y)  #--- Curl Java-Updater
+		y)  echo
+			#--- Curl Java-Updater
 				start_spinner "Starte Docker-Container neu... "
 						docker restart "$SUDO_USER"_nextcloud_1 > /dev/null 2>&1
 						docker restart "$SUDO_USER"_db_1 > /dev/null 2>&1
