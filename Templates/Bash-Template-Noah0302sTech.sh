@@ -85,7 +85,7 @@
 
 
 
-	#----- End of -----#
+	#----- echoEnd
 			function echoEnd {
 				echo
 				echo
