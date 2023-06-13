@@ -162,7 +162,7 @@
 
 	#--- Create a Docker Compose file
 		start_spinner "Erstelle Docker-Compose-File..."
-			touch docker-compose.yml
+			touch docker-compose.yml > /dev/null 2>&1
 		echo "version: '3'
 services:
   db:
@@ -189,7 +189,7 @@ services:
       - db
 volumes:
   nextcloud_data:
-" >> docker-compose.yml
+" >> docker-compose.yml > /dev/null 2>&1
 		stop_spinner $?
 	echoEnd
 
