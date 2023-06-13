@@ -89,8 +89,17 @@
 		start_spinner "Aktualisiere Package-Listen..."
 			apt update -y > /dev/null 2>&1
 		stop_spinner $?
-		echo
-		echo
+		echoEnd
+
+
+
+
+	#----- echoEnd
+			function echoEnd {
+				echo
+				echo
+				echo
+			}
 
 
 
