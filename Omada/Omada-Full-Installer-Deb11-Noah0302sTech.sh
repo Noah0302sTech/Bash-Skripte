@@ -1,8 +1,7 @@
 #!/bin/bash
 #	Made by Noah0302sTech
 #	chmod +x Omada-Full-Installer-Deb11-Noah0302sTech.sh && sudo bash Omada-Full-Installer-Deb11-Noah0302sTech.sh
-
-#TODO:	Check downloaded File, if its a .deb
+#	curl -sSL https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Omada/Omada-Full-Installer-Deb11-Noah0302sTech.sh | sudo bash
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
@@ -97,7 +96,7 @@
 
 
 	#----- Variables
-		javaUpdaterUrl="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Omada/Java-Updater/Java-Updater-Installer-Debian-Noah0302sTech.sh"
+		javaUpdaterUrl="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Omada/Java-Updater/Java-Updater-Installer-Debian-Noah0302sTech.sh"
 
 		folderVar=Omada
 			fullInstallerFolder=Omada-Full-Installer
@@ -142,7 +141,7 @@
 		stop_spinner $?
 
 	#--- Install OpenJDK-8-Headless
-		start_spinner "Installiere OpenJDK-8, bitte warten..."
+		start_spinner "Installiere OpenJDK-8-JRE-Headless, bitte warten..."
 			DEBIAN_FRONTEND=noninteractive apt install openjdk-8-jre-headless -y > /dev/null 2>&1
 		stop_spinner $?
 
@@ -158,7 +157,8 @@
 	#--- Install Java-Updater
 		while IFS= read -n1 -r -p "Möchtest du Java-Updater installieren? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 		case $REPLY in
-			y)  #--- Curl Java-Updater
+			y)	echo
+				#--- Curl Java-Updater
 					start_spinner "Installiere Java-Updater..."
 						wget $javaUpdaterUrl > /dev/null 2>&1
 					stop_spinner $?
@@ -175,8 +175,11 @@
 		esac
 		done
 
-		echo
-		echo
+	echo
+	echo
+	echo
+	echo
+	echo
 
 
 
@@ -192,6 +195,9 @@
 			apt install jsvc curl gnupg2 -y > /dev/null 2>&1
 		stop_spinner $?
 
+	echo
+	echo
+	echo
 	echo
 	echo
 
@@ -227,26 +233,34 @@
 
 	echo
 	echo
-
+	echo
+	echo
+	echo
 
 
 #----- Install Omada
 	echo "----- Omada -----"
 	#--- Prompt user for the Omada download URL or use the default if left blank
-		read -t 10 -p "Füge die Download-URL für Omada_SDN_Controller_vX.X.X_Linux_x64.deb hier ein (Leer oder warte 10 Sekunden für v5.9.9): " omada_url
-		if [ -z "$omada_url" ]; then
-			omada_url="https://static.tp-link.com/upload/software/2023/202303/20230321/Omada_SDN_Controller_v5.9.31_Linux_x64.deb"
-		fi
+		while true; do
+			read -t 30 -p "Füge die Download-URL für Omada_SDN_Controller_vX.X.X_Linux_x64.deb hier ein (Leer oder warte 30 Sekunden für v5.9.31): " omada_url
+			if [ -z "$omada_url" ]; then
+				omada_url="https://static.tp-link.com/upload/software/2023/202303/20230321/Omada_SDN_Controller_v5.9.31_Linux_x64.deb"
+				break
+			elif [[ $omada_url =~ ^https://static\.tp-link\.com/upload/software/.*\.deb$ ]]; then
+				break
+			else
+				echo "Falschen Download-Link eingegeben! Das Skript unterstützt nur '.deb', NICHT '.tag.gz' oder '.zip'!"
+			fi
+		done
 		echo "Gewählte Version: $omada_url"
 
-	#--- Download selcted Omada-Version
+	#--- Download selected Omada-Version
 		start_spinner "Downloade Omada-Controller, bitte warten..."
 			apt install wget -y > /dev/null 2>&1
 			wget "$omada_url" > /dev/null 2>&1
 		stop_spinner $?
 
 	#--- Install downloaded Omada-Version
-		echo
 		#start_spinner "Installiere Omada-Controller, bitte warten..."
 		apt install ./*.deb
 		#stop_spinner $?
@@ -262,27 +276,6 @@
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
-
-		javaUpdaterUrl="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Omada/Java-Updater/Java-Updater-Installer-Debian-Noah0302sTech.sh"
-
-		folderVar=Omada
-			fullInstallerFolder=Omada-Full-Installer
-				fullInstaller=Omada-Full-Installer-Deb11-Noah0302sTech.sh
-			subFolderVar=Java-Updater
-				folder1=Updater-Installer
-					bashInstaller=Java-Updater-Installer-Debian-Noah0302sTech.sh
-				folder2=Updater-Executer
-					updaterExecuter=Java-Updater-Debian-Noah0302sTech.sh
-				cronCheck=Cron-Check.txt
-
-		omadaFolderPath="/home/$SUDO_USER/Noah0302sTech/$folderVar"
-			omadaFullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$fullInstallerFolder"
-			javaUpdaterFolderPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar"
-				updaterInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1"
-					updaterInstallerPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder1/$bashInstaller"
-				updaterExecuterFolderPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2"
-					updaterExecuterPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$updaterExecuter"
-				cronCheckPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck"
 
 #----- Create Folders
 	start_spinner "Erstelle Verzeichnisse..."

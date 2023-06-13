@@ -93,7 +93,7 @@
 		echo
 
 	#----- Variables
-		javaUpdaterUrl="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Omada/Java-Updater/Java-Updater-Installer-Debian-Noah0302sTech.sh"
+		javaUpdaterUrl="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Omada/Java-Updater/Java-Updater-Installer-Debian-Noah0302sTech.sh"
 
 		folderVar=Omada
 			fullInstallerFolder=Omada-Full-Installer
@@ -126,6 +126,7 @@
 		touch /home/$SUDO_USER/$updaterExecuter
 		touch /home/$SUDO_USER/$cronCheck
 		echo "#Init after Install" > /home/$SUDO_USER/$cronCheck
+		echo "" >> /home/$SUDO_USER/$cronCheck
 		echo "#!/bin/bash
 #	Made by Noah0302sTech
 
@@ -187,7 +188,7 @@ alias ccJavaUpdater='cat $cronCheckPath'
 
 
 #----- Create MOTD
-	if grep -q "^Pihole" /etc/motd; then
+	if grep -q "^Omada" /etc/motd; then
 		echo "Der MOTD Eintrag exisitert bereits in /etc/motd"
 	else
 		start_spinner "Passe MOTD an..."
@@ -196,4 +197,74 @@ Omada
 Cron-Check Java-Updater:	ccJavaUpdater
 " >> /etc/motd
 		stop_spinner $?
+	fi
+
+
+
+
+#----- Move Files, if not called by Full-Installer
+	if [ -f "/home/$SUDO_USER/$fullInstaller" ]; then
+		echo "Called by $fullInstaller, not moving Files just yet!"
+	else
+				#----- Create Folders
+			start_spinner "Erstelle Verzeichnisse..."
+				#--- Noah0302sTech
+					if [ ! -d /home/$SUDO_USER/Noah0302sTech ]; then
+						mkdir /home/$SUDO_USER/Noah0302sTech > /dev/null 2>&1
+					else
+						echo "Ordner /home/$SUDO_USER/Noah0302sTech bereits vorhanden!"
+					fi
+
+					#--- Omada-Folder
+						if [ ! -d $omadaFolderPath ]; then
+							mkdir $omadaFolderPath > /dev/null 2>&1
+						else
+							echo "Ordner $omadaFolderPath bereits vorhanden!"
+						fi
+
+						#--- Java-Updater Folder
+							if [ ! -d $javaUpdaterFolderPath ]; then
+								mkdir $javaUpdaterFolderPath > /dev/null 2>&1
+							else
+								echo "Ordner $javaUpdaterFolderPath bereits vorhanden!"
+							fi
+
+							#--- Updater-Installer Folder
+								if [ ! -d $updaterInstallerFolderPath ]; then
+									mkdir $updaterInstallerFolderPath > /dev/null 2>&1
+								else
+									echo "Ordner $updaterInstallerFolderPath bereits vorhanden!"
+								fi
+
+							#--- Updater-Executer Folder
+								if [ ! -d $updaterExecuterFolderPath ]; then
+									mkdir $updaterExecuterFolderPath > /dev/null 2>&1
+								else
+									echo "Ordner $updaterExecuterFolderPath bereits vorhanden!"
+								fi
+			stop_spinner $?
+
+		#----- Move Files
+			start_spinner "Verschiebe Files..."
+					#--- Java-Updater-Installer-Debian-Noah0302sTech.sh
+						if [ ! -f $updaterInstallerPath ]; then
+							mv /home/$SUDO_USER/$bashInstaller $updaterInstallerPath > /dev/null 2>&1
+						else
+							echo "Die Datei $updaterInstallerPath ist bereits vorhanden!"
+						fi
+
+					#--- Java-Updater-Debian-Noah0302sTech.sh
+						if [ ! -f $updaterExecuterPath ]; then
+							mv /home/$SUDO_USER/$updaterExecuter $updaterExecuterPath > /dev/null 2>&1
+						else
+							echo "Die Datei $updaterExecuterPath ist bereits vorhanden!"
+						fi
+
+					#--- Cron-Check.txt
+						if [ ! -f $cronCheckPath ]; then
+							mv /home/$SUDO_USER/$cronCheck $cronCheckPath > /dev/null 2>&1
+						else
+							echo "Die Datei $cronCheckPath ist bereits vorhanden!"
+						fi
+			stop_spinner $?
 	fi
