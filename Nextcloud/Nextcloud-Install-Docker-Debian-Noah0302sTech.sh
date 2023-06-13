@@ -2,6 +2,9 @@
 #	Made by Noah0302sTech
 #	chmod +x Nextcloud-Install-Docker-Debian-Noah0302sTech.sh && sudo bash Nextcloud-Install-Docker-Debian-Noah0302sTech.sh
 
+#	TODO:	Add Alias for Nextcloud-Config
+#				configNC
+
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
 		if [[ $EUID -ne 0 ]]; then
@@ -109,12 +112,14 @@
 		parentFolder="Nextcloud"
 			fullInstallerFolder="Installer"
 				fullInstaller="Nextcloud-Install-Docker-Debian-Noah0302sTech.sh"
+				dockerFile="docker-compose.yml"
 			subFolder="Configurator"
 				bashConfigurator="Nextcloud-Config-Docker-Noah0302sTech.sh"
 
 		parentFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder"
 			fullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder"
 				fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder/$fullInstaller"
+				fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder/$dockerFile"
 			subFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder"
 					updaterInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1/$bashConfigurator"
 
@@ -231,40 +236,26 @@ volumes:
 				echo "Ordner /home/$SUDO_USER/Noah0302sTech bereits vorhanden!"
 			fi
 
-			#--- Parent Folder
+			#--- Nextcloud
 				if [ ! -d $parentFolderPath ]; then
 					mkdir $parentFolderPath > /dev/null 2>&1
 				else
 					echo "Ordner $parentFolderPath bereits vorhanden!"
 				fi
 
-				#--- Full-Installer Folder
+				#--- Nextcloud-Installer
 					if [ ! -d $fullInstallerFolderPath ]; then
 						mkdir $fullInstallerFolderPath > /dev/null 2>&1
 					else
 						echo "Ordner $fullInstallerFolderPath bereits vorhanden!"
 					fi
 
-				#--- Sub Folder
+				#--- Nextcloud-Configurator
 					if [ ! -d $subFolderPath ]; then
 						mkdir $subFolderPath > /dev/null 2>&1
 					else
 						echo "Ordner $subFolderPath bereits vorhanden!"
 					fi
-
-					#--- Folder 1
-						if [ ! -d $folder1Path ]; then
-							mkdir $folder1Path > /dev/null 2>&1
-						else
-							echo "Ordner $folder1Path bereits vorhanden!"
-						fi
-
-					#--- Folder2
-						if [ ! -d $folder2Path ]; then
-							mkdir $folder2Path > /dev/null 2>&1
-						else
-							echo "Ordner $folder2Path bereits vorhanden!"
-						fi
 	stop_spinner $?
 
 #----- Move Files
@@ -276,24 +267,17 @@ volumes:
 				echo "Die Datei $fullInstallerFolderPath ist bereits vorhanden!"
 			fi
 
-			#--- Updater-Installer
+		#--- Docker-Compose
+			if [ ! -f $fullInstallerPath ]; then
+				mv /home/$SUDO_USER/$dockerFile $fullInstallerPath > /dev/null 2>&1
+			else
+				echo "Die Datei '$dockerFile' ist bereits vorhanden!"
+			fi
+
+			#--- Nextcloud-Configurator
 				if [ ! -f $updaterInstallerPath ]; then
 					mv /home/$SUDO_USER/$bashConfigurator $updaterInstallerPath > /dev/null 2>&1
 				else
-					echo "Die Datei $updaterInstallerPath ist bereits vorhanden!"
-				fi
-
-			#--- Update-Executer
-				if [ ! -f $updaterExecuterPath ]; then
-					mv /home/$SUDO_USER/$updaterExecuter $updaterExecuterPath > /dev/null 2>&1
-				else
-					echo "Die Datei $updaterExecuterPath ist bereits vorhanden!"
-				fi
-
-			#--- Cron-Check.txt
-				if [ ! -f $cronCheckPath ]; then
-					mv /home/$SUDO_USER/$cronCheck $cronCheckPath > /dev/null 2>&1
-				else
-					echo "Die Datei $cronCheckPath ist bereits vorhanden!"
+					echo "Die Datei '$bashConfigurator' ist bereits vorhanden!"
 				fi
 	stop_spinner $?
