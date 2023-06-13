@@ -85,6 +85,15 @@
 
 
 
+	#----- End of -----#
+			function echoEnd {
+				echo
+				echo
+				echo
+			}
+
+
+
 	#----- Refresh Packages
 		start_spinner "Aktualisiere Package-Listen..."
 			apt update -y > /dev/null 2>&1
@@ -129,8 +138,7 @@
 	start_spinner "XXXXXXXXXX..."
 		XXXXXXXXXX > /dev/null 2>&1
 	stop_spinner $?
-	echo
-	echo
+	echoEnd
 
 
 
