@@ -105,7 +105,7 @@
 
 		parentFolder="Docker"
 			subFolder="System-Prune"
-				fullInstaller="Full-Installer"
+				fullInstallerFolder="Full-Installer"
 					fullInstaller="Docker-SystemPrune-Installer-Noah0302sTech.sh"
 				folder2="System-Prune-Executer"
 					bashExecuter="Docker-SystemPrune-Executer-Noah0302sTech.sh"
@@ -113,9 +113,9 @@
 
 		parentFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder"
 			subFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder"
-				fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$fullInstaller"
+				fullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$fullInstallerFolder"
 					fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$fullInstaller/$bashExecuter"
-				folder2Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2"
+				bashExecuterFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2"
 					bashExecuterPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2/$fullInstaller"
 				cronCheckPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$cronCheck"
 
@@ -300,17 +300,17 @@ Cron-Check Docker:
 						fi
 
 						#--- Full-Installer
-							if [ ! -d $fullInstallerPath ]; then
-								mkdir $fullInstallerPath > /dev/null 2>&1
+							if [ ! -d $fullInstallerFolderPath ]; then
+								mkdir $fullInstallerFolderPath > /dev/null 2>&1
 							else
-								echo "Ordner $fullInstallerPath bereits vorhanden!"
+								echo "Ordner $fullInstallerFolderPath bereits vorhanden!"
 							fi
 
 						#--- System-Prune-Executer
-							if [ ! -d $folder2Path ]; then
-								mkdir $folder2Path > /dev/null 2>&1
+							if [ ! -d $bashExecuterFolderPath ]; then
+								mkdir $bashExecuterFolderPath > /dev/null 2>&1
 							else
-								echo "Ordner $folder2Path bereits vorhanden!"
+								echo "Ordner $bashExecuterFolderPath bereits vorhanden!"
 							fi
 
 		stop_spinner $?
@@ -326,9 +326,9 @@ Cron-Check Docker:
 
 				#--- Update-Executer
 					if [ ! -f $bashExecuterPath ]; then
-						mv /home/$SUDO_USER/$bashExecuter $folder2Path > /dev/null 2>&1
+						mv /home/$SUDO_USER/$bashExecuter $bashExecuterFolderPath > /dev/null 2>&1
 					else
-						echo "Die Datei $bashExecuter ist bereits in $folder2Path vorhanden!"
+						echo "Die Datei $bashExecuter ist bereits in $bashExecuterFolderPath vorhanden!"
 					fi
 
 			#--- Cron-Check.txt
