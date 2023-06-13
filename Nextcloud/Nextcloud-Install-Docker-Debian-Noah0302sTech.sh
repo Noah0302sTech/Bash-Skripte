@@ -85,6 +85,15 @@
 
 
 
+	#----- End of -----#
+			function echoEnd {
+				echo
+				echo
+				echo
+			}
+
+
+
 	#----- Refresh Packages
 		start_spinner "Aktualisiere Package-Listen..."
 			apt update -y > /dev/null 2>&1
@@ -101,67 +110,59 @@
 			fullInstallerFolder="Installer"
 				fullInstaller="Nextcloud-Install-Docker-Debian-Noah0302sTech.sh"
 			subFolder="Configurator"
-				bashInstaller="Nextcloud-Config-Docker-Noah0302sTech.sh"
+				bashConfigurator="Nextcloud-Config-Docker-Noah0302sTech.sh"
 
 		parentFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder"
 			fullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder"
 				fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder/$fullInstaller"
 			subFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder"
-					updaterInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1/$bashInstaller"
+					updaterInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1/$bashConfigurator"
 
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
+
+
+
 
 
 #----- Docker
 	#--- Install Docker
 		start_spinner "Installiere docker.io..."
-		apt install -y docker.io > /dev/null 2>&1
+			apt install docker.io -y > /dev/null 2>&1
 		stop_spinner $?
-		echo
 
 	#--- Install Docker Compose
 		start_spinner "Installiere Docker-Compose..."
-		apt install -y docker-compose > /dev/null 2>&1
+			apt install docker-compose -y > /dev/null 2>&1
 		stop_spinner $?
-		echo
 
 	#--- Add User to Docker-Group
 		start_spinner "Füge $SUDO_USER zu Docker-Gruppe hinzu..."
-		usermod -aG docker $SUDO_USER > /dev/null 2>&1
+			usermod -aG docker $SUDO_USER > /dev/null 2>&1
 		stop_spinner $?
 
 	#--- Install Apparmor (Only needed on specific Systems like Hetzner VServer)
 		start_spinner "Installiere Apparmor, falls benötigt..."
-		apt install apparmor -y > /dev/null 2>&1
+			apt install apparmor -y > /dev/null 2>&1
 		stop_spinner $?
-
-	echo
-	echo
+	echoEnd
 
 
+#----- Docker-Compose
+	#--- Set default values for Docker-Compose
+		MYSQL_ROOT_PASSWORD=sqlrootpassword
+		MYSQL_PASSWORD=sqlpassword
 
+	#--- Prompt user for custom values
+		read -p "MariaDB-Root-Passwort eigeben [default: $MYSQL_ROOT_PASSWORD]: " input
+		MYSQL_ROOT_PASSWORD=${input:-$MYSQL_ROOT_PASSWORD}
+		read -p "MariaDB-Passwort eigeben [default: $MYSQL_PASSWORD]: " input
+		MYSQL_PASSWORD=${input:-$MYSQL_PASSWORD}
 
-
-#----- Set default values for Docker-Compose
-	MYSQL_ROOT_PASSWORD=sqlrootpassword
-	MYSQL_PASSWORD=sqlpassword
-
-#----- Prompt user for custom values
-	read -p "MariaDB-Root-Passwort eigeben [default: $MYSQL_ROOT_PASSWORD]: " input
-	MYSQL_ROOT_PASSWORD=${input:-$MYSQL_ROOT_PASSWORD}
-	read -p "MariaDB-Passwort eigeben [default: $MYSQL_PASSWORD]: " input
-	MYSQL_PASSWORD=${input:-$MYSQL_PASSWORD}
-	
-	echo
-	echo
-
-
-
-#----- Create a Docker Compose file
-	start_spinner "Erstelle Docker-Compose-File..."
-		touch docker-compose.yml
+	#--- Create a Docker Compose file
+		start_spinner "Erstelle Docker-Compose-File..."
+			touch docker-compose.yml
 		echo "version: '3'
 services:
   db:
@@ -189,10 +190,8 @@ services:
 volumes:
   nextcloud_data:
 " >> docker-compose.yml
-	stop_spinner $?
-
-	echo
-	echo
+		stop_spinner $?
+	echoEnd
 
 
 
@@ -201,23 +200,19 @@ volumes:
 		docker-compose up -d > /dev/null 2>&1
 	stop_spinner $?
 	docker ps
-
-	echo
-	echo
+	echoEnd
 
 
 
 #----- Configure the Nextcloud Server
 	start_spinner "Erstelle Nextcloud-Config-Skript..."
 		apt install wget -y > /dev/null 2>&1
-		wget $url > /dev/null 2>&1
-		chmod +x Nextcloud-Config-Docker-Noah0302sTech.sh
+		wget $urlVar > /dev/null 2>&1
+		chmod +x $bashConfigurator > /dev/null 2>&1
 	stop_spinner $?
 	echo "Um NACH DER INSTALLATION die Nextcloud-Config anzupassen, starte das Nextcloud-Config-Skript mit:"
 	echo "sudo bash /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashExecuter"
-
-	echo
-	echo
+	echoEnd
 
 
 
@@ -283,7 +278,7 @@ volumes:
 
 			#--- Updater-Installer
 				if [ ! -f $updaterInstallerPath ]; then
-					mv /home/$SUDO_USER/$bashInstaller $updaterInstallerPath > /dev/null 2>&1
+					mv /home/$SUDO_USER/$bashConfigurator $updaterInstallerPath > /dev/null 2>&1
 				else
 					echo "Die Datei $updaterInstallerPath ist bereits vorhanden!"
 				fi
