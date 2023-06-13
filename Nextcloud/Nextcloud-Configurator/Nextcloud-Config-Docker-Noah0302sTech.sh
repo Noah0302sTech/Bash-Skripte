@@ -125,6 +125,7 @@
 
 
 
+
 #----- Change Config
 	nano /var/lib/docker/volumes/"$SUDO_USER"_nextcloud_data/_data/config/config.php
 
