@@ -117,27 +117,27 @@
 
 
 #----- Change Config
-    nano /var/www/html/config/config.php
+	nano /var/www/html/config/config.php
 
 
 
 #----- Restart Docker
-    while true; do
-        read -p "Möchtest du die Docker-Container jetzt neustarten [empfohlen]? Y/N: " yn
-        case $yn in
-            [Yy]* ) start_spinner "Starte Docker-Container neu... "
-                        docker restart nextcloud_nextcloud_1 > /dev/null 2>&1
-                        docker restart nextcloud_db_1 > /dev/null 2>&1
-                    stop_spinner $?; break;;
-            [Nn]* ) exit;;
-            * ) echo "Bitte gib Y/y für Ja, oder N/n für Nein ein." && echo;;
-        esac
-    done
-    echo
-    docker ps
-    
-    echo
-    echo
+	while true; do
+		read -p "Möchtest du die Docker-Container jetzt neustarten [empfohlen]? Y/N: " yn
+		case $yn in
+			[Yy]* ) start_spinner "Starte Docker-Container neu... "
+						docker restart nextcloud_nextcloud_1 > /dev/null 2>&1
+						docker restart nextcloud_db_1 > /dev/null 2>&1
+					stop_spinner $?; break;;
+			[Nn]* ) exit;;
+			* ) echo "Bitte gib Y/y für Ja, oder N/n für Nein ein." && echo;;
+		esac
+	done
+	echo
+	docker ps
+	
+	echo
+	echo
 
 
 
@@ -146,79 +146,3 @@
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
-
-#----- Create Folders
-	start_spinner "Erstelle Verzeichnisse..."
-		#--- Noah0302sTech
-			if [ ! -d /home/$SUDO_USER/Noah0302sTech ]; then
-				mkdir /home/$SUDO_USER/Noah0302sTech > /dev/null 2>&1
-			else
-				echo "Ordner /home/$SUDO_USER/Noah0302sTech bereits vorhanden!"
-			fi
-
-			#--- Parent Folder
-				if [ ! -d $parentFolderPath ]; then
-					mkdir $parentFolderPath > /dev/null 2>&1
-				else
-					echo "Ordner $parentFolderPath bereits vorhanden!"
-				fi
-
-				#--- Full-Installer Folder
-					if [ ! -d $fullInstallerFolderPath ]; then
-						mkdir $fullInstallerFolderPath > /dev/null 2>&1
-					else
-						echo "Ordner $fullInstallerFolderPath bereits vorhanden!"
-					fi
-
-				#--- Sub Folder
-					if [ ! -d $subFolderPath ]; then
-						mkdir $subFolderPath > /dev/null 2>&1
-					else
-						echo "Ordner $subFolderPath bereits vorhanden!"
-					fi
-
-					#--- Folder 1
-						if [ ! -d $folder1Path ]; then
-							mkdir $folder1Path > /dev/null 2>&1
-						else
-							echo "Ordner $folder1Path bereits vorhanden!"
-						fi
-
-					#--- Folder2
-						if [ ! -d $folder2Path ]; then
-							mkdir $folder2Path > /dev/null 2>&1
-						else
-							echo "Ordner $folder2Path bereits vorhanden!"
-						fi
-	stop_spinner $?
-
-#----- Move Files
-	start_spinner "Verschiebe Files..."
-		#--- Full-Installer
-			if [ ! -f $fullInstallerFolderPath ]; then
-				mv /home/$SUDO_USER/$fullInstaller $fullInstallerFolderPath > /dev/null 2>&1
-			else
-				echo "Die Datei $fullInstallerFolderPath ist bereits vorhanden!"
-			fi
-
-			#--- Updater-Installer
-				if [ ! -f $updaterInstallerPath ]; then
-					mv /home/$SUDO_USER/$bashInstaller $updaterInstallerPath > /dev/null 2>&1
-				else
-					echo "Die Datei $updaterInstallerPath ist bereits vorhanden!"
-				fi
-
-			#--- Update-Executer
-				if [ ! -f $updaterExecuterPath ]; then
-					mv /home/$SUDO_USER/$updaterExecuter $updaterExecuterPath > /dev/null 2>&1
-				else
-					echo "Die Datei $updaterExecuterPath ist bereits vorhanden!"
-				fi
-
-			#--- Cron-Check.txt
-				if [ ! -f $cronCheckPath ]; then
-					mv /home/$SUDO_USER/$cronCheck $cronCheckPath > /dev/null 2>&1
-				else
-					echo "Die Datei $cronCheckPath ist bereits vorhanden!"
-				fi
-	stop_spinner $?
