@@ -104,7 +104,7 @@
 		urlVar="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Docker/System-Prune/System-Prune-Executer/Docker-SystemPrune-Executer-Noah0302sTech.sh"
 
 		parentFolder="Docker"
-			subFolder="Docker-System-Prune"
+			subFolder="System-Prune"
 				fullInstaller="Full-Installer"
 					fullInstaller="Docker-SystemPrune-Installer-Noah0302sTech.sh"
 				folder2="System-Prune-Executer"
