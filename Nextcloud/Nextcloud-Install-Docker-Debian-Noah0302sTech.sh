@@ -151,6 +151,7 @@
 	echoEnd
 
 
+
 #----- Docker-Compose
 	#--- Set default values for Docker-Compose
 		MYSQL_ROOT_PASSWORD=sqlrootpassword
@@ -213,7 +214,7 @@ volumes:
 		chmod +x $bashConfigurator > /dev/null 2>&1
 	stop_spinner $?
 	echo "Um NACH DER INSTALLATION die Nextcloud-Config anzupassen, starte das Nextcloud-Config-Skript mit:"
-	echo "sudo bash /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashExecuter"
+	echo "sudo bash $updaterInstallerPath"
 	echoEnd
 
 
