@@ -1,6 +1,6 @@
 #!/bin/bash
-#	Made by Noah0302sTech
-#	chmod +x Nextcloud-Install-Docker-Debian-Noah0302sTech.sh && sudo bash Nextcloud-Install-Docker-Debian-Noah0302sTech.sh
+# Made by Noah0302sTech
+# chmod +x Nextcloud-Config-Docker-Noah0302sTech.sh && sudo bash Nextcloud-Config-Docker-Noah0302sTech.sh
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
@@ -114,110 +114,30 @@
 #-----	-----#	#-----	-----#	#-----	-----#
 
 
-#----- Docker
-	#--- Install Docker
-		start_spinner "Installiere docker.io..."
-		apt install -y docker.io > /dev/null 2>&1
-		stop_spinner $?
-		echo
 
-	#--- Install Docker Compose
-		start_spinner "Installiere Docker-Compose..."
-		apt install -y docker-compose > /dev/null 2>&1
-		stop_spinner $?
-		echo
 
-	#--- Add User to Docker-Group
-		start_spinner "Füge $SUDO_USER zu Docker-Gruppe hinzu..."
-		usermod -aG docker $SUDO_USER > /dev/null 2>&1
-		stop_spinner $?
-
-	#--- Install Apparmor (Only needed on specific Systems like Hetzner VServer)
-		start_spinner "Installiere Apparmor, falls benötigt..."
-		apt install apparmor -y > /dev/null 2>&1
-		stop_spinner $?
-
-	echo
-	echo
+#----- Change Config
+    sudo nano /var/lib/docker/volumes/nextcloud_nextcloud_data/_data/config/config.php
 
 
 
-
-
-#----- Set default values for Docker-Compose
-	MYSQL_ROOT_PASSWORD=sqlrootpassword
-	MYSQL_PASSWORD=sqlpassword
-
-#----- Prompt user for custom values
-	read -p "MariaDB-Root-Passwort eigeben [default: $MYSQL_ROOT_PASSWORD]: " input
-	MYSQL_ROOT_PASSWORD=${input:-$MYSQL_ROOT_PASSWORD}
-	read -p "MariaDB-Passwort eigeben [default: $MYSQL_PASSWORD]: " input
-	MYSQL_PASSWORD=${input:-$MYSQL_PASSWORD}
-	
-	echo
-	echo
-
-
-
-#----- Create a Docker Compose file
-	start_spinner "Erstelle Docker-Compose-File..."
-		touch docker-compose.yml
-		echo "version: '3'
-services:
-  db:
-    image: mariadb
-    environment:
-      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
-      - MYSQL_PASSWORD=$MYSQL_PASSWORD
-      - MYSQL_DATABASE=nextclouddb
-      - MYSQL_USER=nextcloud
-    restart: unless-stopped
-  nextcloud:
-    image: nextcloud
-    ports:
-      - 8080:80
-    volumes:
-      - nextcloud_data:/var/www/html
-    environment:
-      - MYSQL_HOST=db
-      - MYSQL_USER=nextcloud
-      - MYSQL_PASSWORD=$MYSQL_PASSWORD
-      - MYSQL_DATABASE=nextclouddb
-    restart: unless-stopped
-    depends_on:
-      - db
-volumes:
-  nextcloud_data:
-" >> docker-compose.yml
-	stop_spinner $?
-
-	echo
-	echo
-
-
-
-#----- Start the Nextcloud server
-	start_spinner "Starte Nextcloud-Server..."
-		docker-compose up -d > /dev/null 2>&1
-	stop_spinner $?
-	docker ps
-
-	echo
-	echo
-
-
-
-#----- Configure the Nextcloud Server
-	start_spinner "Erstelle Nextcloud-Config-Skript..."
-		apt install wget -y > /dev/null 2>&1
-		wget $url > /dev/null 2>&1
-		chmod +x Nextcloud-Config-Docker-Noah0302sTech.sh
-	stop_spinner $?
-	echo "Um NACH DER INSTALLATION die Nextcloud-Config anzupassen, starte das Nextcloud-Config-Skript mit:"
-	echo "sudo bash /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashExecuter"
-
-	echo
-	echo
+#----- Restart Docker
+    while true; do
+        read -p "Möchtest du die Docker-Container jetzt neustarten [empfohlen]? Y/N: " yn
+        case $yn in
+            [Yy]* ) start_spinner "Starte Docker-Container neu... "
+                        sudo docker restart nextcloud_nextcloud_1 > /dev/null 2>&1
+                        sudo docker restart nextcloud_db_1 > /dev/null 2>&1
+                    stop_spinner $?; break;;
+            [Nn]* ) exit;;
+            * ) echo "Bitte gib Y/y für Ja, oder N/n für Nein ein." && echo;;
+        esac
+    done
+    echo
+    sudo docker ps
+    
+    echo
+    echo
 
 
 
