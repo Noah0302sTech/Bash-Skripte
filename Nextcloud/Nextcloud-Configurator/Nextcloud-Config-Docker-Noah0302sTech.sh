@@ -85,6 +85,15 @@
 
 
 
+	#----- End of -----#
+			function echoEnd {
+				echo
+				echo
+				echo
+			}
+
+
+
 	#----- Refresh Packages
 		start_spinner "Aktualisiere Package-Listen..."
 			apt update -y > /dev/null 2>&1
@@ -122,22 +131,26 @@
 
 
 #----- Restart Docker
-	while true; do
-		read -p "Möchtest du die Docker-Container jetzt neustarten [empfohlen]? Y/N: " yn
-		case $yn in
-			[Yy]* ) start_spinner "Starte Docker-Container neu... "
+	while IFS= read -n1 -r -p "Möchtest du die Docker-Container jetzt neustarten, um die Änderungen zu übernehmen? Y/N: " && [[ $REPLY != q ]]; do
+	case $REPLY in
+		y)  #--- Curl Java-Updater
+				start_spinner "Starte Docker-Container neu... "
 						docker restart nextcloud_nextcloud_1 > /dev/null 2>&1
 						docker restart nextcloud_db_1 > /dev/null 2>&1
-					stop_spinner $?; break;;
-			[Nn]* ) exit;;
-			* ) echo "Bitte gib Y/y für Ja, oder N/n für Nein ein." && echo;;
-		esac
+				stop_spinner $?
+			break;;
+
+			n)  echo
+			break;;
+
+			*)  echo
+			echo "Antoworte mit y oder n";;
+	esac
 	done
-	echo
+
 	docker ps
-	
-	echo
-	echo
+
+	echoEnd
 
 
 
