@@ -1,6 +1,6 @@
 #!/bin/bash
 #	Made by Noah0302sTech
-#	chmod +x Docker-System-Prune-Trim.sh && sudo bash Docker-System-Prune-Trim.sh
+#	chmod +x Docker-SystemPrune-Executer-Noah0302sTech.sh && sudo bash Docker-SystemPrune-Executer-Noah0302sTech.sh
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges

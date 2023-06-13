@@ -1,6 +1,6 @@
 #!/bin/bash
 #	Made by Noah0302sTech
-#	chmod +x Docker-System-Prune-Trim-Installer.sh && sudo bash Docker-System-Prune-Trim-Installer.sh
+#	chmod +x Docker-SystemPrune-Installer-Noah0302sTech.sh && sudo bash Docker-SystemPrune-Installer-Noah0302sTech.sh
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
@@ -281,11 +281,11 @@ $cronVariable root /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Docker-Sys
 
 	#--- Move Files
 		start_spinner "Verschiebe Bash-Skript..."
-			#- Docker-System-Prune-Trim-Installer.sh
-				if [ ! -f /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Installer/Docker-System-Prune-Trim-Installer.sh ]; then
-					mv /home/$SUDO_USER/Docker-System-Prune-Trim-Installer.sh /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Installer/Docker-System-Prune-Trim-Installer.sh > /dev/null 2>&1
+			#- Docker-SystemPrune-Installer-Noah0302sTech.sh
+				if [ ! -f /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Installer/Docker-SystemPrune-Installer-Noah0302sTech.sh ]; then
+					mv /home/$SUDO_USER/Docker-SystemPrune-Installer-Noah0302sTech.sh /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Installer/Docker-SystemPrune-Installer-Noah0302sTech.sh > /dev/null 2>&1
 				else
-					echo "Die Datei /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Installer/Docker-System-Prune-Trim-Installer.sh ist bereits vorhanden!"
+					echo "Die Datei /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Installer/Docker-SystemPrune-Installer-Noah0302sTech.sh ist bereits vorhanden!"
 				fi
 			#- Docker-System-Prune-Trim.sh
 				if [ ! -f /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Docker-System-Prune-Trim.sh ]; then
