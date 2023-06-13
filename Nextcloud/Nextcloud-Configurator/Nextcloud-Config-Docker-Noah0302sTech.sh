@@ -117,7 +117,7 @@
 
 
 #----- Change Config
-    sudo nano /var/lib/docker/volumes/nextcloud_nextcloud_data/_data/config/config.php
+    nano /var/www/html/config/config.php
 
 
 
@@ -126,15 +126,15 @@
         read -p "Möchtest du die Docker-Container jetzt neustarten [empfohlen]? Y/N: " yn
         case $yn in
             [Yy]* ) start_spinner "Starte Docker-Container neu... "
-                        sudo docker restart nextcloud_nextcloud_1 > /dev/null 2>&1
-                        sudo docker restart nextcloud_db_1 > /dev/null 2>&1
+                        docker restart nextcloud_nextcloud_1 > /dev/null 2>&1
+                        docker restart nextcloud_db_1 > /dev/null 2>&1
                     stop_spinner $?; break;;
             [Nn]* ) exit;;
             * ) echo "Bitte gib Y/y für Ja, oder N/n für Nein ein." && echo;;
         esac
     done
     echo
-    sudo docker ps
+    docker ps
     
     echo
     echo
