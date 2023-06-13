@@ -136,8 +136,8 @@
 	case $REPLY in
 		y)  #--- Curl Java-Updater
 				start_spinner "Starte Docker-Container neu... "
-						docker restart nextcloud_nextcloud_1 > /dev/null 2>&1
-						docker restart nextcloud_db_1 > /dev/null 2>&1
+						docker restart "$SUDO_USER"_nextcloud_1 > /dev/null 2>&1
+						docker restart "$SUDO_USER"_db_1 > /dev/null 2>&1
 				stop_spinner $?
 			break;;
 
