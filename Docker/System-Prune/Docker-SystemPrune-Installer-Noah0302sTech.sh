@@ -2,6 +2,9 @@
 #	Made by Noah0302sTech
 #	chmod +x Docker-SystemPrune-Installer-Noah0302sTech.sh && sudo bash Docker-SystemPrune-Installer-Noah0302sTech.sh
 
+#TODO:	Fix echo into Cron-Job
+#		check if fstrim is supported with lsblk --discard
+
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
 		if [[ $EUID -ne 0 ]]; then
@@ -107,16 +110,16 @@
 			subFolder="System-Prune"
 				fullInstallerFolder="Full-Installer"
 					fullInstaller="Docker-SystemPrune-Installer-Noah0302sTech.sh"
-				folder2="System-Prune-Executer"
+				bashExecuterFolder="System-Prune-Executer"
 					bashExecuter="Docker-SystemPrune-Executer-Noah0302sTech.sh"
 				cronCheck="Cron-Check.txt"
 
 		parentFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder"
 			subFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder"
 				fullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$fullInstallerFolder"
-					fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$fullInstaller/$bashExecuter"
-				bashExecuterFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2"
-					bashExecuterPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2/$fullInstaller"
+					fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$fullInstaller/$fullInstaller"
+				bashExecuterFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$bashExecuterFolder"
+					bashExecuterPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$bashExecuterFolder/$bashExecuter"
 				cronCheckPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$cronCheck"
 
 #-----	-----#	#-----	-----#	#-----	-----#
@@ -157,9 +160,9 @@
 				read -p "Passe den Cron-Job an [default 22 Uhr Sonntags: $cronVariable]: " input
 				cronVariable=${input:-$cronVariable}
 
-			#--- Create Cron-Check.txt
-				start_spinner "Erstelle Cron-Check.txt..."
-					touch Cron-Check.txt > /dev/null 2>&1
+			#--- Create $cronCheck
+				start_spinner "Erstelle $cronCheck..."
+					touch $cronCheck > /dev/null 2>&1
 				stop_spinner $?
 			
 			#--- Create Cron-Job
@@ -167,7 +170,7 @@
 					echo "Erstelle Crontab..."
 					touch /etc/cron.d/docker-System-Prune-Noah0302sTech
 					echo "#Docker System Prune & Trim by Noah0302sTech
-$cronVariable root $fullInstallerPath" > /etc/cron.d/docker-System-Prune-Noah0302sTech
+$cronVariable root $bashExecuterPath" > /etc/cron.d/docker-System-Prune-Noah0302sTech
 				stop_spinner $?
 
 			#--- Echo Commands into Pihole-Updater.sh
@@ -176,11 +179,11 @@ $cronVariable root $fullInstallerPath" > /etc/cron.d/docker-System-Prune-Noah030
 					echo "
 
 #Cron-Check
-	echo "" >> '$cronCheckPath'
-	echo "Job lief am:" >> '$cronCheckPath'
-	date >> '$cronCheckPath'
-	echo $dockerPruneOutput >> '$cronCheckPath'
-	echo $fstrimOutput >> '$cronCheckPath'" >> $bashExecuter
+	echo "" >> $cronCheckPath
+	echo "Job lief am:" >> $cronCheckPath
+	date >> $cronCheckPath
+	echo "'$dockerPruneOutput'" >> $cronCheckPath
+	echo "'$fstrimOutput'" >> $cronCheckPath" >> $bashExecuter
 				stop_spinner $?
 
 		else
@@ -242,8 +245,8 @@ $cronVariable root $fullInstallerPath" > /etc/cron.d/docker-System-Prune-Noah030
 
 
 #Alias Docker-System-Prune and Trim
-alias DSPtrim='sudo bash /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/$bashExecuter'
-alias ccDocker='cat /home/$SUDO_USER/Noah0302sTech/Docker/System-Prune/Cron-Check.txt'
+alias DSPtrim='sudo bash $bashExecuterPath'
+alias ccDocker='cat $cronCheckPath'
 "  >> /home/$SUDO_USER/.bashrc
 		stop_spinner $?
 	fi
