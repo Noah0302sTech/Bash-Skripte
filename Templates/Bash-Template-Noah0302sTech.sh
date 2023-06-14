@@ -1,6 +1,6 @@
 #!/bin/bash
 #	Made by Noah0302sTech
-#	chmod +x $bashInstaller && sudo bash $bashInstaller
+#	chmod +x $bash1 && sudo bash $bash1
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
@@ -111,9 +111,9 @@
 				fullInstaller="XXXXXXXXXX"
 			subFolder="XXXXXXXXXX"
 				folder1="XXXXXXXXXX"
-					bashInstaller="XXXXXXXXXX"
+					bash1="XXXXXXXXXX"
 				folder2="XXXXXXXXXX"
-					updaterExecuter="XXXXXXXXXX"
+					bash2="XXXXXXXXXX"
 				cronCheck="XXXXXXXXXX"
 
 		parentFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder"
@@ -121,9 +121,9 @@
 				fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder/$fullInstaller"
 			subFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder"
 				folder1Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1"
-					updaterInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1/$bashInstaller"
+					updaterInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1/$bash1"
 				folder2Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2"
-					updaterExecuterPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2/$updaterExecuter"
+					bash2Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2/$bash2"
 				cronCheckPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$cronCheck"
 
 #-----	-----#	#-----	-----#	#-----	-----#
@@ -205,16 +205,16 @@
 
 				#--- Updater-Installer
 					if [ ! -f $updaterInstallerPath ]; then
-						mv /home/$SUDO_USER/$bashInstaller $updaterInstallerPath > /dev/null 2>&1
+						mv /home/$SUDO_USER/$bash1 $updaterInstallerPath > /dev/null 2>&1
 					else
 						echo "Die Datei $updaterInstallerPath ist bereits vorhanden!"
 					fi
 
 				#--- Update-Executer
-					if [ ! -f $updaterExecuterPath ]; then
-						mv /home/$SUDO_USER/$updaterExecuter $updaterExecuterPath > /dev/null 2>&1
+					if [ ! -f $bash2Path ]; then
+						mv /home/$SUDO_USER/$bash2 $bash2Path > /dev/null 2>&1
 					else
-						echo "Die Datei $updaterExecuterPath ist bereits vorhanden!"
+						echo "Die Datei $bash2Path ist bereits vorhanden!"
 					fi
 
 				#--- Cron-Check.txt
