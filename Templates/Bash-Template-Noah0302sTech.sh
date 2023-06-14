@@ -121,7 +121,7 @@
 				fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder/$fullInstaller"
 			subFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder"
 				folder1Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1"
-					updaterInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1/$bash1"
+					bash1Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1/$bash1"
 				folder2Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2"
 					bash2Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2/$bash2"
 				cronCheckPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$cronCheck"
@@ -204,10 +204,10 @@
 				fi
 
 				#--- Updater-Installer
-					if [ ! -f $updaterInstallerPath ]; then
-						mv /home/$SUDO_USER/$bash1 $updaterInstallerPath > /dev/null 2>&1
+					if [ ! -f $bash1Path ]; then
+						mv /home/$SUDO_USER/$bash1 $bash1Path > /dev/null 2>&1
 					else
-						echo "Die Datei $updaterInstallerPath ist bereits vorhanden!"
+						echo "Die Datei $bash1Path ist bereits vorhanden!"
 					fi
 
 				#--- Update-Executer
