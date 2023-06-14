@@ -154,8 +154,9 @@
 		cronVariable="0 22 * * SUN"
 
 	#--- Ask for Cron-Job
-		read -p "Möchtest du einen Cron-Job hinzufügen? (y/N): " choice
-		if [[ "$choice" == "y" || "$choice" == "Y" ]]; then
+	while IFS= read -n1 -r -p "Möchtest du einen Cron-Job hinzufügen? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+	case $REPLY in
+		y)  echo
 			#--- Prompt for custom values
 				read -p "Passe den Cron-Job an [default 22 Uhr Sonntags: $cronVariable]: " input
 				cronVariable=${input:-$cronVariable}
@@ -186,9 +187,15 @@ $cronVariable root $bashExecuterPath" > /etc/cron.d/docker-System-Prune-Noah0302
 	echo "'$fstrimOutput'" >> $cronCheckPath" >> $bashExecuter
 				stop_spinner $?
 
-		else
+			break;;
+		n)  echo
 			echo "Cron-Job wurde nicht erstellt."
-		fi
+			
+			break;;
+		*)  echo
+			echo "Antoworte mit y oder n";;
+	esac
+	done
 	echoEnd
 
 
@@ -225,6 +232,7 @@ $cronVariable root $bashExecuterPath" > /etc/cron.d/docker-System-Prune-Noah0302
 
 			break;;
 		n)  echo
+			echo "DSPtrim wurde nicht erstellt."
 			
 			break;;
 		*)  echo
