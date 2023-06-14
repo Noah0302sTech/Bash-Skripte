@@ -151,6 +151,7 @@
 
 
 #----- Cron-Job
+	echo "----- Cron-Job -----"
 	#--- Variable
 		cronVariable="0 22 * * SUN"
 
@@ -201,6 +202,7 @@ $cronVariable root $bashExecuterPath" > /etc/cron.d/docker-System-Prune-Noah0302
 
 
 #----- Ask for Execute
+	echo "----- DSP-Trim -----"
 	while IFS= read -n1 -r -p "Möchtest du DSPtrim jetzt ausführen? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 	case $REPLY in
 		y)  echo
@@ -240,6 +242,7 @@ $cronVariable root $bashExecuterPath" > /etc/cron.d/docker-System-Prune-Noah0302
 
 
 #--- Create Alias
+	echo "----- Alias -----"
     if grep -q "^alias DSPtrim=" /home/$SUDO_USER/.bashrc; then
 		echo "Der Alias existiert bereits in /home/$SUDO_USER/.bashrc"
 	else
@@ -259,6 +262,7 @@ alias ccDocker='cat $cronCheckPath'
 
 
 #----- Create MOTD
+	echo "----- MOTD -----"
 	if grep -q "^Docker-System-Prune" /etc/motd; then
 		echo "Der MOTD Eintrag exisitert bereits in /etc/motd"
 	else
