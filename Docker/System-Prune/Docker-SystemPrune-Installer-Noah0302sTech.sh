@@ -4,6 +4,7 @@
 
 #TODO:	Fix echo into Cron-Job
 #		check if fstrim is supported with lsblk --discard
+#		Only create ccDocker Alias, if Cron-Job was selected
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
@@ -243,7 +244,7 @@ $cronVariable root $bashExecuterPath" > /etc/cron.d/docker-System-Prune-Noah0302
 
 
 
-#----- Create Alias
+#--- Create Alias
     if grep -q "^alias DSPtrim=" /home/$SUDO_USER/.bashrc; then
 		echo "Der Alias existiert bereits in /home/$SUDO_USER/.bashrc"
 	else
