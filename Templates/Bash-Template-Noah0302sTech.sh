@@ -197,30 +197,30 @@
 	#----- Move Files
 		start_spinner "Verschiebe Files..."
 			#--- Full-Installer
-				if [ ! -f $fullInstallerFolderPath ]; then
-					mv /home/$SUDO_USER/$fullInstaller $fullInstallerFolderPath > /dev/null 2>&1
+				if [ ! -f $fullInstallerPath ]; then
+					mv /home/$SUDO_USER/$fullInstaller $fullInstallerPath > /dev/null 2>&1
 				else
-					echo "Die Datei $fullInstallerFolderPath ist bereits vorhanden!"
+					echo "Die Datei $fullInstaller ist bereits vorhanden!"
 				fi
 
 				#--- Updater-Installer
 					if [ ! -f $bash1Path ]; then
 						mv /home/$SUDO_USER/$bash1 $bash1Path > /dev/null 2>&1
 					else
-						echo "Die Datei $bash1Path ist bereits vorhanden!"
+						echo "Die Datei $bash1 ist bereits vorhanden!"
 					fi
 
 				#--- Update-Executer
 					if [ ! -f $bash2Path ]; then
 						mv /home/$SUDO_USER/$bash2 $bash2Path > /dev/null 2>&1
 					else
-						echo "Die Datei $bash2Path ist bereits vorhanden!"
+						echo "Die Datei $bash2 ist bereits vorhanden!"
 					fi
 
 				#--- Cron-Check.txt
 					if [ ! -f $cronCheckPath ]; then
 						mv /home/$SUDO_USER/$cronCheck $cronCheckPath > /dev/null 2>&1
 					else
-						echo "Die Datei $cronCheckPath ist bereits vorhanden!"
+						echo "Die Datei $cronCheck ist bereits vorhanden!"
 					fi
 		stop_spinner $?
