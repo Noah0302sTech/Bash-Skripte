@@ -169,7 +169,6 @@
 			
 			#--- Create Cron-Job
 				start_spinner "Erstelle Crontab..."
-					echo "Erstelle Crontab..."
 					touch /etc/cron.d/docker-System-Prune-Noah0302sTech
 					echo "#Docker System Prune & Trim by Noah0302sTech
 $cronVariable root $bashExecuterPath" > /etc/cron.d/docker-System-Prune-Noah0302sTech
@@ -220,16 +219,12 @@ $cronVariable root $bashExecuterPath" > /etc/cron.d/docker-System-Prune-Noah0302
 				else
 					echo "Docker ist nicht installiert, überspringe Docker System Prune"
 				fi
-				echo
-				echo
 
 			#--- Trim
 				start_spinner "Trimme Filesystem..."
 					fstrimOutput=$(/sbin/fstrim -av 2>&1)
 				stop_spinner $?
 				echo $fstrimOutput
-				echo
-				echo
 
 			break;;
 		n)  echo
