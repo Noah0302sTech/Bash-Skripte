@@ -155,7 +155,8 @@
 				start_spinner "Trimme Filesystem..."
 					fstrimOutput=$(/sbin/fstrim -av 2>&1)
 				stop_spinner $?
-				echo $fstrimOutput					echoEnd
+				echo $fstrimOutput
+				echoEnd
 		else
 					echo "Trim wird nicht von deinem Dateisystem unterstützt!"
 	fi
