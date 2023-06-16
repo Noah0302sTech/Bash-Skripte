@@ -3,7 +3,6 @@
 #	chmod +x Docker-SystemPrune-Installer-Noah0302sTech.sh && sudo bash Docker-SystemPrune-Installer-Noah0302sTech.sh
 
 #TODO:	Fix echo into Cron-Job
-#		check if fstrim is supported with lsblk --discard
 #		Only create ccDocker Alias, if Cron-Job was selected
 
 #---------- Initial Checks & Functions
