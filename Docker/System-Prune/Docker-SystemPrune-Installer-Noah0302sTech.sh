@@ -105,6 +105,7 @@
 
 	#----- Variables
 		urlVar="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Docker/System-Prune/System-Prune-Executer/Docker-SystemPrune-Executer-Noah0302sTech.sh"
+		cronJobAdded=false
 
 		parentFolder="Docker"
 			subFolder="System-Prune"
@@ -185,6 +186,9 @@ $cronVariable root $bashExecuterPath" > /etc/cron.d/docker-System-Prune-Noah0302
 	date >> $cronCheckPath
 	echo "'$dockerPruneOutput'" >> $cronCheckPath
 	echo "'$fstrimOutput'" >> $cronCheckPath" >> $bashExecuter
+
+			#--- Modify Variable
+				cronJobAdded="true"
 				stop_spinner $?
 
 			break;;
@@ -216,7 +220,6 @@ $cronVariable root $bashExecuterPath" > /etc/cron.d/docker-System-Prune-Noah0302
 				else
 					echo "Trim wird nicht von deinem Dateisystem unterstützt!"
 				fi
-				echoEnd
 
 			break;;
 		n)  echo
@@ -242,9 +245,12 @@ $cronVariable root $bashExecuterPath" > /etc/cron.d/docker-System-Prune-Noah0302
 
 
 #Alias Docker-System-Prune and Trim
-alias DSPtrim='sudo bash $bashExecuterPath'
-alias ccDocker='cat $cronCheckPath'
-"  >> /home/$SUDO_USER/.bashrc
+alias DSPtrim='sudo bash $bashExecuterPath'"  >> /home/$SUDO_USER/.bashrc
+
+		if $cronJobAdded == true; then
+			echo "alias ccDocker='cat $cronCheckPath'
+" >> /home/$SUDO_USER/.bashrc
+		fi
 		stop_spinner $?
 	fi
 	echoEnd
@@ -260,10 +266,13 @@ alias ccDocker='cat $cronCheckPath'
 			echo "Passe MOTD an..."
 			echo "
 Docker-System-Prune + Trim:
-	DSPtrim
-Cron-Check Docker:
+	DSPtrim" >> /etc/motd
+
+		if $cronJobAdded == true; then
+			echo "Cron-Check Docker:
 	ccDocker
 " >> /etc/motd
+		fi
 		stop_spinner $?
 	fi
 	echoEnd
@@ -333,9 +342,12 @@ Cron-Check Docker:
 					fi
 
 			#--- Cron-Check.txt
-				if [ ! -f $cronCheckPath ]; then
-					mv /home/$SUDO_USER/$cronCheck $cronCheckPath > /dev/null 2>&1
-				else
-					echo "Die Datei $cronCheck ist bereits in $cronCheckPath vorhanden!"
+				if $cronJobAdded == true; then
+					if [ ! -f $cronCheckPath ]; then
+						mv /home/$SUDO_USER/$cronCheck $cronCheckPath > /dev/null 2>&1
+					else
+						echo "Die Datei $cronCheck ist bereits in $cronCheckPath vorhanden!"
+					fi
 				fi
+
 		stop_spinner $?
