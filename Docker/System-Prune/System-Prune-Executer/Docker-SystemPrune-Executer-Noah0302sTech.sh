@@ -152,7 +152,7 @@
 	if command lsblk --discard &> /dev/null
 		then
 			#--- Trim
-				start_spinner "Downloade $bashExecuter..."
+				start_spinner "Trimme Filesystem..."
 					fstrimOutput=$(/sbin/fstrim -av 2>&1)
 				stop_spinner $?
 				echo $fstrimOutput					echoEnd
