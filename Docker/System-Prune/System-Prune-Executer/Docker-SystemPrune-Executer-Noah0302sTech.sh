@@ -148,11 +148,17 @@
 
 
 
-#----- Trim
-	start_spinner "Trimme Filesystem..."
-		fstrimOutput=$(/sbin/fstrim -av 2>&1)
-	stop_spinner $?
-	echo $fstrimOutput
+#----- Check if Trim is supported
+	if command lsblk --discard &> /dev/null
+		then
+			#--- Trim
+				start_spinner "Downloade $bashExecuter..."
+					fstrimOutput=$(/sbin/fstrim -av 2>&1)
+				stop_spinner $?
+				echo $fstrimOutput					echoEnd
+		else
+					echo "Trim wird nicht von deinem Dateisystem unterstützt!"
+	fi
 	echoEnd
 
 

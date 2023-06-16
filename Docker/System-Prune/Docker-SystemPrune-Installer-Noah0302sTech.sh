@@ -206,27 +206,19 @@ $cronVariable root $bashExecuterPath" > /etc/cron.d/docker-System-Prune-Noah0302
 	while IFS= read -n1 -r -p "Möchtest du DSPtrim jetzt ausführen? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 	case $REPLY in
 		y)  echo
-			#--- Docker
-				if command -v docker &> /dev/null
+			#----- Check if Trim is supported
+				if command lsblk --discard &> /dev/null
 				then
-					if [[ -z "$(docker ps -q -f status=exited)" ]]; then
-						start_spinner "Alle Docker Container laufen, führe Docker-System-Prune aus..."
-							dockerPruneOutput=$(docker system prune -f 2>&1)
+					#--- Trim
+						start_spinner "Downloade $bashExecuter..."
+							fstrimOutput=$(/sbin/fstrim -av 2>&1)
 						stop_spinner $?
-						echo $dockerPruneOutput
-					else
-						echo "Es wurden gestoppte Container gefunden:"
-						docker ps -f "status=exited"
-					fi	
+						echo $fstrimOutput
+						echoEnd
 				else
-					echo "Docker ist nicht installiert, überspringe Docker System Prune"
+					echo "Trim wird nicht von deinem Dateisystem unterstützt!"
 				fi
-
-			#--- Trim
-				start_spinner "Trimme Filesystem..."
-					fstrimOutput=$(/sbin/fstrim -av 2>&1)
-				stop_spinner $?
-				echo $fstrimOutput
+				echoEnd
 
 			break;;
 		n)  echo
