@@ -214,7 +214,6 @@ $cronVariable root $bashExecuterPath" > /etc/cron.d/docker-System-Prune-Noah0302
 							fstrimOutput=$(/sbin/fstrim -av 2>&1)
 						stop_spinner $?
 						echo $fstrimOutput
-						echoEnd
 				else
 					echo "Trim wird nicht von deinem Dateisystem unterstützt!"
 				fi
