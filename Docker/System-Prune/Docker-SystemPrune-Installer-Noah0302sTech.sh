@@ -2,8 +2,8 @@
 #	Made by Noah0302sTech
 #	chmod +x Docker-SystemPrune-Installer-Noah0302sTech.sh && sudo bash Docker-SystemPrune-Installer-Noah0302sTech.sh
 
-#TODO:	Fix echo into Cron-Job sometimes not working correctly
-#		Only create ccDocker Alias, if Cron-Job was selected
+#TODO:	Fix echo into Cron-Job sometimes not working correctly?
+#		Fix check for Trim-Command
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges

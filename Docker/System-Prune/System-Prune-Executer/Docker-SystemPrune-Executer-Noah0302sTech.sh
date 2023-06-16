@@ -2,6 +2,8 @@
 #	Made by Noah0302sTech
 #	chmod +x Docker-SystemPrune-Executer-Noah0302sTech.sh && sudo bash Docker-SystemPrune-Executer-Noah0302sTech.sh
 
+#TODO:	Fix check for Trim-Command
+
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
 		if [[ $EUID -ne 0 ]]; then
