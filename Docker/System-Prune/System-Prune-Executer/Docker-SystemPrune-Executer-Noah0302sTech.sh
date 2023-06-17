@@ -149,7 +149,7 @@
 
 
 #----- Check if the filesystem supports fstrim command
-	if mount | awk '$2 == "/" && $4 ~ /discard/ {exit 0} END {exit 1}'; then
+	if blkid -o value -s discard $(findmnt -n -o SOURCE --target /) >/dev/null 2>&1; then
 		echo "Filesystem supports fstrim command"
 
 		# Run fstrim on the root filesystem
