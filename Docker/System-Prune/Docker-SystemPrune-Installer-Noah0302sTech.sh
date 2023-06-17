@@ -209,15 +209,8 @@ $cronVariable root $bashExecuterPath" > /etc/cron.d/docker-System-Prune-Noah0302
 	while IFS= read -n1 -r -p "Möchtest du DSPtrim jetzt ausführen? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 	case $REPLY in
 		y)  echo
-			#--- Check if the filesystem supports fstrim command
-				if mount | grep " / " | grep -q "\sdiscard"; then
-					echo "Filesystem supports fstrim command"
-
-					#--- Run fstrim on the root filesystem
-						fstrim / -v
-				else
-					echo "Filesystem does not support fstrim command"
-				fi
+			#--- Execute downloaded Bash-File
+				bash $bashExecuter
 
 			break;;
 		n)  echo

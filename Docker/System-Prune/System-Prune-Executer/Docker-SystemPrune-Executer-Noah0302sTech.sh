@@ -149,11 +149,15 @@
 
 
 #----- Check if the filesystem supports fstrim command
-	if mount | grep " / " | grep -q "\sdiscard"; then
+	if mount | awk '$2 == "/" && $4 ~ /discard/ {exit 0} END {exit 1}'; then
 		echo "Filesystem supports fstrim command"
 
-		#--- Run fstrim on the root filesystem
-			fstrim / -v
+		# Run fstrim on the root filesystem
+		if command -v fstrim >/dev/null 2>&1; then
+			fstrim -v /
+		else
+			echo "fstrim command is not available"
+		fi
 	else
 		echo "Filesystem does not support fstrim command"
 	fi
