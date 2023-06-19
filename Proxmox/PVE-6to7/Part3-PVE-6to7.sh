@@ -54,7 +54,7 @@ deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription" > /etc/
 	echo "----- Upgrade System -----"
 	echo "ACHTUNG, Upgrade erst ausführen, wenn 'pve6to7' keine Fehler mehr aufzeigt!"
 	echo
-	pve6to7
+	pve6to7 -full
 	echo
 	echo "ACHTUNG, Upgrade erst ausführen, wenn 'pve6to7' keine Fehler mehr aufzeigt!"
 	echo
