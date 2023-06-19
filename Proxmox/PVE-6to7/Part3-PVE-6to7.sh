@@ -65,7 +65,7 @@ deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription" > /etc/
 
 			break;;
 		n)  echo
-			echo "Meta-Data-Server wurden nicht neu gestartet!"
+			echo "Proxmox wurde nicht auf PVE 7.x geupgraded!"
 			echo "Falls du das später machen möchtest, gebe folgenden Befehl ein:"
 			echo "apt dist-upgrade"
 			
