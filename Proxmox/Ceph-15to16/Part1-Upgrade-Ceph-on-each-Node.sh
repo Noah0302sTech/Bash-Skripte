@@ -19,6 +19,7 @@
 
 
 #Move Bash-Script
+	mkdir Ceph-15to16
 	mv Part1-Upgrade-Ceph-on-each-Node.sh Ceph-15to16/Part1-Upgrade-Ceph-on-each-Node.sh
 
 	echoEnd
