@@ -13,7 +13,7 @@
 
 #Update to latest 6.4-X
 	echo "----- Update to latest 6.4-X -----"
-	apt update && apt upgrade
+	apt update && apt dist-upgrade
 
 	echo
 	echo
