@@ -80,3 +80,49 @@
 		done
 
 	echoEnd
+
+
+
+#Disallow pre-Pacific OSDs and enable all new Pacific-only functionality
+	echo "ACHTUNG, allow Pacific-only functionality sollten erst aktiviert werden, wenn ALLE OSDs des CLUSTERs geupgraded sind!"
+		ceph status
+		while IFS= read -n1 -r -p "Sind alle Ceph-Monitore geupgraded? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+		case $REPLY in
+			y)  echo
+				ceph osd require-osd-release pacific
+
+				break;;
+			n)  echo
+				sleep 5
+				ceph tell osd.* version;;
+
+			*)  echo
+				echo "Antoworte mit y oder n";;
+				
+		esac
+		done
+
+	echoEnd
+
+
+
+#Upgrade all CephFS MDS daemons
+	echo "ACHTUNG, allow CephFS-MDS sollten erst geupgraded werden, wenn ALLE non-zero ranks deaktiviert sind!"
+		ceph status
+		while IFS= read -n1 -r -p "Sind alle Ceph-Monitore geupgraded? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+		case $REPLY in
+			y)  echo
+				ceph osd require-osd-release pacific
+
+				break;;
+			n)  echo
+				sleep 5
+				ceph status;;
+
+			*)  echo
+				echo "Antoworte mit y oder n";;
+				
+		esac
+		done
+
+	echoEnd
