@@ -1,6 +1,7 @@
 #!/bin/bash
 #	Made by Noah0302sTech
 # 	chmod +x Part1-Upgrade-Ceph-on-each-Node.sh && bash Part1-Upgrade-Ceph-on-each-Node.sh
+#	curl -sSL https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Proxmox/Ceph-15to16/Part1-Upgrade-Ceph-on-each-Node.sh | bash
 
 
 
