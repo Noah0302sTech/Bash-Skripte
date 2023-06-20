@@ -37,6 +37,7 @@
 	echo "----- Enable msgrv2 protocol -----"
 		ceph mon enable-msgr2
 		ceph mon dump
+		echo
 
 		echo "Alle Ceph-Monitore MÜSSEN ein v1 UND eine v2 Addresse haben!"
 		while IFS= read -n1 -r -p "Sind v1 UND v2 verfügbar? [y]es|[n]o: " && [[ $REPLY != q ]]; do
@@ -44,8 +45,13 @@
 			y)  echo
 
 				break;;
+
 			n)  echo
-				sleep 5;;
+
+				echo "Warte 5 weitere Sekunden..."
+				sleep 5
+				ceph mon dump
+				echo;;
 
 			*)  echo
 				echo "Antoworte mit y oder n";;
@@ -104,7 +110,7 @@
 				break;;
 			*)  echo
 				echo "Antoworte mit y oder n";;
-				
+
 		esac
 		done
 
