@@ -36,7 +36,6 @@
 #Enable msgrv2 protocol and update Ceph configuration
 	echo "----- Enable msgrv2 protocol -----"
 		ceph mon enable-msgr2
-		sleep 10
 		ceph mon dump
 
 		echo "Alle Ceph-Monitore MÜSSEN ein v1 UND eine v2 Addresse haben!"
@@ -46,11 +45,11 @@
 
 				break;;
 			n)  echo
-				exit
-				
-				break;;
+				sleep 5;;
+
 			*)  echo
 				echo "Antoworte mit y oder n";;
+				
 		esac
 		done
 
@@ -105,6 +104,7 @@
 				break;;
 			*)  echo
 				echo "Antoworte mit y oder n";;
+				
 		esac
 		done
 
