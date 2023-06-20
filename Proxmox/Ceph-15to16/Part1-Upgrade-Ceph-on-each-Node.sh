@@ -13,7 +13,7 @@
 		}
 
 	#----- Variables
-		url="XXXXXXXXXX"
+		url="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Proxmox/Ceph-15to16/Part2-Restart-Ceph-Daemons.sh"
 
 
 
@@ -94,13 +94,12 @@
 		while IFS= read -n1 -r -p "Sind alle Nodes geupgraded? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 		case $REPLY in
 			y)  echo
-				curl $url
+				curl -sSL $url | bash
 
 				break;;
 			n)  echo
-				echo "Meta-Data-Server wurden nicht neu gestartet!"
-				echo "Falls du das später machen möchtest, gebe folgenden Befehl ein:"
-				echo "systemctl restart ceph-mds.target"
+				echo "Part 2 wurde noch nicht ausgeführt, aber wird gedownloaded:"
+				wget $url
 				
 				break;;
 			*)  echo
