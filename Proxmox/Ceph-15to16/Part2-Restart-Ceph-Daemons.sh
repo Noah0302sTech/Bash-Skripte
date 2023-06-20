@@ -41,9 +41,13 @@
 				systemctl restart ceph-mgr.target
 
 				break;;
+				
 			n)  echo
+
+				echo "Warte 5 weitere Sekunden..."
 				sleep 5
-				ceph mon dump | grep min_mon_release;;
+				ceph mon dump | grep min_mon_release
+				echo;;
 
 			*)  echo
 				echo "Antoworte mit y oder n";;
