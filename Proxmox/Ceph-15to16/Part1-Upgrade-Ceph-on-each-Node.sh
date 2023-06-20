@@ -51,6 +51,7 @@
 
 				echo "Warte 5 weitere Sekunden..."
 				sleep 5
+				ceph mon dump
 				echo;;
 
 			*)  echo
