@@ -34,7 +34,7 @@
 
 
 #Restart the manager daemons on all nodes
-	echo "ACHTUNG, erst Ceph-Manager-Daemons neu starten, wenn alle Ceph-Monitore geupgraded sind! [min_mon_release 16 (pacific)]"
+	echo "ACHTUNG, erst Ceph-Manager-Daemons neu starten, wenn alle Ceph-Monitore geupgraded sind! [min_mon_release 17 (quincy)]"
 		ceph mon dump | grep min_mon_release
 		while IFS= read -n1 -r -p "Sind alle Ceph-Monitore geupgraded? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 		case $REPLY in
@@ -97,14 +97,14 @@
 
 
 
-#Disallow pre-Pacific OSDs and enable all new Pacific-only functionality
-	echo "ACHTUNG, allow Pacific-only functionality sollten erst aktiviert werden, wenn ALLE OSDs des CLUSTERs geupgraded sind!"
+#Disallow pre-Quincy OSDs and enable all new Quincy-only functionality
+	echo "ACHTUNG, allow Quincy-only functionality sollten erst aktiviert werden, wenn ALLE OSDs des CLUSTERs geupgraded sind!"
 		ceph tell osd.* version
 		while IFS= read -n1 -r -p "Sind alle Ceph-Monitore geupgraded? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 		case $REPLY in
 			y)  echo
 
-				ceph osd require-osd-release pacific
+				ceph osd require-osd-release quincy
 
 				break;;
 
