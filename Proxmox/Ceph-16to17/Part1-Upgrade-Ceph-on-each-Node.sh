@@ -1,7 +1,7 @@
 #!/bin/bash
 #	Made by Noah0302sTech
 # 	chmod +x Part1-Upgrade-Ceph-on-each-Node.sh && bash Part1-Upgrade-Ceph-on-each-Node.sh
-#	curl -sSL https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Proxmox/Ceph-16to17/Part1-Upgrade-Ceph-on-each-Node.sh | bash
+#	wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Proxmox/Ceph-16to17/Part1-Upgrade-Ceph-on-each-Node.sh && bash Part1-Upgrade-Ceph-on-each-Node.sh
 
 
 
