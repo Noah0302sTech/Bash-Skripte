@@ -100,7 +100,7 @@
 #Disallow pre-Pacific OSDs and enable all new Pacific-only functionality
 	echo "ACHTUNG, allow Pacific-only functionality sollten erst aktiviert werden, wenn ALLE OSDs des CLUSTERs geupgraded sind!"
 		ceph tell osd.* version
-		while IFS= read -n1 -r -p "Sind alle Ceph-Monitore geupgraded? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+		while IFS= read -n1 -r -p "Sind alle Ceph-OSDs geupgraded? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 		case $REPLY in
 			y)  echo
 
