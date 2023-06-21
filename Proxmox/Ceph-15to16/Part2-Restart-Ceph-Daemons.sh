@@ -39,6 +39,7 @@
 		while IFS= read -n1 -r -p "Sind alle Ceph-Monitore geupgraded? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 		case $REPLY in
 			y)  echo
+
 				systemctl restart ceph-mgr.target
 
 				break;;
@@ -47,8 +48,10 @@
 
 				echo "Warte 5 weitere Sekunden..."
 				sleep 5
+
 				ceph mon dump | grep min_mon_release
 				echo
+
 				echo "Falls sie nicht geupgraded sind, kann das auch per GUI gemacht werden!"
 				echo;;
 
@@ -68,14 +71,19 @@
 		while IFS= read -n1 -r -p "Sind alle Ceph-Manager geupgraded? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 		case $REPLY in
 			y)  echo
+
 				systemctl restart ceph-osd.target
 
 				break;;
 
 			n)  echo
+
+				echo "Warte 5 weitere Sekunden..."
 				sleep 5
+
 				ceph -s
 				echo
+
 				echo "Falls sie nicht geupgraded sind, kann das auch per GUI gemacht werden!"
 				echo;;
 
@@ -95,14 +103,19 @@
 		while IFS= read -n1 -r -p "Sind alle Ceph-Monitore geupgraded? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 		case $REPLY in
 			y)  echo
+
 				ceph osd require-osd-release pacific
 
 				break;;
 
 			n)  echo
+
+				echo "Warte 5 weitere Sekunden..."
 				sleep 5
+				
 				ceph tell osd.* version
 				echo
+
 				echo "Falls sie nicht geupgraded sind, kann das auch per GUI gemacht werden!"
 				echo;;
 
@@ -122,14 +135,19 @@
 		while IFS= read -n1 -r -p "Sind ALLE non-zero ranks deaktiviert [y]es|[n]o: " && [[ $REPLY != q ]]; do
 		case $REPLY in
 			y)  echo
+
 				systemctl restart ceph-mds.target
 
 				break;;
 
 			n)  echo
+
+				echo "Warte 5 weitere Sekunden..."
 				sleep 5
+
 				ceph status
 				echo
+
 				echo "Falls sie nicht geupgraded sind, kann das auch per GUI gemacht werden!"
 				echo;;
 
@@ -148,11 +166,14 @@
 		while IFS= read -n1 -r -p "Sind alle Nodes geupgraded? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 		case $REPLY in
 			y)  echo
+			
 				ceph osd unset noout
 
 				break;;
 
 			n)  echo
+
+				echo "Warte 5 weitere Sekunden..."
 				sleep 5;;
 				
 				
