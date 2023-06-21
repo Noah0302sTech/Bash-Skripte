@@ -106,7 +106,7 @@
 
 				break;;
 			n)  echo
-				echo "Part 2 wurde noch nicht ausgeführt, aber wird gedownloaded:"
+				echo "Part 2 wurde noch nicht ausgeführt!"
 				wget $url
 				
 				break;;
