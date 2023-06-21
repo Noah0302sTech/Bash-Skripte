@@ -3,7 +3,7 @@
 # 	chmod +x Part2-Restart-Ceph-Daemons.sh && bash Part2-Restart-Ceph-Daemons.sh
 #	curl -sSL https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Proxmox/Ceph-15to16/Part2-Restart-Ceph-Daemons.sh | bash
 
-
+#TODO:	Alles ab Ceph-OSDs neu starten überprüfen
 
 #----------- Init
 	#----- echoEnd
@@ -48,6 +48,8 @@
 				echo "Warte 5 weitere Sekunden..."
 				sleep 5
 				ceph mon dump | grep min_mon_release
+				echo
+				echo "Falls sie nicht geupgraded sind, kann das auch per GUI gemacht werden!"
 				echo;;
 
 			*)  echo
@@ -63,7 +65,7 @@
 #Restart the OSD daemon on all nodes
 	echo "ACHTUNG, erst alle Ceph-OSDs neu starten, wenn alle Ceph-Manager geupgraded sind! [mon: 3 daemons, quorum...]"
 		ceph -s
-		while IFS= read -n1 -r -p "Sind alle Ceph-Monitore geupgraded? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+		while IFS= read -n1 -r -p "Sind alle Ceph-Manager geupgraded? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 		case $REPLY in
 			y)  echo
 				systemctl restart ceph-osd.target
@@ -72,7 +74,10 @@
 
 			n)  echo
 				sleep 5
-				ceph -s;;
+				ceph -s
+				echo
+				echo "Falls sie nicht geupgraded sind, kann das auch per GUI gemacht werden!"
+				echo;;
 
 			*)  echo
 				echo "Antoworte mit y oder n";;
@@ -96,7 +101,10 @@
 
 			n)  echo
 				sleep 5
-				ceph tell osd.* version;;
+				ceph tell osd.* version
+				echo
+				echo "Falls sie nicht geupgraded sind, kann das auch per GUI gemacht werden!"
+				echo;;
 
 			*)  echo
 				echo "Antoworte mit y oder n";;
@@ -111,7 +119,7 @@
 #Upgrade all CephFS MDS daemons
 	echo "ACHTUNG, allow CephFS-MDS sollten erst geupgraded werden, wenn ALLE non-zero ranks deaktiviert sind!"
 		ceph status
-		while IFS= read -n1 -r -p "Sind alle Ceph-Monitore geupgraded? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+		while IFS= read -n1 -r -p "Sind ALLE non-zero ranks deaktiviert [y]es|[n]o: " && [[ $REPLY != q ]]; do
 		case $REPLY in
 			y)  echo
 				ceph osd require-osd-release pacific
@@ -120,7 +128,10 @@
 
 			n)  echo
 				sleep 5
-				ceph status;;
+				ceph status
+				echo
+				echo "Falls sie nicht geupgraded sind, kann das auch per GUI gemacht werden!"
+				echo;;
 
 			*)  echo
 				echo "Antoworte mit y oder n";;
