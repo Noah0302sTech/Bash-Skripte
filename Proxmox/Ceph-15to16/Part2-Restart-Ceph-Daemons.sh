@@ -1,7 +1,7 @@
 #!/bin/bash
 #	Made by Noah0302sTech
 # 	chmod +x Part2-Restart-Ceph-Daemons.sh && bash Part2-Restart-Ceph-Daemons.sh
-#	curl -sSL https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Proxmox/Ceph-15to16/Part2-Restart-Ceph-Daemons.sh | bash
+#	wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Proxmox/Ceph-15to16/Part2-Restart-Ceph-Daemons.sh && bash Part2-Restart-Ceph-Daemons.sh
 
 #TODO:	Alles ab Ceph-OSDs neu starten überprüfen
 
