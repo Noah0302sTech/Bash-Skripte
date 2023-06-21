@@ -64,17 +64,9 @@
 
 
 
-#Check if bluestore_fsck_quick_fix_on_mount is disabled
-	echo "----- Enable bluestore_fsck_quick_fix_on_mount -----"
-		ceph config set osd bluestore_fsck_quick_fix_on_mount true
-
-	echoEnd
-
-
-
-#Change the current Ceph repositories from Octopus to Pacific
-	echo "----- Change the current Ceph repositories from Octopus to Pacific -----"
-		sed -i 's/octopus/pacific/' /etc/apt/sources.list.d/ceph.list
+#Change the current Ceph repositories from Pacific to Quincy
+	echo "----- Change the current Ceph repositories from Pacific to Quincy -----"
+		sed -i 's/pacific/quincy/' /etc/apt/sources.list.d/ceph.list
 
 	echoEnd
 
