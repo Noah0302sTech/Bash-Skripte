@@ -122,7 +122,7 @@
 		while IFS= read -n1 -r -p "Sind ALLE non-zero ranks deaktiviert [y]es|[n]o: " && [[ $REPLY != q ]]; do
 		case $REPLY in
 			y)  echo
-				ceph osd require-osd-release pacific
+				systemctl restart ceph-mds.target
 
 				break;;
 
