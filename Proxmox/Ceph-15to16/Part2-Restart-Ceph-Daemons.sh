@@ -61,17 +61,18 @@
 
 
 #Restart the OSD daemon on all nodes
-	echo "ACHTUNG, erst alle Ceph-OSDs neu starten, wenn alle Ceph-Manager geupgraded sind! [HEALTH_OK]"
-		ceph status
+	echo "ACHTUNG, erst alle Ceph-OSDs neu starten, wenn alle Ceph-Manager geupgraded sind! [mon: 3 daemons, quorum...]"
+		ceph -s
 		while IFS= read -n1 -r -p "Sind alle Ceph-Monitore geupgraded? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 		case $REPLY in
 			y)  echo
 				systemctl restart ceph-osd.target
 
 				break;;
+
 			n)  echo
 				sleep 5
-				ceph status;;
+				ceph -s;;
 
 			*)  echo
 				echo "Antoworte mit y oder n";;
@@ -85,13 +86,14 @@
 
 #Disallow pre-Pacific OSDs and enable all new Pacific-only functionality
 	echo "ACHTUNG, allow Pacific-only functionality sollten erst aktiviert werden, wenn ALLE OSDs des CLUSTERs geupgraded sind!"
-		ceph status
+		ceph tell osd.* version
 		while IFS= read -n1 -r -p "Sind alle Ceph-Monitore geupgraded? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 		case $REPLY in
 			y)  echo
 				ceph osd require-osd-release pacific
 
 				break;;
+
 			n)  echo
 				sleep 5
 				ceph tell osd.* version;;
@@ -115,6 +117,7 @@
 				ceph osd require-osd-release pacific
 
 				break;;
+
 			n)  echo
 				sleep 5
 				ceph status;;
@@ -122,6 +125,29 @@
 			*)  echo
 				echo "Antoworte mit y oder n";;
 				
+		esac
+		done
+
+	echoEnd
+
+
+
+#Unset the 'noout' flag
+	echo "ACHTUNG, noout flag erst deaktivieren, wenn ALLES fertig ist!"
+		while IFS= read -n1 -r -p "Sind alle Nodes geupgraded? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+		case $REPLY in
+			y)  echo
+				ceph osd unset noout
+
+				break;;
+
+			n)  echo
+				sleep 5;;
+				
+				
+			*)  echo
+				echo "Antoworte mit y oder n";;
+
 		esac
 		done
 
