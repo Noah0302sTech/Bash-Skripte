@@ -101,7 +101,8 @@
 		while IFS= read -n1 -r -p "Sind alle Nodes geupgraded? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 		case $REPLY in
 			y)  echo
-				curl -sSL $url | bash
+				wget $url
+				bash Part2-Restart-Ceph-Daemons.sh
 
 				break;;
 			n)  echo
