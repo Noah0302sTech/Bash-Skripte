@@ -52,7 +52,7 @@
 				ceph mon dump | grep min_mon_release
 				echo
 
-				echo "Falls sie nicht geupgraded sind, kann das auch per GUI gemacht werden!"
+				echo "Falls sie nicht geupgraded sind, kann das auch per 'systemctl restart ceph-mon.target' auf jedem Node gemacht werden!"
 				echo;;
 
 			*)  echo
@@ -82,7 +82,7 @@
 
 				echo
 
-				echo "Falls sie nicht geupgraded sind, kann das auch per GUI gemacht werden!"
+				echo "Falls sie nicht geupgraded sind, kann das auch per 'systemctl restart ceph-mgr.target' auf jedem Node gemacht werden!"
 				echo;;
 
 			*)  echo
@@ -114,7 +114,7 @@
 				ceph tell osd.* version
 				echo
 
-				echo "Falls sie nicht geupgraded sind, kann das auch per GUI gemacht werden!"
+				echo "Falls sie nicht geupgraded sind, kann das auch per 'systemctl restart ceph-osd.target' auf jedem Node gemacht werden!"
 				echo;;
 
 			*)  echo
@@ -144,7 +144,7 @@
 
 				echo
 
-				echo "Falls sie nicht geupgraded sind, kann das auch per GUI gemacht werden!"
+				echo "Falls sie nicht geupgraded sind, kann das auch per 'systemctl restart ceph-mds.target' auf jedem Node gemacht werden!"
 				echo;;
 
 			*)  echo
