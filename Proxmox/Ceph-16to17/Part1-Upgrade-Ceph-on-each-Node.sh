@@ -99,7 +99,6 @@
 				break;;
 			n)  echo
 				echo "Part 2 wurde noch nicht ausgeführt!"
-				wget $url
 				
 				break;;
 			*)  echo
