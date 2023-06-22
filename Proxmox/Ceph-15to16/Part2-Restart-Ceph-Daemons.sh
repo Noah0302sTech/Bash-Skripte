@@ -66,8 +66,7 @@
 
 
 #Restart the OSD daemon on all nodes
-	echo "ACHTUNG, erst alle Ceph-OSDs neu starten, wenn alle Ceph-Manager geupgraded sind! [mon: 3 daemons, quorum...]"
-		ceph -s
+	echo "ACHTUNG, erst alle Ceph-OSDs neu starten, wenn alle Ceph-Manager geupgraded sind! In der GUI sichtbar!"
 		while IFS= read -n1 -r -p "Sind alle Ceph-Manager geupgraded? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 		case $REPLY in
 			y)  echo
@@ -81,7 +80,6 @@
 				echo "Warte 5 weitere Sekunden..."
 				sleep 5
 
-				ceph -s
 				echo
 
 				echo "Falls sie nicht geupgraded sind, kann das auch per GUI gemacht werden!"
@@ -130,9 +128,8 @@
 
 
 #Upgrade all CephFS MDS daemons
-	echo "ACHTUNG, allow CephFS-MDS sollten erst geupgraded werden, wenn ALLE non-zero ranks deaktiviert sind!"
-		ceph status
-		while IFS= read -n1 -r -p "Sind ALLE non-zero ranks deaktiviert [y]es|[n]o: " && [[ $REPLY != q ]]; do
+	echo "ACHTUNG, alle CephFS-MDS sollten erst geupgraded werden, wenn ALLE non-zero ranks deaktiviert sind! In der GUI sichtbar!"
+		while IFS= read -n1 -r -p "Sind ALLE non-zero ranks deaktiviert? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 		case $REPLY in
 			y)  echo
 
@@ -145,7 +142,6 @@
 				echo "Warte 5 weitere Sekunden..."
 				sleep 5
 
-				ceph status
 				echo
 
 				echo "Falls sie nicht geupgraded sind, kann das auch per GUI gemacht werden!"
