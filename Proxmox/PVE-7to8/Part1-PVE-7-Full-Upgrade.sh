@@ -1,6 +1,7 @@
 #!/bin/bash
 #	Made by Noah0302sTech
 # 	chmod +x Part2-PVE-7to8.sh && bash Part2-PVE-7to8.sh
+#	wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Proxmox/PVE-7to8/Part1-PVE-7-Full-Upgrade.sh && bash Part1-PVE-7-Full-Upgrade.sh
 
 
 
@@ -13,7 +14,7 @@
 		}
 
 	#----- Variables
-		url="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Proxmox/Ceph-15to16/Part2-Restart-Ceph-Daemons.sh"
+		url="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Proxmox/PVE-7to8/Part2-PVE-7to8.sh"
 
 
 
@@ -22,52 +23,76 @@
 
 	echoEnd
 
+
+
 #Move Bash-Script
 	mv Part2-PVE-7to8.sh PVE-7to8/Part2-PVE-7to8.sh
 
 	echoEnd
 
-#Delete Enterprise Repo
-	echo "----- Delete Enterprise Repo -----"
-		rm /etc/apt/sources.list.d/pve-enterprise.list
 
+
+#Outcomment Enterprise Repo
+	echo "----- Enterprise Repo -----"
+		echo "ACHTUNG, nur benötigt, wenn keine Lizenz vorhanden ist!"
+		while IFS= read -n1 -r -p "Jetzt Node rebooten? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+		case $REPLY in
+			y)  echo
+					echo "# deb https://enterprise.proxmox.com/debian/pve bookworm pve-enterprise" > /etc/apt/sources.list.d/pve-enterprise.list
+
+				break;;
+			n)  echo
+					echo "Node wurde nicht rebotet! Neue Kernel-Version noch nicht aktiv!"
+				
+				break;;
+			*)  echo
+					echo "Antoworte mit y oder n";;
+		esac
+		done
 	echoEnd
 
-#Add No-Subscription Repo
+
+
+#Add No-Subscription Repo for latest 7.4.x
 	echo "----- Add No-Subscription Repo -----"
-	echo "
+		echo "
+
+
+#PVE-No-Subscription
 deb http://download.proxmox.com/debian/pve buster pve-no-subscription" >> /etc/apt/sources.list
 
 	echoEnd
 
-#Update to latest 6.4-X
-	echo "----- Update to latest 6.4-X -----"
-	apt update && apt dist-upgrade
+
+
+#Update to latest 7.4.x
+	echo "----- Update to latest 7.4.x -----"
+		apt update && apt dist-upgrade
 
 	echoEnd
 
+
+
 #Reboot Node
 	echo "----- Reboot Node -----"
-	echo "ACHTUNG, erst Node rebooten, wenn keine VM mehr auf diesem Node läuft!"
-	while IFS= read -n1 -r -p "Jetzt Node rebooten? [y]es|[n]o: " && [[ $REPLY != q ]]; do
-	case $REPLY in
-		y)  echo
+		echo "Optionaler Reboot des Nodes"
+		echo "ACHTUNG, erst Node rebooten, wenn keine VM mehr auf diesem Node läuft!"
+		while IFS= read -n1 -r -p "Jetzt Node rebooten? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+		case $REPLY in
+			y)  echo
+					echo "Starte in 15 Sekunden neu!"
+					echoEnd
+					sleep 15
+					reboot
 
-			echo "Starte in 15 Sekunden neu!"
-			echo
-			echo
-			echo
-			sleep 15
-			reboot
-
-			break;;
-		n)  echo
-			echo "Node wurde nicht rebotet! Neue Kernel-Version noch nicht aktiv!"
-			
-			break;;
-		*)  echo
-			echo "Antoworte mit y oder n";;
-	esac
-	done
+				break;;
+			n)  echo
+					echo "Node wurde nicht rebotet! Neue Kernel-Version noch nicht aktiv!"
+				
+				break;;
+			*)  echo
+					echo "Antoworte mit y oder n";;
+		esac
+		done
 
 	echoEnd
