@@ -1,6 +1,6 @@
 #!/bin/bash
 #	Made by Noah0302sTech
-# 	chmod +x Part2-PVE-7to8.sh && bash Part2-PVE-7to8.sh
+# 	chmod +x Part1-PVE-7-Full-Upgrade.sh && bash Part1-PVE-7-Full-Upgrade.sh
 #	wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Proxmox/PVE-7to8/Part1-PVE-7-Full-Upgrade.sh && bash Part1-PVE-7-Full-Upgrade.sh
 
 
@@ -26,7 +26,7 @@
 
 
 #Move Bash-Script
-	mv Part2-PVE-7to8.sh PVE-7to8/Part2-PVE-7to8.sh
+	mv Part1-PVE-7-Full-Upgrade.sh PVE-7to8/Part1-PVE-7-Full-Upgrade.sh
 
 	echoEnd
 
