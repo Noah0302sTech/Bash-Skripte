@@ -59,7 +59,7 @@
 
 
 #PVE-No-Subscription
-deb http://download.proxmox.com/debian/pve buster pve-no-subscription" >> /etc/apt/sources.list
+deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription" >> /etc/apt/sources.list
 
 	echoEnd
 
