@@ -35,7 +35,7 @@
 #Outcomment Enterprise Repo
 	echo "----- Enterprise Repo -----"
 		echo "ACHTUNG, nur benötigt, wenn keine Lizenz vorhanden ist!"
-		while IFS= read -n1 -r -p "Jetzt Node rebooten? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+		while IFS= read -n1 -r -p "Enterprise Repo jetzt deaktivieren? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 		case $REPLY in
 			y)  echo
 					echo "# deb https://enterprise.proxmox.com/debian/pve bookworm pve-enterprise" > /etc/apt/sources.list.d/pve-enterprise.list
@@ -87,7 +87,7 @@ deb http://download.proxmox.com/debian/pve buster pve-no-subscription" >> /etc/a
 
 				break;;
 			n)  echo
-					echo "Node wurde nicht rebotet! Neue Kernel-Version noch nicht aktiv!"
+					echo "Node wurde nicht rebotet! Neue Kernel-Version ggf. noch nicht aktiv!"
 				
 				break;;
 			*)  echo
