@@ -38,7 +38,7 @@
 		while IFS= read -n1 -r -p "Enterprise Repo jetzt deaktivieren? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 		case $REPLY in
 			y)  echo
-					echo "# deb https://enterprise.proxmox.com/debian/pve bookworm pve-enterprise" > /etc/apt/sources.list.d/pve-enterprise.list
+					echo "#deb https://enterprise.proxmox.com/debian/pve bookworm pve-enterprise" > /etc/apt/sources.list.d/pve-enterprise.list
 
 				break;;
 			n)  echo
