@@ -107,9 +107,9 @@
 		urlVar="https://raw.githubusercontent.com/Noah0302sTech/"
 
 		parentFolder="XXXXXXXXXX"
-			fullInstallerFolder="XXXXXXXXXX"
-				fullInstaller="XXXXXXXXXX"
 			subFolder="XXXXXXXXXX"
+				fullInstallerFolder="XXXXXXXXXX"
+					fullInstaller="XXXXXXXXXX"
 				folder1="XXXXXXXXXX"
 					bash1="XXXXXXXXXX"
 				folder2="XXXXXXXXXX"
@@ -117,13 +117,16 @@
 				cronCheck="XXXXXXXXXX"
 
 		parentFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder"
-			fullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder"
-				fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder/$fullInstaller"
 			subFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder"
+				fullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$fullInstallerFolder"
+					fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$fullInstallerFolder/$fullInstaller"
+
 				folder1Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1"
 					bash1Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1/$bash1"
+
 				folder2Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2"
 					bash2Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2/$bash2"
+
 				cronCheckPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$cronCheck"
 
 #-----	-----#	#-----	-----#	#-----	-----#
@@ -138,6 +141,31 @@
 	start_spinner "XXXXXXXXXX..."
 		XXXXXXXXXX > /dev/null 2>&1
 	stop_spinner $?
+	echoEnd
+
+
+
+#----- XXXXXXXXXX
+	echo "XXXXXXXXXX"
+		while IFS= read -n1 -r -p "XXXXXXXXXX? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+		case $REPLY in
+			y)  echo
+
+					XXXXXXXXXX
+
+				echo
+				break;;
+			n)  echo
+
+					XXXXXXXXXX
+
+				echo;;
+			*)  echo
+
+				echo "Antoworte mit y oder n";;
+		esac
+		done
+
 	echoEnd
 
 
@@ -165,19 +193,19 @@
 						echo "Ordner $parentFolderPath bereits vorhanden!"
 					fi
 
-					#--- Full-Installer Folder
-						if [ ! -d $fullInstallerFolderPath ]; then
-							mkdir $fullInstallerFolderPath > /dev/null 2>&1
-						else
-							echo "Ordner $fullInstallerFolderPath bereits vorhanden!"
-						fi
-
 					#--- Sub Folder
 						if [ ! -d $subFolderPath ]; then
 							mkdir $subFolderPath > /dev/null 2>&1
 						else
 							echo "Ordner $subFolderPath bereits vorhanden!"
 						fi
+
+						#--- Full-Installer Folder
+							if [ ! -d $fullInstallerFolderPath ]; then
+								mkdir $fullInstallerFolderPath > /dev/null 2>&1
+							else
+								echo "Ordner $fullInstallerFolderPath bereits vorhanden!"
+							fi
 
 						#--- Folder 1
 							if [ ! -d $folder1Path ]; then
