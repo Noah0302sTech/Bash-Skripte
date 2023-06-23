@@ -55,11 +55,25 @@
 
 #Add No-Subscription Repo for latest 7.4.x
 	echo "----- Add No-Subscription Repo -----"
-		echo "
+		echo "ACHTUNG, nur benötigt, wenn keine Lizenz vorhanden ist und die No-Subscription nicht aktiviert ist!"
+		while IFS= read -n1 -r -p "No-Subscription Repo jetzt aktivieren? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+		case $REPLY in
+			y)  echo
+							echo "
 
 
 #PVE-No-Subscription
 deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription" >> /etc/apt/sources.list
+
+				break;;
+			n)  echo
+					echo "Node wurde nicht rebotet! Neue Kernel-Version noch nicht aktiv!"
+				
+				break;;
+			*)  echo
+					echo "Antoworte mit y oder n";;
+		esac
+		done
 
 	echoEnd
 
