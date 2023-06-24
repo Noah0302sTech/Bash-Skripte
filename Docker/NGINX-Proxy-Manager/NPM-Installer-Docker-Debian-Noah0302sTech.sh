@@ -178,7 +178,7 @@ services:
       # DB_SQLITE_FILE: "/data/database.sqlite"
 
       # Uncomment this if IPv6 is not enabled on your host
-      DISABLE_IPV6: 'true'
+      # DISABLE_IPV6: 'true'
 
     volumes:
       - ./data:/data
