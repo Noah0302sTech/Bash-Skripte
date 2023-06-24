@@ -144,13 +144,18 @@
 		start_spinner "Füge $SUDO_USER zu Docker-Gruppe hinzu..."
 			usermod -aG docker $SUDO_USER > /dev/null 2>&1
 		stop_spinner $?
-		
+
 	echoEnd
 
 
 
 #----- Create NPM
 	#--- Create docker-compose.yml
+		#- Variables
+			webinterfacePort="81:81"
+				read -p "Gib den Port für das Admin-Webinterface an [default: $webinterfacePort]: " input
+				webinterfacePort=${input:-$webinterfacePort}
+
 	start_spinner "Erstelle docker-compose.yml..."
 		touch docker-compose.yml > /dev/null 2>&1
 		echo "version: '3.8'
@@ -162,7 +167,7 @@ services:
       # These ports are in format <host-port>:<container-port>
       - '80:80' # Public HTTP Port
       - '443:443' # Public HTTPS Port
-      - '81:81' # Admin Web Port
+      - '$webinterfacePort' # Admin Web Port
       # Add any other Stream port you want to expose
       # - '21:21' # FTP
 
@@ -173,7 +178,7 @@ services:
       # DB_SQLITE_FILE: "/data/database.sqlite"
 
       # Uncomment this if IPv6 is not enabled on your host
-      # DISABLE_IPV6: 'true'
+      DISABLE_IPV6: 'true'
 
     volumes:
       - ./data:/data
