@@ -98,8 +98,7 @@
 		start_spinner "Aktualisiere Package-Listen..."
 			apt update -y > /dev/null 2>&1
 		stop_spinner $?
-		echo
-		echo
+		echoEnd
 
 
 
@@ -152,7 +151,7 @@
 #----- Create NPM
 	#--- Create docker-compose.yml
 		#- Variables
-			webinterfacePort="81:81"
+			webinterfacePort="81"
 				read -p "Gib den Port für das Admin-Webinterface an [default: $webinterfacePort]: " input
 				webinterfacePort=${input:-$webinterfacePort}
 
@@ -167,7 +166,7 @@ services:
       # These ports are in format <host-port>:<container-port>
       - '80:80' # Public HTTP Port
       - '443:443' # Public HTTPS Port
-      - '$webinterfacePort' # Admin Web Port
+      - '81:$webinterfacePort' # Admin Web Port
       # Add any other Stream port you want to expose
       # - '21:21' # FTP
 
