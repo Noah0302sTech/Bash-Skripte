@@ -157,7 +157,7 @@
 
 	start_spinner "Erstelle docker-compose.yml..."
 		touch docker-compose.yml > /dev/null 2>&1
-		echo "version: '3.8'
+		echo "version: '3.7'
 services:
   app:
     image: 'jc21/nginx-proxy-manager:latest'
