@@ -166,7 +166,7 @@ services:
       # These ports are in format <host-port>:<container-port>
       - '80:80' # Public HTTP Port
       - '443:443' # Public HTTPS Port
-      - '81:$webinterfacePort' # Admin Web Port
+      - '$webinterfacePort:81' # Admin Web Port
       # Add any other Stream port you want to expose
       # - '21:21' # FTP
 
