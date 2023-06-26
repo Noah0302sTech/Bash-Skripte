@@ -129,6 +129,7 @@
 
 
 #----- Docker
+	echo "----- Docker-Installation -----"
 	#--- Install Docker
 		start_spinner "Installiere docker.io..."
 			apt install docker.io -y > /dev/null 2>&1
@@ -149,11 +150,32 @@
 
 
 #----- Create NPM
+	echo "----- NPM-Config -----"
 	#--- Create docker-compose.yml
-		#- Variables
+		#- Webinterface Port
 			webinterfacePort="81"
 				read -p "Gib den Port für das Admin-Webinterface an [default: $webinterfacePort]: " input
 				webinterfacePort=${input:-$webinterfacePort}
+
+		#- ipv6
+			disableIPV6="true"
+			while IFS= read -n1 -r -p "IPv6 Integration deaktivieren? (default = $disableIPV6) [y]es|[n]o: " && [[ $REPLY != q ]]; do
+				case $REPLY in
+					y)  echo
+							disableIPV6="true"
+							echo "IPv6 bleibt deaktiviert!"
+
+						break;;
+					n)  echo
+							disableIPV6="false"
+							echo "IPv6 wurde aktiviert!"
+						
+						break;;
+					*)  echo
+							echo "Antoworte mit y oder n";;
+
+				esac
+				done
 
 	start_spinner "Erstelle docker-compose.yml..."
 		touch docker-compose.yml > /dev/null 2>&1
@@ -177,7 +199,7 @@ services:
       # DB_SQLITE_FILE: "/data/database.sqlite"
 
       # Uncomment this if IPv6 is not enabled on your host
-      DISABLE_IPV6: 'true'
+      DISABLE_IPV6: '$disableIPV6'
 
     volumes:
       - ./data:/data
@@ -200,6 +222,7 @@ services:
 #-----	-----#	#-----	-----#	#-----	-----#
 
 #---------- Creating Files & Folders, moving Files
+	echo "----- Ordnerstruktur -----"
 	#----- Create Folders
 		start_spinner "Erstelle Verzeichnisse..."
 			#--- Noah0302sTech
