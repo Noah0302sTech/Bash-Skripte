@@ -171,13 +171,13 @@ services:
       # - '21:21' # FTP
 
     # Uncomment the next line if you uncomment anything in the section
-    # environment:
+    environment:
       # Uncomment this if you want to change the location of
       # the SQLite DB file within the container
       # DB_SQLITE_FILE: "/data/database.sqlite"
 
       # Uncomment this if IPv6 is not enabled on your host
-      # DISABLE_IPV6: 'true'
+      DISABLE_IPV6: 'true'
 
     volumes:
       - ./data:/data
