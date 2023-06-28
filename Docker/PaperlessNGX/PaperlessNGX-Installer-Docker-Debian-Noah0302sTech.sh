@@ -1,6 +1,6 @@
 #!/bin/bash
 #	Made by Noah0302sTech
-#	chmod +x PaperlessNGS-Installer-Docker-Debian-Noah0302sTech.sh && sudo bash PaperlessNGS-Installer-Docker-Debian-Noah0302sTech.sh
+#	chmod +x PaperlessNGX-Installer-Docker-Debian-Noah0302sTech.sh && sudo bash PaperlessNGX-Installer-Docker-Debian-Noah0302sTech.sh
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
@@ -109,25 +109,12 @@
 		parentFolder="Docker"
 			subFolder="PaperlessNGX"
 				fullInstallerFolder="Installer"
-					fullInstaller="PaperlessNGS-Installer-Docker-Debian-Noah0302sTech.sh"
-				folder1="XXXXXXXXXX"
-					bash1="XXXXXXXXXX"
-				folder2="XXXXXXXXXX"
-					bash2="XXXXXXXXXX"
-				cronCheck="XXXXXXXXXX"
+					fullInstaller="PaperlessNGX-Installer-Docker-Debian-Noah0302sTech.sh"
 
 		parentFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder"
 			subFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder"
 				fullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$fullInstallerFolder"
 					fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$fullInstallerFolder/$fullInstaller"
-
-				folder1Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1"
-					bash1Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1/$bash1"
-
-				folder2Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2"
-					bash2Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2/$bash2"
-
-				cronCheckPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$cronCheck"
 
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
@@ -157,6 +144,7 @@
 
 #----- PaperlessNGX
 	start_spinner "Installiere PaperlessNGX..."
+		apt install curl -y > /dev/null 2>&1
 		bash -c "$(curl -L https://raw.githubusercontent.com/paperless-ngx/paperless-ngx/main/install-paperless-ngx.sh)"
 	stop_spinner $?
 	echoEnd
@@ -199,20 +187,6 @@
 							else
 								echo "Ordner $fullInstallerFolderPath bereits vorhanden!"
 							fi
-
-						#--- Folder 1
-							if [ ! -d $folder1Path ]; then
-								mkdir $folder1Path > /dev/null 2>&1
-							else
-								echo "Ordner $folder1Path bereits vorhanden!"
-							fi
-
-						#--- Folder2
-							if [ ! -d $folder2Path ]; then
-								mkdir $folder2Path > /dev/null 2>&1
-							else
-								echo "Ordner $folder2Path bereits vorhanden!"
-							fi
 		stop_spinner $?
 
 	#----- Move Files
@@ -223,25 +197,4 @@
 				else
 					echo "Die Datei $fullInstaller ist bereits vorhanden!"
 				fi
-
-				#--- Updater-Installer
-					if [ ! -f $bash1Path ]; then
-						mv /home/$SUDO_USER/$bash1 $bash1Path > /dev/null 2>&1
-					else
-						echo "Die Datei $bash1 ist bereits vorhanden!"
-					fi
-
-				#--- Update-Executer
-					if [ ! -f $bash2Path ]; then
-						mv /home/$SUDO_USER/$bash2 $bash2Path > /dev/null 2>&1
-					else
-						echo "Die Datei $bash2 ist bereits vorhanden!"
-					fi
-
-				#--- Cron-Check.txt
-					if [ ! -f $cronCheckPath ]; then
-						mv /home/$SUDO_USER/$cronCheck $cronCheckPath > /dev/null 2>&1
-					else
-						echo "Die Datei $cronCheck ist bereits vorhanden!"
-					fi
 		stop_spinner $?
