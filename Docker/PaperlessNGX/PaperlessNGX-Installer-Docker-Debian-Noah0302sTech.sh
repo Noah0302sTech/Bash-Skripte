@@ -143,10 +143,15 @@
 
 
 #----- PaperlessNGX
-	start_spinner "Installiere PaperlessNGX..."
-		apt install curl -y > /dev/null 2>&1
-		bash -c "$(curl -L https://raw.githubusercontent.com/paperless-ngx/paperless-ngx/main/install-paperless-ngx.sh)"
-	stop_spinner $?
+	#--- Curl
+		start_spinner "Installiere CURL..."
+			apt install curl -y > /dev/null 2>&1
+		stop_spinner $?
+
+	#--- Paperless
+		echo "Installiere Paperless-NGX..."
+			sudo -u $SUDO_USER bash -c "$(curl -L https://raw.githubusercontent.com/paperless-ngx/paperless-ngx/main/install-paperless-ngx.sh)"
+
 	echoEnd
 
 
