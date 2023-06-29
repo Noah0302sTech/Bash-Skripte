@@ -104,7 +104,7 @@
 		echoEnd
 
 	#----- Variables
-		urlVar="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Docker/System-Prune/System-Prune-Executer/Docker-SystemPrune-Executer-Noah0302sTech.sh"
+		urlVar="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Docker/System-Prune/System-Prune-Executer/Docker-SystemPrune-Executer-Noah0302sTech.sh"
 		cronJobAdded=false
 
 		parentFolder="Docker"
