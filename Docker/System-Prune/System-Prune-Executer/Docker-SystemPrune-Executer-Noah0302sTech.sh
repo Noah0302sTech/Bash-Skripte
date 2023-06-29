@@ -140,7 +140,7 @@
 		else
 			echo "Es wurden gestoppte Container gefunden:"
 			docker ps -f "status=exited"
-		fi	
+		fi
 	else
 		echo "Docker ist nicht installiert, überspringe Docker System Prune"
 	fi
