@@ -149,18 +149,60 @@
 
 
 #----- Check if the filesystem supports fstrim command
-	if blkid -o value -s discard $(findmnt -n -o SOURCE --target /) >/dev/null 2>&1; then
-		echo "Filesystem supports fstrim command"
+# Check if the script is running within a container
+if [ -f /proc/1/environ ] && grep -q container=lxc /proc/1/environ; then
+    echo "Script is running within a container"
 
-		# Run fstrim on the root filesystem
-		if command -v fstrim >/dev/null 2>&1; then
-			fstrim -v /
-		else
-			echo "fstrim command is not available"
-		fi
-	else
-		echo "Filesystem does not support fstrim command"
-	fi
+    # Check if the filesystem supports fstrim command on the host
+    if blkid -o value -s discard $(findmnt -n -o SOURCE --target /) >/dev/null 2>&1; then
+        echo "Host filesystem supports fstrim command"
+
+        # Run fstrim on the root filesystem (only if executed on the host, not within the container)
+        if command -v fstrim >/dev/null 2>&1; then
+            fstrim -v /
+        else
+            echo "fstrim command is not available on the host"
+        fi
+    else
+        echo "Host filesystem does not support fstrim command"
+    fi
+else
+    # Check if the script is running within a VMware VM
+    if command -v dmidecode >/dev/null 2>&1 && dmidecode -s system-product-name | grep -qi "VMware"; then
+        echo "Script is running within a VMware VM"
+
+        # Check if the host filesystem supports fstrim command
+        if blkid -o value -s discard $(findmnt -n -o SOURCE --target /) >/dev/null 2>&1; then
+            echo "Host filesystem supports fstrim command"
+
+            # Run fstrim on the root filesystem (only if executed on the host, not within the VM)
+            if command -v fstrim >/dev/null 2>&1; then
+                fstrim -v /
+            else
+                echo "fstrim command is not available on the host"
+            fi
+        else
+            echo "Host filesystem does not support fstrim command"
+        fi
+    else
+        echo "Script is not running within a container or VMware VM"
+
+        # Check if the filesystem supports fstrim command
+        if blkid -o value -s discard $(findmnt -n -o SOURCE --target /) >/dev/null 2>&1; then
+            echo "Filesystem supports fstrim command"
+
+            # Run fstrim on the root filesystem
+            if command -v fstrim >/dev/null 2>&1; then
+                fstrim -v /
+            else
+                echo "fstrim command is not available"
+            fi
+        else
+            echo "Filesystem does not support fstrim command"
+        fi
+    fi
+fi
+
 	echoEnd
 
 
