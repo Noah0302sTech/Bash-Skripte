@@ -149,31 +149,35 @@
 
 
 #----- Check if the filesystem supports fstrim command
-# Check if the script is running within a container
-if [ -f /proc/1/environ ] && grep -q container=lxc /proc/1/environ; then
-    echo "Script is running within a container"
-    exit 0
-fi
+	#--- Check if the script is running within a container
+	if [ -f /proc/1/environ ] && grep -q container=lxc /proc/1/environ; then
+		echo "Script is running within a container!"
+		echo "You might not have Permissions to use the 'fstrim' Command!"
+		echo "Script will be aborted!"
+		exit 0
+	fi
 
-# Check if the script is running within a VMware VM
-if command -v dmidecode >/dev/null 2>&1 && dmidecode -s system-product-name | grep -qi "VMware"; then
-    echo "Script is running within a VMware VM"
-    exit 0
-fi
+	#--- Check if the script is running within a VMware VM
+	if command -v dmidecode >/dev/null 2>&1 && dmidecode -s system-product-name | grep -qi "VMware"; then
+		echo "Script is running within a VMware VM"
+		echo "You might not have Permissions to use the 'fstrim' Command!"
+		echo "Script will be aborted!"
+		exit 0
+	fi
 
-# Check if the filesystem supports fstrim command
-if blkid -o value -s discard $(findmnt -n -o SOURCE --target /) >/dev/null 2>&1; then
-    echo "Filesystem supports fstrim command"
+	#--- Check if the filesystem supports fstrim command
+	if blkid -o value -s discard $(findmnt -n -o SOURCE --target /) >/dev/null 2>&1; then
+		echo "Filesystem supports fstrim command"
 
-    # Run fstrim on the root filesystem
-    if command -v fstrim >/dev/null 2>&1; then
-        fstrim -v /
-    else
-        echo "fstrim command is not available"
-    fi
-else
-    echo "Filesystem does not support fstrim command"
-fi
+		# Run fstrim on the root filesystem
+		if command -v fstrim >/dev/null 2>&1; then
+			fstrim -v /
+		else
+			echo "fstrim command is not available"
+		fi
+	else
+		echo "Filesystem does not support fstrim command"
+	fi
 
 	echoEnd
 
