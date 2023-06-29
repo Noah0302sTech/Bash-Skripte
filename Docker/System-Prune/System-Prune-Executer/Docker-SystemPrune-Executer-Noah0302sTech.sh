@@ -1,6 +1,8 @@
 #!/bin/bash
-# Made by Noah0302sTech
-# chmod +x Docker-System-Prune.sh && sudo bash Docker-System-Prune.sh
+#	Made by Noah0302sTech
+#	chmod +x Docker-SystemPrune-Executer-Noah0302sTech.sh && sudo bash Docker-SystemPrune-Executer-Noah0302sTech.sh
+
+#TODO:	Fix check for Trim-Command
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
@@ -11,7 +13,7 @@
 
 
 
-	#----- Source of Spinner-Function: https://github.com/tlatsas/bash-spinner
+	#----- Source of Spinner-Function: https://github.com/tlatsas/bash-spinner -----#
 			function _spinner() {
 				# $1 start/stop
 				#
@@ -85,17 +87,24 @@
 
 
 
+	#----- echoEnd
+			function echoEnd {
+				echo
+				echo
+				echo
+			}
+
+
+
 	#----- Refresh Packages
 		start_spinner "Aktualisiere Package-Listen..."
-			sudo apt update -y > /dev/null 2>&1
+			apt update -y > /dev/null 2>&1
 		stop_spinner $?
-		echo
-		echo
+		echoEnd
 
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
-
 
 
 
@@ -110,13 +119,13 @@
 		start_spinner "Autoremove Packages..."
 			apt autoremove -y > /dev/null 2>&1
 		stop_spinner $?
-	echo
-	echo
+	echoEnd
 
 
 
 #----- Variables
-	dockerPruneOutput="Docker-System-Prune did not run!"
+	dockerPruneOutput="Docker-System-Prune did not run! Laufen alle Docker-Container?"
+	fstrimOutput="FS-Trim did not run! Unterstützt dein Filesystem den Trim-Command?"
 
 
 
@@ -135,13 +144,46 @@
 	else
 		echo "Docker ist nicht installiert, überspringe Docker System Prune"
 	fi
-	echo
-	echo
+	echoEnd
+
+
+
+#----- Check if the filesystem supports fstrim command
+	#--- Check if the script is running within a container
+	if [ -f /proc/1/environ ] && grep -q container=lxc /proc/1/environ; then
+		echo "Script is running within a container!"
+		echo "You might not have Permissions to use the 'fstrim' Command!"
+		echo "Script will be aborted!"
+		exit 0
+	fi
+
+	#--- Check if the script is running within a VMware VM
+	if command -v dmidecode >/dev/null 2>&1 && dmidecode -s system-product-name | grep -qi "VMware"; then
+		echo "Script is running within a VMware VM"
+		echo "You might not have Permissions to use the 'fstrim' Command!"
+		echo "Script will be aborted!"
+		exit 0
+	fi
+
+	#--- Check if the filesystem supports fstrim command
+	if blkid -o value -s discard $(findmnt -n -o SOURCE --target /) >/dev/null 2>&1; then
+		echo "Filesystem supports fstrim command"
+
+		# Run fstrim on the root filesystem
+		if command -v fstrim >/dev/null 2>&1; then
+			fstrim -v /
+		else
+			echo "fstrim command is not available"
+		fi
+	else
+		echo "Filesystem does not support fstrim command"
+	fi
+
+	echoEnd
 
 
 
 
-
-#-----	-----#	#-----	-----#	#-----	-----# TO DO: check lsblk --discard
+#-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
