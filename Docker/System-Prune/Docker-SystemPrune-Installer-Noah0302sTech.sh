@@ -175,7 +175,7 @@
 $cronVariable root $bashExecuterPath" > /etc/cron.d/docker-System-Prune-Noah0302sTech
 				stop_spinner $?
 
-			#--- Echo Commands into Pihole-Updater.sh
+			#--- Echo Commands into Docker-SystemPrune-Executer
 				start_spinner "Passe $bashExecuter an..."
 					echo "Passe $bashExecuter an..."
 					echo "
