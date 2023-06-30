@@ -118,20 +118,40 @@
 
 
 
-#Reboot Node
-	echo "----- Reboot Node -----"
-		echo "ACHTUNG, erst Node rebooten, wenn keine VM mehr auf diesem Node läuft!"
-		while IFS= read -n1 -r -p "Jetzt Node rebooten? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+#PVE-Version Check
+	echo "----- PVE-Version Check -----"
+		echo "ACHTUNG, die Proxmox-Version muss nun '8.0.3' oder höher sein!"
+		pveversion
+		while IFS= read -n1 -r -p "Ist die PVE-Version '8.0.3' oder höher? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 		case $REPLY in
 			y)  echo
-					echo "Starte in 15 Sekunden neu!"
-					echoEnd
-					sleep 15
-					reboot
+					#Reboot Node
+						echo "----- Reboot Node -----"
+							echo "ACHTUNG, erst Node rebooten, wenn keine VM mehr auf diesem Node läuft!"
+							while IFS= read -n1 -r -p "Jetzt Node rebooten? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+							case $REPLY in
+								y)  echo
+										echo "Starte in 15 Sekunden neu!"
+										echoEnd
+										sleep 15
+										systemctl reboot
+
+									break;;
+								n)  echo
+										echo "Node wurde nicht rebotet! Neue Kernel-Version noch nicht aktiv!"
+									
+									break;;
+								*)  echo
+										echo "Antoworte mit y oder n";;
+							esac
+							done
+
+	echoEnd
 
 				break;;
 			n)  echo
-					echo "Node wurde nicht rebotet! Neue Kernel-Version noch nicht aktiv!"
+					echo "Das PVE-Upgrade wurde nicht ordnungsgemäß durchgefüht!"
+					echo "Prüfe nach möglichen Error-Logs!"
 				
 				break;;
 			*)  echo
