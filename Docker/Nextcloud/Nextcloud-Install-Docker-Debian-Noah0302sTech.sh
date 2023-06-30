@@ -2,8 +2,7 @@
 #	Made by Noah0302sTech
 #	chmod +x Nextcloud-Install-Docker-Debian-Noah0302sTech.sh && sudo bash Nextcloud-Install-Docker-Debian-Noah0302sTech.sh
 
-#	TODO:	Add Alias for Nextcloud-Config
-#				configNC
+#TODO: Create MOTD and Alias for Nextcloud-Config
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
@@ -107,7 +106,7 @@
 
 
 	#----- Variables
-		urlVar="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Docker/Nextcloud/Nextcloud-Configurator/Nextcloud-Config-Docker-Noah0302sTech.sh"
+		urlVar="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Docker/Nextcloud/Nextcloud-Configurator/Nextcloud-Config-Docker-Noah0302sTech.sh"
 
 		parentFolder="Nextcloud"
 			fullInstallerFolder="Installer"
@@ -121,7 +120,7 @@
 				fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder/$fullInstaller"
 				fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder/$dockerFile"
 			subFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder"
-					updaterInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1/$bashConfigurator"
+					updaterInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$bashConfigurator"
 
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
@@ -152,6 +151,7 @@
 			apt install apparmor -y > /dev/null 2>&1
 		stop_spinner $?
 	echoEnd
+
 
 
 #----- Docker-Compose
@@ -216,7 +216,8 @@ volumes:
 		chmod +x $bashConfigurator > /dev/null 2>&1
 	stop_spinner $?
 	echo "Um NACH DER INSTALLATION die Nextcloud-Config anzupassen, starte das Nextcloud-Config-Skript mit:"
-	echo "sudo bash /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$bashExecuter"
+	echo "sudo bash $updaterInstallerPath"
+	echo "ERST NACH DER INSTALLATION MÖGLICH!"
 	echoEnd
 
 

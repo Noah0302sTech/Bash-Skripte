@@ -104,7 +104,7 @@
 		echoEnd
 
 	#----- Variables
-		urlVar="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Docker/System-Prune/System-Prune-Executer/Docker-SystemPrune-Executer-Noah0302sTech.sh"
+		urlVar="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Docker/System-Prune/System-Prune-Executer/Docker-SystemPrune-Executer-Noah0302sTech.sh"
 		cronJobAdded=false
 
 		parentFolder="Docker"
@@ -175,7 +175,7 @@
 $cronVariable root $bashExecuterPath" > /etc/cron.d/docker-System-Prune-Noah0302sTech
 				stop_spinner $?
 
-			#--- Echo Commands into Pihole-Updater.sh
+			#--- Echo Commands into Docker-SystemPrune-Executer
 				start_spinner "Passe $bashExecuter an..."
 					echo "Passe $bashExecuter an..."
 					echo "
