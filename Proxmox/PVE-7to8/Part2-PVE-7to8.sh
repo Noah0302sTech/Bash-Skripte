@@ -36,7 +36,12 @@
 #Update the configured APT repositories
 	echo "----- Update the configured APT repositories -----"
 		sed -i 's/bullseye/bookworm/g' /etc/apt/sources.list
-		sed -i -e 's/bullseye/bookworm/g' /etc/apt/sources.list.d/pve-install-repo.list
+
+		file="/etc/apt/sources.list.d/pve-install-repo.list"
+		if [ -e "$file" ]; then
+			sed -i -e 's/bullseye/bookworm/g' /etc/apt/sources.list.d/pve-install-repo.list
+		fi
+		
 
 	echoEnd
 
@@ -44,7 +49,6 @@
 
 #Change Ceph Repo
 	echo "----- Change Ceph Repo -----"
-		pveversion
 		while IFS= read -n1 -r -p "Ist Ceph installiert? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 		case $REPLY in
 			y)  echo
