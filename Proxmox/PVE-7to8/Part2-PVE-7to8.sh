@@ -75,6 +75,11 @@
 
 				break;;
 			n)  echo
+					ceph_list="/etc/apt/sources.list.d/ceph.list"
+					content="deb http://download.proxmox.com/debian/ceph-quincy bookworm no-subscription"
+						if [[ -f "$ceph_list" ]]; then
+							echo "$content" > "$ceph_list"
+						fi
 					echo "Skript wird fortgeführt!"
 
 				break;;
