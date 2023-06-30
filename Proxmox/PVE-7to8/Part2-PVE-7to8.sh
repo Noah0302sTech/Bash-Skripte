@@ -59,6 +59,7 @@
 						while IFS= read -n1 -r -p "Ist auf Version '17.x.x'? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 						case $REPLY in
 							y)  echo
+									echo "deb http://download.proxmox.com/debian/ceph-quincy bookworm no-subscription" > /etc/apt/sources.list.d/ceph.list
 									echo "Skript wird fortgeführt!"
 
 								break;;
@@ -157,6 +158,10 @@
 			n)  echo
 					echo "Das PVE-Upgrade wurde nicht ordnungsgemäß durchgefüht!"
 					echo "Prüfe nach möglichen Error-Logs!"
+					echo
+					echo "Mögliche Lösungswege:"
+					echo "apt -o Debug::pkgProblemResolver=yes install qemu-server
+apt -o Debug::pkgProblemResolver=yes install pve-manager"
 
 				break;;
 			*)  echo
