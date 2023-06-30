@@ -135,7 +135,7 @@
 		pveversion
 		while IFS= read -n1 -r -p "Ist die PVE-Version '8.0.3' oder höher? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 		case $REPLY in
-			y)  echo
+			y)  echoEnd
 					#Reboot Node
 						echo "----- Reboot Node -----"
 							echo "ACHTUNG, erst Node rebooten, wenn keine VM mehr auf diesem Node läuft!"
@@ -157,7 +157,7 @@
 							esac
 							done
 
-	echoEnd
+					echoEnd
 
 				break;;
 			n)  echo
