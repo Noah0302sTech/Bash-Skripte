@@ -44,9 +44,36 @@
 
 #Change Ceph Repo
 	echo "----- Change Ceph Repo -----"
-		echo "deb http://download.proxmox.com/debian/ceph-quincy bookworm no-subscription" > /etc/apt/sources.list.d/ceph.list
+		pveversion
+		while IFS= read -n1 -r -p "Ist Ceph installiert? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+		case $REPLY in
+			y)  echo
+					echo "ACHTUNG, wenn Ceph installiert ist, muss es MINDESTENS 'Ceph-Quincy (17.x.x) sein!"
+						ceph tell osd.* version
+						while IFS= read -n1 -r -p "Ist auf Version '17.x.x'? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+						case $REPLY in
+							y)  echo
+									echo "deb http://download.proxmox.com/debian/ceph-quincy bookworm no-subscription" > /etc/apt/sources.list.d/ceph.list
 
-	echoEnd
+								break;;
+							n)  echo
+									echo "Ceph-Repo wurde nicht angepasst!"
+									
+								exit 0;;
+							*)  echo
+									echo "Antoworte mit y oder n";;
+						esac
+						done
+
+				exit 0;;
+			n)  echo
+					echo "Skript wird fortgeführt!"
+				
+				break;;
+			*)  echo
+					echo "Antoworte mit y oder n";;
+		esac
+		done
 
 
 
@@ -84,6 +111,8 @@
 		done
 
 	echoEnd
+
+
 
 #Reboot Node
 	echo "----- Reboot Node -----"
