@@ -32,17 +32,54 @@
 
 
 
+#Ceph
+	echo "----- Ceph -----"
+		while IFS= read -n1 -r -p "Ist Ceph installiert? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+		case $REPLY in
+			y)  echo
+					echo "ACHTUNG, wenn Ceph installiert ist, muss es MINDESTENS 'Ceph-Quincy (17.x.x) sein!"
+						ceph tell osd.* version
+						while IFS= read -n1 -r -p "Ist auf Version '17.x.x'? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+						case $REPLY in
+							y)  echo
+									echo "Skript wird fortgeführt!"
+
+								break;;
+							n)  echo
+									echo "Upgrade kann nicht durchgeführt werden, wenn die Ceph-Version nicht mindestens '17.x.x' oder höher ist"
+									echo "Skript wird abgebrochen!"
+									
+								exit 0;;
+							*)  echo
+									echo "Antoworte mit y oder n";;
+						esac
+						done
+
+				exit 0;;
+			n)  echo
+					echo "Skript wird fortgeführt!"
+				
+				break;;
+			*)  echo
+					echo "Antoworte mit y oder n";;
+		esac
+		done
+
+	echoEnd
+
+
+
 #Outcomment Enterprise Repo
 	echo "----- Enterprise Repo -----"
 		echo "ACHTUNG, nur benötigt, wenn keine Lizenz vorhanden ist!"
 		while IFS= read -n1 -r -p "Enterprise Repo jetzt deaktivieren? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 		case $REPLY in
 			y)  echo
-					echo "#deb https://enterprise.proxmox.com/debian/pve bookworm pve-enterprise" > /etc/apt/sources.list.d/pve-enterprise.list
+					echo "#deb https://enterprise.proxmox.com/debian/pve bullseye pve-enterprise" > /etc/apt/sources.list.d/pve-enterprise.list
 
 				break;;
 			n)  echo
-					echo "Node wurde nicht rebotet! Neue Kernel-Version noch nicht aktiv!"
+					echo "Enterprise-Repo wurde nicht deaktiviert!"
 				
 				break;;
 			*)  echo
@@ -67,7 +104,7 @@ deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription" >> /etc
 
 				break;;
 			n)  echo
-					echo "Node wurde nicht rebotet! Neue Kernel-Version noch nicht aktiv!"
+					echo "No-Subscription-Repo wurde nicht aktiviert!"
 				
 				break;;
 			*)  echo
@@ -87,9 +124,33 @@ deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription" >> /etc
 
 
 
+#Check Version
+	echo "----- Check Version -----"
+		echo "ACHTUNG, die Version MUSS nun '7.4-15' oder höher anzeigen!"
+		pveversion
+		while IFS= read -n1 -r -p "Ist die Version höher als '7.4-15'? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+		case $REPLY in
+			y)  echo
+					echo "Führe Skript weiter aus!"
+
+				break;;
+			n)  echo
+					echo "Skript wird abgebrochen!"
+					echo "Upgrade kann nicht durchgeführt werden, wenn die Version nicht mindestens '7.4-15' oder höher ist"
+				
+				exit 0;;
+			*)  echo
+					echo "Antoworte mit y oder n";;
+		esac
+		done
+
+	echoEnd
+
+
+
 #Reboot Node
 	echo "----- Reboot Node -----"
-		echo "Optionaler Reboot des Nodes"
+		echo "Optionaler Reboot des Nodes, wenn kein neuer Kernel installiert wurde!"
 		echo "ACHTUNG, erst Node rebooten, wenn keine VM mehr auf diesem Node läuft!"
 		while IFS= read -n1 -r -p "Jetzt Node rebooten? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 		case $REPLY in
