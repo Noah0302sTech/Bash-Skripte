@@ -96,11 +96,15 @@
 		while IFS= read -n1 -r -p "No-Subscription Repo jetzt aktivieren? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 		case $REPLY in
 			y)  echo
-							echo "
+							echo "deb http://ftp.de.debian.org/debian bullseye main contrib
 
+deb http://ftp.de.debian.org/debian bullseye-updates main contrib
 
-#PVE-No-Subscription
-deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription" >> /etc/apt/sources.list
+# security updates
+deb http://security.debian.org bullseye-security main contrib
+
+#No-Subscription
+deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription" > /etc/apt/sources.list
 
 				break;;
 			n)  echo
@@ -158,7 +162,7 @@ deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription" >> /etc
 					echo "Starte in 15 Sekunden neu!"
 					echoEnd
 					sleep 15
-					reboot
+					systemctl reboot
 
 				break;;
 			n)  echo
