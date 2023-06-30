@@ -55,7 +55,7 @@
 						esac
 						done
 
-				exit 0;;
+				break;;
 			n)  echo
 					echo "Skript wird fortgeführt!"
 				
