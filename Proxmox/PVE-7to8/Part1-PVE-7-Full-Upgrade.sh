@@ -176,5 +176,3 @@
 					echo "Antoworte mit y oder n";;
 		esac
 		done
-
-	echoEnd
