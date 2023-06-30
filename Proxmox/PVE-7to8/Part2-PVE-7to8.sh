@@ -11,6 +11,8 @@
 			echo
 			echo
 			echo
+			echo
+			echo
 		}
 
 	#----- Variables
@@ -41,7 +43,7 @@
 		if [ -e "$file" ]; then
 			sed -i -e 's/bullseye/bookworm/g' /etc/apt/sources.list.d/pve-install-repo.list
 		fi
-		
+
 
 	echoEnd
 
@@ -62,7 +64,7 @@
 								break;;
 							n)  echo
 									echo "Ceph-Repo wurde nicht angepasst!"
-									
+
 								exit 0;;
 							*)  echo
 									echo "Antoworte mit y oder n";;
@@ -107,7 +109,7 @@
 					echo "Proxmox wurde nicht auf PVE 8.x geupgraded!"
 					echo "Falls du das später machen möchtest, gebe folgenden Befehl ein:"
 					echo "apt dist-upgrade"
-				
+
 				break;;
 			*)  echo
 					echo "Antoworte mit y oder n";;
@@ -152,7 +154,7 @@
 			n)  echo
 					echo "Das PVE-Upgrade wurde nicht ordnungsgemäß durchgefüht!"
 					echo "Prüfe nach möglichen Error-Logs!"
-				
+
 				break;;
 			*)  echo
 					echo "Antoworte mit y oder n";;
