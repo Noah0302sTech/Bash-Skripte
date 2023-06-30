@@ -44,12 +44,12 @@
 							y)  echo
 									echo "Skript wird fortgeführt!"
 
-								break;;
+								exit 0;;
 							n)  echo
 									echo "Upgrade kann nicht durchgeführt werden, wenn die Ceph-Version nicht mindestens '17.x.x' oder höher ist"
 									echo "Skript wird abgebrochen!"
 									
-								exit 0;;
+								break;;
 							*)  echo
 									echo "Antoworte mit y oder n";;
 						esac
