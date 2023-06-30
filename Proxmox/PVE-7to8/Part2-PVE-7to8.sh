@@ -59,11 +59,12 @@
 						while IFS= read -n1 -r -p "Ist auf Version '17.x.x'? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 						case $REPLY in
 							y)  echo
-									echo "deb http://download.proxmox.com/debian/ceph-quincy bookworm no-subscription" > /etc/apt/sources.list.d/ceph.list
+									echo "Skript wird fortgeführt!"
 
 								break;;
 							n)  echo
-									echo "Ceph-Repo wurde nicht angepasst!"
+									echo "Upgrade kann nicht durchgeführt werden, wenn die Ceph-Version nicht mindestens '17.x.x' oder höher ist"
+									echo "Skript wird abgebrochen!"
 
 								exit 0;;
 							*)  echo
@@ -71,15 +72,17 @@
 						esac
 						done
 
-				exit 0;;
+				break;;
 			n)  echo
 					echo "Skript wird fortgeführt!"
-				
+
 				break;;
 			*)  echo
 					echo "Antoworte mit y oder n";;
 		esac
 		done
+
+	echoEnd
 
 
 
