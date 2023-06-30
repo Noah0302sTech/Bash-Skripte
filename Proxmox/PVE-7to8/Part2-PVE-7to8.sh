@@ -144,7 +144,7 @@
 									break;;
 								n)  echo
 										echo "Node wurde nicht rebotet! Neue Kernel-Version noch nicht aktiv!"
-									
+
 									break;;
 								*)  echo
 										echo "Antoworte mit y oder n";;
