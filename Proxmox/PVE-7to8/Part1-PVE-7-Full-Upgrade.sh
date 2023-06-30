@@ -96,15 +96,16 @@
 		while IFS= read -n1 -r -p "No-Subscription Repo jetzt aktivieren? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 		case $REPLY in
 			y)  echo
-							echo "deb http://ftp.de.debian.org/debian bullseye main contrib
+					file="/etc/apt/sources.list"
+					search_string="pve-no-subscription"
 
-deb http://ftp.de.debian.org/debian bullseye-updates main contrib
-
-# security updates
-deb http://security.debian.org bullseye-security main contrib
-
-#No-Subscription
-deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription" > /etc/apt/sources.list
+					if grep -q "$search_string\$" "$file"; then
+						echo "Already present"
+					else
+						echo -e "\n#No-Subscription" >> "$file"
+						echo "deb http://download.proxmox.com/debian/pve bullseye $search_string" >> "$file"
+						echo "Lines appended to $file"
+					fi
 
 				break;;
 			n)  echo
