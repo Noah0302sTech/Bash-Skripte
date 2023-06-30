@@ -173,5 +173,3 @@ apt -o Debug::pkgProblemResolver=yes install pve-manager"
 					echo "Antoworte mit y oder n";;
 		esac
 		done
-
-	echoEnd
