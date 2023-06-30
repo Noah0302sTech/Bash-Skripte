@@ -48,7 +48,7 @@
 							n)  echo
 									echo "Upgrade kann nicht durchgeführt werden, wenn die Ceph-Version nicht mindestens '17.x.x' oder höher ist"
 									echo "Skript wird abgebrochen!"
-									
+
 								exit 0;;
 							*)  echo
 									echo "Antoworte mit y oder n";;
@@ -58,7 +58,7 @@
 				break;;
 			n)  echo
 					echo "Skript wird fortgeführt!"
-				
+
 				break;;
 			*)  echo
 					echo "Antoworte mit y oder n";;
@@ -80,7 +80,7 @@
 				break;;
 			n)  echo
 					echo "Enterprise-Repo wurde nicht deaktiviert!"
-				
+
 				break;;
 			*)  echo
 					echo "Antoworte mit y oder n";;
@@ -110,7 +110,7 @@
 				break;;
 			n)  echo
 					echo "No-Subscription-Repo wurde nicht aktiviert!"
-				
+
 				break;;
 			*)  echo
 					echo "Antoworte mit y oder n";;
@@ -142,7 +142,7 @@
 			n)  echo
 					echo "Skript wird abgebrochen!"
 					echo "Upgrade kann nicht durchgeführt werden, wenn die Version nicht mindestens '7.4-15' oder höher ist"
-				
+
 				exit 0;;
 			*)  echo
 					echo "Antoworte mit y oder n";;
@@ -168,7 +168,7 @@
 				break;;
 			n)  echo
 					echo "Node wurde nicht rebotet! Neue Kernel-Version ggf. noch nicht aktiv!"
-				
+
 				break;;
 			*)  echo
 					echo "Antoworte mit y oder n";;
