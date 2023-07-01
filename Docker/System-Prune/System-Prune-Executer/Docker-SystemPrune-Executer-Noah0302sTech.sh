@@ -149,38 +149,38 @@
 
 
 #----- Check if the filesystem supports fstrim command
-	start_spinner "Trimme Filesystem..."
-		#--- Check if the script is running within a container
-		if [ -f /proc/1/environ ] && grep -q container=lxc /proc/1/environ; then
-			echo "Script läuft in einem Container!"
-			echo "Möglicherweise keine Berechtigungen für 'fstrim' Command!"
-			echo "Script wird abgebrochen!"
-			exit 0
-		fi
+	#--- Check if the script is running within a container
+	if [ -f /proc/1/environ ] && grep -q container=lxc /proc/1/environ; then
+		echo "Script läuft in einem Container!"
+		echo "Möglicherweise keine Berechtigungen für 'fstrim' Command!"
+		echo "Script wird abgebrochen!"
+		exit 0
+	fi
 
-		#--- Check if the script is running within a VMware VM
-		if command -v dmidecode >/dev/null 2>&1 && dmidecode -s system-product-name | grep -qi "VMware"; then
-			echo "Script läuft in einer VMware-VM"
-			echo "Möglicherweise keine Berechtigungen für 'fstrim' Command"
-			echo "Script wird abgebrochen!"
-			exit 0
-		fi
+	#--- Check if the script is running within a VMware VM
+	if command -v dmidecode >/dev/null 2>&1 && dmidecode -s system-product-name | grep -qi "VMware"; then
+		echo "Script läuft in einer VMware-VM"
+		echo "Möglicherweise keine Berechtigungen für 'fstrim' Command"
+		echo "Script wird abgebrochen!"
+		exit 0
+	fi
 
-		#--- Check if the filesystem supports fstrim command
-		if blkid -o value -s discard $(findmnt -n -o SOURCE --target /) >/dev/null 2>&1; then
-			echo "Filesystem unterstützt 'fstrim' Command"
+	#--- Check if the filesystem supports fstrim command
+	if blkid -o value -s discard $(findmnt -n -o SOURCE --target /) >/dev/null 2>&1; then
+		echo "Filesystem unterstützt 'fstrim' Command"
 
-			# Run fstrim on the root filesystem
-			if command -v fstrim >/dev/null 2>&1; then
+		# Run fstrim on the root filesystem
+		if command -v fstrim >/dev/null 2>&1; then
+			start_spinner "Trimme Filesystem..."
 				fstrimOutput=$(/sbin/fstrim -av 2>&1)
-			else
-				echo "'fstrim' Command ist nicht verfügbar"
-			fi
+			stop_spinner $?
+			echo $fstrimOutput
 		else
-			echo "Filesystem unterstützt 'fstrim' Command NICHT!"
+			echo "'fstrim' Command ist nicht verfügbar"
 		fi
-	stop_spinner $?
-	echo $fstrimOutput
+	else
+		echo "Filesystem unterstützt 'fstrim' Command NICHT!"
+	fi
 
 	echoEnd
 
