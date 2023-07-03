@@ -105,7 +105,7 @@
 	uniSrc="192.168.6.8"
 	uniPeer="192.168.6.9"
 	virtIP="192.168.6.10"
-	unboundPwd="Unb0und1!"
+	keepAlivedPW="KeepAlived1!"
 	prio="50"
 
 
@@ -128,8 +128,8 @@
 		virtIP=${input:-$virtIP}
 
 	#--- Unbound PW
-		read -p "Gib das Unbound-Passwort an [default: $unboundPwd]: " input
-		unboundPwd=${input:-$unboundPwd}
+		read -p "Gib das KeepAliveD-Passwort an [default: $keepAlivedPW]: " input
+		keepAlivedPW=${input:-$keepAlivedPW}
 
 	#--- Priority
 		read -p "Gib die Priorität an (Höher=Primary) [default: $prio]: " input
@@ -162,7 +162,7 @@ vrrp_instance VI_1 {
 
   authentication {
     auth_type PASS
-    auth_pass '$unboundPwd'
+    auth_pass '$keepAlivedPW'
   }
 
   virtual_ipaddress {
