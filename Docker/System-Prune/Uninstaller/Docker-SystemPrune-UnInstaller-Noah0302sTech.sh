@@ -1,6 +1,6 @@
 #!/bin/bash
 #	Made by Noah0302sTech
-#	chmod +x Docker-SystemPrune-Installer-Noah0302sTech.sh && sudo bash Docker-SystemPrune-Installer-Noah0302sTech.sh
+#	chmod +x Docker-SystemPrune-UnInstaller-Noah0302sTech.sh && sudo bash Docker-SystemPrune-UnInstaller-Noah0302sTech.sh
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
@@ -107,7 +107,7 @@
 		parentFolder="Docker"
 			subFolder="System-Prune"
 				fullInstallerFolder="Full-Installer"
-					fullInstaller="Docker-SystemPrune-Installer-Noah0302sTech.sh"
+					fullInstaller="Docker-SystemPrune-UnInstaller-Noah0302sTech.sh"
 				bashExecuterFolder="System-Prune-Executer"
 					bashExecuter="Docker-SystemPrune-Executer-Noah0302sTech.sh"
 				cronCheck="Cron-Check.txt"
