@@ -1,9 +1,9 @@
 #!/bin/bash
 #	Made by Noah0302sTech
 #	chmod +x Docker-SystemPrune-Installer-Noah0302sTech.sh && sudo bash Docker-SystemPrune-Installer-Noah0302sTech.sh
+#	wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Docker/System-Prune/Docker-SystemPrune-Installer-Noah0302sTech.sh && sudo bash Docker-SystemPrune-Installer-Noah0302sTech.sh
 
-#TODO:	Fix echo into Cron-Job sometimes not working correctly?
-#		Fix check for Trim-Command
+#TODO:	Fix "Files not found" if Executer is executed before moving files
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
@@ -104,23 +104,28 @@
 		echoEnd
 
 	#----- Variables
-		urlVar="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Docker/System-Prune/System-Prune-Executer/Docker-SystemPrune-Executer-Noah0302sTech.sh"
+		urlVarExecuter="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Docker/System-Prune/System-Prune-Executer/Docker-SystemPrune-Executer-Noah0302sTech.sh"
+		urlVarUninstaller="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Docker/System-Prune/Uninstaller/Docker-SystemPrune-UnInstaller-Noah0302sTech.sh"
 		cronJobAdded=false
 
 		parentFolder="Docker"
 			subFolder="System-Prune"
 				fullInstallerFolder="Full-Installer"
 					fullInstaller="Docker-SystemPrune-Installer-Noah0302sTech.sh"
-				bashExecuterFolder="System-Prune-Executer"
+				bashExecuterFolder="Executer"
 					bashExecuter="Docker-SystemPrune-Executer-Noah0302sTech.sh"
+				unInstallerFolder="Uninstaller"
+					unInstaller="Docker-SystemPrune-UnInstaller-Noah0302sTech.sh"
 				cronCheck="Cron-Check.txt"
 
 		parentFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder"
 			subFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder"
 				fullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$fullInstallerFolder"
-					fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$fullInstaller/$fullInstaller"
+					fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$fullInstallerFolder/$fullInstaller"
 				bashExecuterFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$bashExecuterFolder"
 					bashExecuterPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$bashExecuterFolder/$bashExecuter"
+				unInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$unInstallerFolder"
+					unInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$unInstallerFolder/$unInstaller"
 				cronCheckPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$cronCheck"
 
 #-----	-----#	#-----	-----#	#-----	-----#
@@ -139,7 +144,8 @@
 
 	#--- Downloade File
 		start_spinner "Downloade $bashExecuter..."
-			wget $urlVar > /dev/null 2>&1
+			wget $urlVarExecuter > /dev/null 2>&1
+			wget $urlVarUninstaller > /dev/null 2>&1
 		stop_spinner $?
 
 	#--- Make $bashExecuter executable
@@ -314,6 +320,13 @@ Docker-System-Prune + Trim:
 								echo "Ordner $bashExecuterFolderPath bereits vorhanden!"
 							fi
 
+						#--- Uninstaller
+							if [ ! -d $unInstallerFolderPath ]; then
+								mkdir $unInstallerFolderPath > /dev/null 2>&1
+							else
+								echo "Ordner $unInstallerFolderPath bereits vorhanden!"
+							fi
+
 		stop_spinner $?
 
 	#----- Move Files
@@ -325,11 +338,18 @@ Docker-System-Prune + Trim:
 						echo "Die Datei $fullInstaller ist bereits in $fullInstallerFolderPath vorhanden!"
 					fi
 
-				#--- Update-Executer
+				#--- Trim-Executer
 					if [ ! -f $bashExecuterPath ]; then
 						mv /home/$SUDO_USER/$bashExecuter $bashExecuterFolderPath > /dev/null 2>&1
 					else
 						echo "Die Datei $bashExecuter ist bereits in $bashExecuterFolderPath vorhanden!"
+					fi
+
+				#--- Uninstaller
+					if [ ! -f $unInstallerPath ]; then
+						mv /home/$SUDO_USER/$unInstaller $unInstallerFolderPath > /dev/null 2>&1
+					else
+						echo "Die Datei $unInstaller ist bereits in $unInstallerFolderPath vorhanden!"
 					fi
 
 			#--- Cron-Check.txt
