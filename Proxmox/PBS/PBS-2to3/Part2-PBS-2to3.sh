@@ -1,7 +1,7 @@
 #!/bin/bash
 #	Made by Noah0302sTech
 # 	chmod +x Part2-PBS-2to3.sh && bash Part2-PBS-2to3.sh
-#	wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Proxmox/PBS/PBS-2to3/Part2-PBS-2to3.sh && bash Part2-PBS-2to3.sh
+#	wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Proxmox/PBS/PBS-2to3/Part2-PBS-2to3.sh && bash Part2-PBS-2to3.sh
 
 
 
@@ -14,7 +14,7 @@
 		}
 
 	#----- Variables
-		url="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Proxmox/PBS/PBS-2to3/Part2-PBS-2to3.sh"
+		url="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Proxmox/PBS/PBS-2to3/Part2-PBS-2to3.sh"
 
 
 

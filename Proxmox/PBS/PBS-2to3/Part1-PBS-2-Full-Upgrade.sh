@@ -1,7 +1,7 @@
 #!/bin/bash
 #	Made by Noah0302sTech
 # 	chmod +x Part1-PBS-2-Full-Upgrade.sh && bash Part1-PBS-2-Full-Upgrade.sh
-#	wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Proxmox/PBS/PBS-2to3/Part1-PBS-2-Full-Upgrade.sh && bash Part1-PBS-2-Full-Upgrade.sh
+#	wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Proxmox/PBS/PBS-2to3/Part1-PBS-2-Full-Upgrade.sh && bash Part1-PBS-2-Full-Upgrade.sh
 
 
 
@@ -14,7 +14,7 @@
 		}
 
 	#----- Variables
-		url="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Proxmox/PBS/PBS-2to3/Part1-PBS-2-Full-Upgrade.sh"
+		url="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Proxmox/PBS/PBS-2to3/Part2-PBS-2to3.sh"
 
 
 

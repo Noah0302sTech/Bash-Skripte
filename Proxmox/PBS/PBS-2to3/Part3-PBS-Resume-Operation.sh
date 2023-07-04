@@ -1,7 +1,7 @@
 #!/bin/bash
 #	Made by Noah0302sTech
 # 	chmod +x Part3-PBS-Resume-Operation.sh && bash Part3-PBS-Resume-Operation.sh
-#	wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Proxmox/PBS/PBS-2to3/Part3-PBS-Resume-Operation.sh && bash Part3-PBS-Resume-Operation.sh
+#	wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Proxmox/PBS/PBS-2to3/Part3-PBS-Resume-Operation.sh && bash Part3-PBS-Resume-Operation.sh
 
 
 
@@ -14,7 +14,7 @@
 		}
 
 	#----- Variables
-		url="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Proxmox/PBS/PBS-2to3/Part3-PBS-Resume-Operation.sh"
+		url="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Proxmox/PBS/PBS-2to3/Part3-PBS-Resume-Operation.sh"
 
 
 
