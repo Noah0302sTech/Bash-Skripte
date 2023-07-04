@@ -101,7 +101,8 @@
 		echoEnd
 
 	#----- Variables
-		urlVar="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Docker/System-Prune/System-Prune-Executer/Docker-SystemPrune-Executer-Noah0302sTech.sh"
+		urlVarExecuter="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Docker/System-Prune/System-Prune-Executer/Docker-SystemPrune-Executer-Noah0302sTech.sh"
+		urlVarUninstaller="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Docker/System-Prune/Uninstaller/Docker-SystemPrune-UnInstaller-Noah0302sTech.sh"
 		cronJobAdded=false
 
 		parentFolder="Docker"
@@ -140,7 +141,8 @@
 
 	#--- Downloade File
 		start_spinner "Downloade $bashExecuter..."
-			wget $urlVar > /dev/null 2>&1
+			wget $urlVarExecuter > /dev/null 2>&1
+			wget $urlVarUninstaller > /dev/null 2>&1
 		stop_spinner $?
 
 	#--- Make $bashExecuter executable
@@ -315,6 +317,13 @@ Docker-System-Prune + Trim:
 								echo "Ordner $bashExecuterFolderPath bereits vorhanden!"
 							fi
 
+						#--- Uninstaller
+							if [ ! -d $unInstallerFolderPath ]; then
+								mkdir $unInstallerFolderPath > /dev/null 2>&1
+							else
+								echo "Ordner $unInstallerFolderPath bereits vorhanden!"
+							fi
+
 		stop_spinner $?
 
 	#----- Move Files
@@ -326,11 +335,18 @@ Docker-System-Prune + Trim:
 						echo "Die Datei $fullInstaller ist bereits in $fullInstallerFolderPath vorhanden!"
 					fi
 
-				#--- Update-Executer
+				#--- Trim-Executer
 					if [ ! -f $bashExecuterPath ]; then
 						mv /home/$SUDO_USER/$bashExecuter $bashExecuterFolderPath > /dev/null 2>&1
 					else
 						echo "Die Datei $bashExecuter ist bereits in $bashExecuterFolderPath vorhanden!"
+					fi
+
+				#--- Uninstaller
+					if [ ! -f $unInstallerPath ]; then
+						mv /home/$SUDO_USER/$unInstaller $unInstallerFolderPath > /dev/null 2>&1
+					else
+						echo "Die Datei $unInstaller ist bereits in $unInstallerFolderPath vorhanden!"
 					fi
 
 			#--- Cron-Check.txt
