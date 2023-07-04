@@ -101,23 +101,27 @@
 		echoEnd
 
 	#----- Variables
-		urlVar="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Docker/System-Prune/System-Prune-Executer/Docker-SystemPrune-Executer-Noah0302sTech.sh"
+		urlVar="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Docker/System-Prune/Uninstaller/Docker-SystemPrune-UnInstaller-Noah0302sTech.sh"
 		cronJobAdded=false
 
 		parentFolder="Docker"
 			subFolder="System-Prune"
 				fullInstallerFolder="Full-Installer"
-					fullInstaller="Docker-SystemPrune-UnInstaller-Noah0302sTech.sh"
+					fullInstaller="Docker-SystemPrune-Installer-Noah0302sTech.sh"
 				bashExecuterFolder="System-Prune-Executer"
 					bashExecuter="Docker-SystemPrune-Executer-Noah0302sTech.sh"
+				unInstallerFolder="Uninstaller"
+					unInstaller="Docker-SystemPrune-UnInstaller-Noah0302sTech.sh"
 				cronCheck="Cron-Check.txt"
 
 		parentFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder"
 			subFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder"
 				fullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$fullInstallerFolder"
-					fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$fullInstaller/$fullInstaller"
+					fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$fullInstallerFolder/$fullInstaller"
 				bashExecuterFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$bashExecuterFolder"
 					bashExecuterPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$bashExecuterFolder/$bashExecuter"
+				unInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$unInstallerFolder"
+					unInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$unInstallerFolder/$unInstaller"
 				cronCheckPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$cronCheck"
 
 #-----	-----#	#-----	-----#	#-----	-----#
