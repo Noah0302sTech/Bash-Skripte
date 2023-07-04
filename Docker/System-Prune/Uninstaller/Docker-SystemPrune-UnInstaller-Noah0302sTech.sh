@@ -167,7 +167,6 @@
 					sed -i '/^#Alias/d' /home/$SUDO_USER/.bashrc
 					sed -i '/^alias DSPtrim/d' /home/$SUDO_USER/.bashrc
 					sed -i '/^alias ccDocker/d' /home/$SUDO_USER/.bashrc
-					sed -i '/^$/d' /home/$SUDO_USER/.bashrc
 				stop_spinner $?
 
 			break;;
