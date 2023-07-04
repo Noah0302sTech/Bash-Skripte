@@ -102,7 +102,7 @@
 
 	#----- Variables
 		urlVar="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Docker/System-Prune/Uninstaller/Docker-SystemPrune-UnInstaller-Noah0302sTech.sh"
-		cronJobAdded=false
+		cronJobAdded=true
 
 		parentFolder="Docker"
 			subFolder="System-Prune"
@@ -132,69 +132,22 @@
 
 
 
-#----- Docker Prune Script
-	#--- Install WGET
-		start_spinner "Installiere WGET..."
-			apt install wget -y > /dev/null 2>&1
-		stop_spinner $?
-
-	#--- Downloade File
-		start_spinner "Downloade $bashExecuter..."
-			wget $urlVar > /dev/null 2>&1
-		stop_spinner $?
-
-	#--- Make $bashExecuter executable
-		start_spinner "Mache $bashExecuter ausführbar..."
-			chmod +x $bashExecuter > /dev/null 2>&1
-		stop_spinner $?
-	echoEnd
-
-
-
-#----- Cron-Job
-	echo "----- Cron-Job -----"
-	#--- Variable
-		cronVariable="0 22 * * SUN"
-
-	#--- Ask for Cron-Job
-	while IFS= read -n1 -r -p "Möchtest du einen Cron-Job hinzufügen? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+#----- Remove Cron-Job
+	while IFS= read -n1 -r -p "Möchtest du einen Cron-Job entfernen? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 	case $REPLY in
 		y)  echo
-			#--- Prompt for custom values
-				read -p "Passe den Cron-Job an [default 22 Uhr Sonntags: $cronVariable]: " input
-				cronVariable=${input:-$cronVariable}
-
-			#--- Create $cronCheck
-				start_spinner "Erstelle $cronCheck..."
-					touch $cronCheck > /dev/null 2>&1
+			#--- Remove Cron-Job
+				start_spinner "Lösche Crontab..."
+					rm /etc/cron.d/docker-System-Prune-Noah0302sTech
 				stop_spinner $?
-			
-			#--- Create Cron-Job
-				start_spinner "Erstelle Crontab..."
-					touch /etc/cron.d/docker-System-Prune-Noah0302sTech
-					echo "#Docker System Prune & Trim by Noah0302sTech
-$cronVariable root $bashExecuterPath" > /etc/cron.d/docker-System-Prune-Noah0302sTech
-				stop_spinner $?
-
-			#--- Echo Commands into Docker-SystemPrune-Executer
-				start_spinner "Passe $bashExecuter an..."
-					echo "Passe $bashExecuter an..."
-					echo "
-
-#Cron-Check
-	echo "" >> $cronCheckPath
-	echo "Job lief am:" >> $cronCheckPath
-	date >> $cronCheckPath
-	echo "'$dockerPruneOutput'" >> $cronCheckPath
-	echo "'$fstrimOutput'" >> $cronCheckPath" >> $bashExecuter
 
 			#--- Modify Variable
-				cronJobAdded="true"
+				cronJobAdded="false"
 				stop_spinner $?
 
 			break;;
 		n)  echo
-			echo "Cron-Job wurde nicht erstellt."
+			echo "Cron-Job wurde nicht gelöscht."
 			
 			break;;
 		*)  echo
@@ -204,18 +157,20 @@ $cronVariable root $bashExecuterPath" > /etc/cron.d/docker-System-Prune-Noah0302
 	echoEnd
 
 
-
-#----- Ask for Execute
-	echo "----- DSP-Trim -----"
-	while IFS= read -n1 -r -p "Möchtest du DSPtrim jetzt ausführen? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+#----- Remove Alias
+	while IFS= read -n1 -r -p "Möchtest du den Bash-Alias entfernen? [y]es|[n]o: " && [[ $REPLY != q ]]; do
 	case $REPLY in
 		y)  echo
-			#--- Execute downloaded Bash-File
-				bash $bashExecuter
+			#--- Remove Alias
+				start_spinner "Lösche Bash-Alias..."
+					sed -i '/^#Alias/d' /home/$SUDO_USER/.bashrc
+					sed -i '/^alias DSPtrim/d' /home/$SUDO_USER/.bashrc
+					sed -i '/^alias ccDocker/d' /home/$SUDO_USER/.bashrc
+				stop_spinner $?
 
 			break;;
 		n)  echo
-			echo "DSPtrim wurde nicht erstellt."
+			echo "Bash-Alias wurde nicht gelöscht."
 			
 			break;;
 		*)  echo
@@ -226,47 +181,27 @@ $cronVariable root $bashExecuterPath" > /etc/cron.d/docker-System-Prune-Noah0302
 
 
 
-#--- Create Alias
-	echo "----- Alias -----"
-    if grep -q "^alias DSPtrim=" /home/$SUDO_USER/.bashrc; then
-		echo "Der Alias existiert bereits in /home/$SUDO_USER/.bashrc"
-	else
-		start_spinner "Erstelle Alias..."
-			echo "Erstelle Alias..."
-			echo "
+#----- Remove MOTD
+	while IFS= read -n1 -r -p "Möchtest du den MOTD-Eintrag entfernen? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+	case $REPLY in
+		y)  echo
+			#--- Remove Alias
+				start_spinner "Lösche MOTD-Eintrag..."
+					sed -i '/^Docker-System-Prune + Trim:/d' /etc/motd
+					sed -i '/^        DSPtrim/d' /etc/motd
+					sed -i '/^Cron-Check Docker:/d' /etc/motd
+					sed -i '/^        ccDocker/d' /etc/motd
+				stop_spinner $?
 
-
-#Alias Docker-System-Prune and Trim
-alias DSPtrim='sudo bash $bashExecuterPath'"  >> /home/$SUDO_USER/.bashrc
-
-		if $cronJobAdded == true; then
-			echo "alias ccDocker='cat $cronCheckPath'
-" >> /home/$SUDO_USER/.bashrc
-		fi
-		stop_spinner $?
-	fi
-	echoEnd
-
-
-
-#----- Create MOTD
-	echo "----- MOTD -----"
-	if grep -q "^Docker-System-Prune" /etc/motd; then
-		echo "Der MOTD Eintrag exisitert bereits in /etc/motd"
-	else
-		start_spinner "Passe MOTD an..."
-			echo "Passe MOTD an..."
-			echo "
-Docker-System-Prune + Trim:
-	DSPtrim" >> /etc/motd
-
-		if $cronJobAdded == true; then
-			echo "Cron-Check Docker:
-	ccDocker
-" >> /etc/motd
-		fi
-		stop_spinner $?
-	fi
+			break;;
+		n)  echo
+			echo "MOTD-Eintrag wurde nicht gelöscht."
+			
+			break;;
+		*)  echo
+			echo "Antoworte mit y oder n";;
+	esac
+	done
 	echoEnd
 
 
@@ -276,70 +211,3 @@ Docker-System-Prune + Trim:
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
-
-#---------- Creating Files & Folders, moving Files
-	#----- Create Folders
-		start_spinner "Erstelle Verzeichnisse..."
-			#--- Noah0302sTech
-				if [ ! -d /home/$SUDO_USER/Noah0302sTech ]; then
-					mkdir /home/$SUDO_USER/Noah0302sTech > /dev/null 2>&1
-				else
-					echo "Ordner /home/$SUDO_USER/Noah0302sTech bereits vorhanden!"
-				fi
-
-				#--- Docker
-					if [ ! -d $parentFolderPath ]; then
-						mkdir $parentFolderPath > /dev/null 2>&1
-					else
-						echo "Ordner $parentFolderPath bereits vorhanden!"
-					fi
-
-					#--- Docker-System-Prune
-						if [ ! -d $subFolderPath ]; then
-							mkdir $subFolderPath > /dev/null 2>&1
-						else
-							echo "Ordner $subFolderPath bereits vorhanden!"
-						fi
-
-						#--- Full-Installer
-							if [ ! -d $fullInstallerFolderPath ]; then
-								mkdir $fullInstallerFolderPath > /dev/null 2>&1
-							else
-								echo "Ordner $fullInstallerFolderPath bereits vorhanden!"
-							fi
-
-						#--- System-Prune-Executer
-							if [ ! -d $bashExecuterFolderPath ]; then
-								mkdir $bashExecuterFolderPath > /dev/null 2>&1
-							else
-								echo "Ordner $bashExecuterFolderPath bereits vorhanden!"
-							fi
-
-		stop_spinner $?
-
-	#----- Move Files
-		start_spinner "Verschiebe Files..."
-				#--- Full-Installer
-					if [ ! -f $fullInstallerPath ]; then
-						mv /home/$SUDO_USER/$fullInstaller $fullInstallerFolderPath > /dev/null 2>&1
-					else
-						echo "Die Datei $fullInstaller ist bereits in $fullInstallerFolderPath vorhanden!"
-					fi
-
-				#--- Update-Executer
-					if [ ! -f $bashExecuterPath ]; then
-						mv /home/$SUDO_USER/$bashExecuter $bashExecuterFolderPath > /dev/null 2>&1
-					else
-						echo "Die Datei $bashExecuter ist bereits in $bashExecuterFolderPath vorhanden!"
-					fi
-
-			#--- Cron-Check.txt
-				if $cronJobAdded == true; then
-					if [ ! -f $cronCheckPath ]; then
-						mv /home/$SUDO_USER/$cronCheck $cronCheckPath > /dev/null 2>&1
-					else
-						echo "Die Datei $cronCheck ist bereits in $cronCheckPath vorhanden!"
-					fi
-				fi
-
-		stop_spinner $?
