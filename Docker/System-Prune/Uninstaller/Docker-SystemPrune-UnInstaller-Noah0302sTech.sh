@@ -1,6 +1,7 @@
 #!/bin/bash
 #	Made by Noah0302sTech
 #	chmod +x Docker-SystemPrune-UnInstaller-Noah0302sTech.sh && sudo bash Docker-SystemPrune-UnInstaller-Noah0302sTech.sh
+#	wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Docker/System-Prune/Uninstaller/Docker-SystemPrune-UnInstaller-Noah0302sTech.sh && sudo bash Docker-SystemPrune-UnInstaller-Noah0302sTech.sh
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
