@@ -107,7 +107,7 @@
 		cronJobAdded=false
 
 		parentFolder="Docker"
-			subFolder="System-Prune"
+			currentFolder="System-Prune"
 				fullInstallerFolder="Full-Installer"
 					fullInstaller="Docker-SystemPrune-Installer-Noah0302sTech.sh"
 				bashExecuterFolder="Executer"
@@ -117,14 +117,14 @@
 				cronCheck="Cron-Check.txt"
 
 		parentFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder"
-			subFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder"
-				fullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$fullInstallerFolder"
-					fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$fullInstallerFolder/$fullInstaller"
-				bashExecuterFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$bashExecuterFolder"
-					bashExecuterPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$bashExecuterFolder/$bashExecuter"
-				unInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$unInstallerFolder"
-					unInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$unInstallerFolder/$unInstaller"
-				cronCheckPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$cronCheck"
+			currentFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$currentFolder"
+				fullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$currentFolder/$fullInstallerFolder"
+					fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$currentFolder/$fullInstallerFolder/$fullInstaller"
+				bashExecuterFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$currentFolder/$bashExecuterFolder"
+					bashExecuterPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$currentFolder/$bashExecuterFolder/$bashExecuter"
+				unInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$currentFolder/$unInstallerFolder"
+					unInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$currentFolder/$unInstallerFolder/$unInstaller"
+				cronCheckPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$currentFolder/$cronCheck"
 
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
@@ -200,6 +200,28 @@
 			break;;
 		n)  echo
 			echo "MOTD-Eintrag wurde nicht gelöscht."
+			
+			break;;
+		*)  echo
+			echo "Antoworte mit y oder n";;
+	esac
+	done
+	echoEnd
+
+
+
+#----- Remove Folder-Structure
+	while IFS= read -n1 -r -p "Möchtest du die Ordner-Struktur entfernen? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+	case $REPLY in
+		y)  echo
+			#--- Remove Alias
+				start_spinner "Lösche Ordner-Struktur..."
+					rm -rf $currentFolderPath > /dev/null 2>&1
+				stop_spinner $?
+
+			break;;
+		n)  echo
+			echo "Ordner-Struktur wurde nicht gelöscht."
 			
 			break;;
 		*)  echo
