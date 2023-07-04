@@ -163,9 +163,11 @@
 		y)  echo
 			#--- Remove Alias
 				start_spinner "Lösche Bash-Alias..."
+					cp /home/$SUDO_USER/.bashrc /home/$SUDO_USER/.bashrc-backup
 					sed -i '/^#Alias/d' /home/$SUDO_USER/.bashrc
 					sed -i '/^alias DSPtrim/d' /home/$SUDO_USER/.bashrc
 					sed -i '/^alias ccDocker/d' /home/$SUDO_USER/.bashrc
+					sed -i '/^$/d' /home/$SUDO_USER/.bashrc
 				stop_spinner $?
 
 			break;;
@@ -187,10 +189,12 @@
 		y)  echo
 			#--- Remove Alias
 				start_spinner "Lösche MOTD-Eintrag..."
+					cp /etc/motd /etc/motd-backup
 					sed -i '/^Docker-System-Prune + Trim:/d' /etc/motd
-					sed -i '/^        DSPtrim/d' /etc/motd
+					sed -i '/^	DSPtrim/d' /etc/motd
 					sed -i '/^Cron-Check Docker:/d' /etc/motd
-					sed -i '/^        ccDocker/d' /etc/motd
+					sed -i '/^	ccDocker/d' /etc/motd
+					sed -i '/^$/d' /etc/motd
 				stop_spinner $?
 
 			break;;
