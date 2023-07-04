@@ -102,14 +102,15 @@
 		echoEnd
 
 	#----- Variables
-		urlVar="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Docker/System-Prune/Uninstaller/Docker-SystemPrune-UnInstaller-Noah0302sTech.sh"
-		cronJobAdded=true
+		urlVarExecuter="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Docker/System-Prune/System-Prune-Executer/Docker-SystemPrune-Executer-Noah0302sTech.sh"
+		urlVarUninstaller="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Docker/System-Prune/Uninstaller/Docker-SystemPrune-UnInstaller-Noah0302sTech.sh"
+		cronJobAdded=false
 
 		parentFolder="Docker"
 			subFolder="System-Prune"
 				fullInstallerFolder="Full-Installer"
 					fullInstaller="Docker-SystemPrune-Installer-Noah0302sTech.sh"
-				bashExecuterFolder="System-Prune-Executer"
+				bashExecuterFolder="Executer"
 					bashExecuter="Docker-SystemPrune-Executer-Noah0302sTech.sh"
 				unInstallerFolder="Uninstaller"
 					unInstaller="Docker-SystemPrune-UnInstaller-Noah0302sTech.sh"

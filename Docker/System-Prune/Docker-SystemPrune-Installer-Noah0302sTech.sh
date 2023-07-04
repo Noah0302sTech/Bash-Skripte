@@ -110,7 +110,7 @@
 			subFolder="System-Prune"
 				fullInstallerFolder="Full-Installer"
 					fullInstaller="Docker-SystemPrune-Installer-Noah0302sTech.sh"
-				bashExecuterFolder="System-Prune-Executer"
+				bashExecuterFolder="Executer"
 					bashExecuter="Docker-SystemPrune-Executer-Noah0302sTech.sh"
 				unInstallerFolder="Uninstaller"
 					unInstaller="Docker-SystemPrune-UnInstaller-Noah0302sTech.sh"
