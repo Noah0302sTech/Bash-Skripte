@@ -232,6 +232,10 @@
 
 
 
+#----- Remove Uninstaller, if it was executed seperately
+	if [ -f "/home/$SUDO_USER/Docker-SystemPrune-UnInstaller-Noah0302sTech.sh" ]; then
+		rm "/home/$SUDO_USER/Docker-SystemPrune-UnInstaller-Noah0302sTech.sh"
+	fi
 
 
 #-----	-----#	#-----	-----#	#-----	-----#
