@@ -144,7 +144,6 @@
 
 			#--- Modify Variable
 				cronJobAdded="false"
-				stop_spinner $?
 
 			break;;
 		n)  echo
