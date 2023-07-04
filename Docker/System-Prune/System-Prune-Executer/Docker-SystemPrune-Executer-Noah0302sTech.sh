@@ -169,7 +169,7 @@
 
 		# Run fstrim on the root filesystem
 		if command -v fstrim >/dev/null 2>&1; then
-			fstrim -v /
+			dockerPruneOutput=$(fstrim -v / 2>&1)
 		else
 			echo "fstrim command is not available"
 		fi
