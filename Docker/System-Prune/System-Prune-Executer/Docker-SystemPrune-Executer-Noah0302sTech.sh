@@ -110,7 +110,7 @@
 #----- APT
 	#--- Update
 		start_spinner "Update Package-Listen..."
-			apt update -y > /dev/null 2>&1
+			apt update > /dev/null 2>&1
 		stop_spinner $?
 
 	#--- Autoremove
