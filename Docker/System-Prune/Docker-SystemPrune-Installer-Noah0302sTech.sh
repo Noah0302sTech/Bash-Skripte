@@ -178,7 +178,7 @@
 				start_spinner "Erstelle Crontab..."
 					touch /etc/cron.d/docker-System-Prune-Noah0302sTech
 					echo "#Docker System Prune & Trim by Noah0302sTech
-$cronVariable root $bashExecuterPath" > /etc/cron.d/docker-System-Prune-Noah0302sTech
+$cronVariable root sudo -E $bashExecuterPath" > /etc/cron.d/docker-System-Prune-Noah0302sTech
 				stop_spinner $?
 
 			#--- Echo Commands into Docker-SystemPrune-Executer
