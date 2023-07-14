@@ -1,6 +1,6 @@
 #!/bin/bash
 #	Made by Noah0302sTech
-#	chmod +x $bashInstaller && sudo bash $bashInstaller
+#	chmod +x $folder1bashScript && sudo bash $folder1bashScript
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
@@ -106,23 +106,23 @@
 		urlVar="https://raw.githubusercontent.com/Noah0302sTech/"
 
 		parentFolder="XXXXXXXXXX"
-			fullInstallerFolder="XXXXXXXXXX"
-				fullInstaller="XXXXXXXXXX"
 			subFolder="XXXXXXXXXX"
+				fullInstallerFolder="XXXXXXXXXX"
+					fullInstaller="XXXXXXXXXX"
 				folder1="XXXXXXXXXX"
-					bashInstaller="XXXXXXXXXX"
+					folder1bashScript="XXXXXXXXXX"
 				folder2="XXXXXXXXXX"
-					updaterExecuter="XXXXXXXXXX"
+					folder2bashScript="XXXXXXXXXX"
 				cronCheck="XXXXXXXXXX"
 
 		parentFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder"
-			fullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder"
-				fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder/$fullInstaller"
 			subFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder"
+				fullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$fullInstallerFolder"
+					fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder/$fullInstaller"
 				folder1Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1"
-					updaterInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1/$bashInstaller"
+					folder1bashScriptPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1/$folder1bashScript"
 				folder2Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2"
-					updaterExecuterPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2/$updaterExecuter"
+					folder2bashScriptPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2/$folder2bashScript"
 				cronCheckPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$cronCheck"
 
 #-----	-----#	#-----	-----#	#-----	-----#
@@ -164,19 +164,19 @@
 					echo "Ordner $parentFolderPath bereits vorhanden!"
 				fi
 
-				#--- Full-Installer Folder
-					if [ ! -d $fullInstallerFolderPath ]; then
-						mkdir $fullInstallerFolderPath > /dev/null 2>&1
-					else
-						echo "Ordner $fullInstallerFolderPath bereits vorhanden!"
-					fi
-
 				#--- Sub Folder
 					if [ ! -d $subFolderPath ]; then
 						mkdir $subFolderPath > /dev/null 2>&1
 					else
 						echo "Ordner $subFolderPath bereits vorhanden!"
 					fi
+
+					#--- Full-Installer Folder
+						if [ ! -d $fullInstallerFolderPath ]; then
+							mkdir $fullInstallerFolderPath > /dev/null 2>&1
+						else
+							echo "Ordner $fullInstallerFolderPath bereits vorhanden!"
+						fi
 
 					#--- Folder 1
 						if [ ! -d $folder1Path ]; then
@@ -202,24 +202,24 @@
 				echo "Die Datei $fullInstallerFolderPath ist bereits vorhanden!"
 			fi
 
-			#--- Updater-Installer
-				if [ ! -f $updaterInstallerPath ]; then
-					mv /home/$SUDO_USER/$bashInstaller $updaterInstallerPath > /dev/null 2>&1
-				else
-					echo "Die Datei $updaterInstallerPath ist bereits vorhanden!"
-				fi
+		#--- Folder 1 Bash Script
+			if [ ! -f $folder1bashScriptPath ]; then
+				mv /home/$SUDO_USER/$folder1bashScript $folder1bashScriptPath > /dev/null 2>&1
+			else
+				echo "Die Datei $folder1bashScriptPath ist bereits vorhanden!"
+			fi
 
-			#--- Update-Executer
-				if [ ! -f $updaterExecuterPath ]; then
-					mv /home/$SUDO_USER/$updaterExecuter $updaterExecuterPath > /dev/null 2>&1
-				else
-					echo "Die Datei $updaterExecuterPath ist bereits vorhanden!"
-				fi
+		#--- Folder 2 Bash Script
+			if [ ! -f $folder2bashScriptPath ]; then
+				mv /home/$SUDO_USER/$folder2bashScript $folder2bashScriptPath > /dev/null 2>&1
+			else
+				echo "Die Datei $folder2bashScriptPath ist bereits vorhanden!"
+			fi
 
-			#--- Cron-Check.txt
-				if [ ! -f $cronCheckPath ]; then
-					mv /home/$SUDO_USER/$cronCheck $cronCheckPath > /dev/null 2>&1
-				else
-					echo "Die Datei $cronCheckPath ist bereits vorhanden!"
-				fi
+		#--- Cron-Check.txt
+			if [ ! -f $cronCheckPath ]; then
+				mv /home/$SUDO_USER/$cronCheck $cronCheckPath > /dev/null 2>&1
+			else
+				echo "Die Datei $cronCheckPath ist bereits vorhanden!"
+			fi
 	stop_spinner $?
