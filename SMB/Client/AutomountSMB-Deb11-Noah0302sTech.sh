@@ -1,6 +1,6 @@
 #!/bin/bash
 # Made by Noah0302sTech
-# chmod +x AutomountSMB-Deb11-Noah0302sTech.sh && bash AutomountSMB-Deb11-Noah0302sTech.sh
+# chmod +x AutomountSMB-Deb11-Noah0302sTech.sh && sudo bash AutomountSMB-Deb11-Noah0302sTech.sh
 #	wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/SMB/Client/AutomountSMB-Deb11-Noah0302sTech.sh && sudo bash AutomountSMB-Deb11-Noah0302sTech.sh
 
 
@@ -182,13 +182,13 @@
             stop_spinner $?
 
     #--- SMB-Mount Folder
-		start_spinner "Modifiziere Permissions..."
+		echo "Modifiziere Permissions..."
 			if [ ! -d $smbFolderPath ]; then
 				mkdir $smbFolderPath
+				chown -R root:$SUDO_USER $smbFolderPath
 			else
 				echo "Ordner $smbFolderPath bereits vorhanden!"
 			fi
-		stop_spinner $?
     
 	echoEnd
 
