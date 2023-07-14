@@ -137,8 +137,8 @@
 	start_spinner "XXXXXXXXXX..."
 		XXXXXXXXXX > /dev/null 2>&1
 	stop_spinner $?
-	echo
-	echo
+	
+	echoEnd
 
 
 
