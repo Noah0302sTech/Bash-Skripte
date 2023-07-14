@@ -184,8 +184,7 @@
     #--- SMB-Mount Folder
 		start_spinner "Modifiziere Permissions..."
 			if [ ! -d $smbFolderPath ]; then
-				mkdir $smbFolderPath > /dev/null 2>&1
-				chown -R $SUDO_USER:$SUDO_USER $smbFolderPath
+				mkdir $smbFolderPath
 			else
 				echo "Ordner $smbFolderPath bereits vorhanden!"
 			fi
