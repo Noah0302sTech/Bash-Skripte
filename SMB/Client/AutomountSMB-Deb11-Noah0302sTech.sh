@@ -185,7 +185,6 @@
 		echo "Modifiziere Permissions..."
 			if [ ! -d $smbFolderPath ]; then
 				mkdir $smbFolderPath
-				chown -R root:$SUDO_USER $smbFolderPath
 			else
 				echo "Ordner $smbFolderPath bereits vorhanden!"
 			fi
