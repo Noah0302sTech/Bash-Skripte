@@ -1,7 +1,7 @@
 # Bash-Skripte
-Ansammlung meiner Bash Skripte, die ich unter anderem auf meinem Youtube-Kanal (https://www.youtube.com/@Noah0302sTech) vorstelle!
+Collection of my Bash-Scripts, which I sometimes show off on my Youtube-Channel (https://www.youtube.com/@Noah0302sTech)!
 
-Falls ihr Verbesserungsvorschläge für meine Skripts habt, schreibt mir gerne.
+If you have any Issues, or Questions, please do not hesitate to send me a Message!
 
 
 
@@ -67,4 +67,9 @@ Falls ihr Verbesserungsvorschläge für meine Skripts habt, schreibt mir gerne.
 	│	└── Bash-Template-Noah0302sTech.sh
 	├── .gitignore
 	├── LICENSE 
-	└── README.md 
+	└── README.md
+
+
+
+Do you like what I do? If the answer is yes, then you can fuel my Coffee-Addiction here (https://www.buymeacoffee.com/Noah0302sTech)!
+This really is not necessary, as I do this a a hobby! BUT I would greatly appreciate it, if you were to support me.
