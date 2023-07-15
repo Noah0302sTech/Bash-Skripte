@@ -178,6 +178,7 @@
 		echo "Modifiziere Permissions..."
 			if [ ! -d $smbFolderPath ]; then
 				mkdir $smbFolderPath
+				chown -R root:$SUDO_USER $smbFolderPath
 			else
 				echo "Ordner $smbFolderPath bereits vorhanden!"
 			fi
@@ -189,7 +190,9 @@
 #----- FSTAB
     start_spinner "Erstelle FStab..."
         touch /etc/fstab
-        echo "//$SHARE $smbFolderPath cifs vers=3.0,credentials=/root/.$FILENAME" > /etc/fstab
+        echo "
+#Automount SMB-Share
+//$SHARE $smbFolderPath cifs vers=3.0,credentials=/root/.$FILENAME" >> /etc/fstab
 		systemctl daemon-reload
     stop_spinner $?
     
@@ -211,7 +214,7 @@
 	stop_spinner $?
 
 	#--- Variables
-		cronVariable="* * * * *"
+		cronVariable="*/1 * * * *"
 		paperlessConsume="/home/$SUDO_USER/paperless-ngx/consume"
 
 		#- Prompt for custom values
@@ -224,7 +227,7 @@
 		start_spinner "Passe Crontab an..."
 			echo "#Moving of Files from SMB-Share to Paperless-Consume
 "'PATH="/usr/local/bin:/usr/bin:/bin"'"
-$cronVariable root 'mv $smbFolderPath/*.pdf $paperlessConsume'" > /etc/cron.d/paperless-move-Files-to-Consume
+$cronVariable root /bin/bash -c 'mv $smbFolderPath/*.pdf $paperlessConsume'" > /etc/cron.d/paperless-move-Files-to-Consume
 		stop_spinner $?
 
 	echoEnd
