@@ -5,7 +5,7 @@ Falls ihr Verbesserungsvorschläge für meine Skripts habt, schreibt mir gerne.
 
 
 
-	Test-Bash-Skripte
+	Bash-Skripte
 	├── Docker
 	│	├── Nextcloud
 	│	│	├── Nextcloud-Configurator
