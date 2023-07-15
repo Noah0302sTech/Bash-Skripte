@@ -1,6 +1,9 @@
 #!/bin/bash
-#	Made by Noah0302sTech
-#	chmod +x $folder1bashScript && sudo bash $folder1bashScript
+# Made by Noah0302sTech
+# chmod +x AutomountSMB-Deb11-Noah0302sTech.sh && sudo bash AutomountSMB-Deb11-Noah0302sTech.sh
+#	wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/SMB/Client/AutomountSMB-Deb11-Noah0302sTech.sh && sudo bash AutomountSMB-Deb11-Noah0302sTech.sh
+
+
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
@@ -105,24 +108,24 @@
 	#----- Variables
 		urlVar="https://raw.githubusercontent.com/Noah0302sTech/"
 
-		parentFolder="XXXXXXXXXX"
-			subFolder="XXXXXXXXXX"
-				fullInstallerFolder="XXXXXXXXXX"
-					fullInstaller="XXXXXXXXXX"
+		parentFolder="SMB"
+			subFolder="Client"
+				fullInstallerFolder="Installer"
+					fullInstaller="AutomountSMB-Deb11-Noah0302sTech.sh"
 				folder1="XXXXXXXXXX"
-					folder1bashScript="XXXXXXXXXX"
+					bashInstaller="XXXXXXXXXX"
 				folder2="XXXXXXXXXX"
-					folder2bashScript="XXXXXXXXXX"
+					updaterExecuter="XXXXXXXXXX"
 				cronCheck="XXXXXXXXXX"
 
 		parentFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder"
+			fullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder"
+				fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder/$fullInstaller"
 			subFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder"
-				fullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$fullInstallerFolder"
-					fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder/$fullInstaller"
 				folder1Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1"
-					folder1bashScriptPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1/$folder1bashScript"
+					updaterInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1/$bashInstaller"
 				folder2Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2"
-					folder2bashScriptPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2/$folder2bashScript"
+					updaterExecuterPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2/$updaterExecuter"
 				cronCheckPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$cronCheck"
 
 #-----	-----#	#-----	-----#	#-----	-----#
@@ -131,13 +134,81 @@
 
 
 
+#----- Install SMB-Utils
+    start_spinner "Installiere SMB-Utilities..."
+        apt install cifs-utils -y > /dev/null 2>&1
+    stop_spinner $?
+
+	echoEnd
 
 
-#----- XXXXXXXXXX
-	start_spinner "XXXXXXXXXX..."
-		XXXXXXXXXX > /dev/null 2>&1
-	stop_spinner $?
-	
+
+#----- Set default values
+    FILENAME=smbcreds
+    SHARE=192.168.x.x/SMB-Share
+    USERNAME=username
+    PASSWORD=password1
+    smbFolderPath="/mnt/SMB-Share"
+
+
+
+#----- Prompt for custom values
+    read -p "Gib den Namen für das versteckte Passwort-File ein [default: $FILENAME]: " input
+    FILENAME=${input:-$FILENAME}
+    read -p "Gib die IP deines Servers ein [default: $SHARE]: " input
+    SHARE=${input:-$SHARE}
+    read -p "Gib den User-Namen für den SMB-Share ein [default: $USERNAME]: " input
+    USERNAME=${input:-$USERNAME}
+    read -p "Gib das Passwort für den SMB-Share ein [default: $PASSWORD]: " input
+    PASSWORD=${input:-$PASSWORD}
+    read -p "Gib den Name für den lokalen SMB-Mount-Folder ein [default: $smbFolderPath]: " input
+    smbFolderPath=${input:-$smbFolderPath}
+
+	echoEnd
+
+
+#----- Create Files
+
+    #--- Password-File
+        start_spinner "Erstelle User-Credential-Files..."
+            touch /root/.$FILENAME
+            echo "username=$USERNAME" > /root/.$FILENAME
+            echo "password=$PASSWORD" >> /root/.$FILENAME
+        stop_spinner $?
+        
+        #--- Permissions
+            start_spinner "Modifiziere Permissions..."
+                chmod 400 /root/.$FILENAME
+            stop_spinner $?
+
+    #--- SMB-Mount Folder
+		echo "Modifiziere Permissions..."
+			if [ ! -d $smbFolderPath ]; then
+				mkdir $smbFolderPath
+				chown -R root:$SUDO_USER $smbFolderPath
+			else
+				echo "Ordner $smbFolderPath bereits vorhanden!"
+			fi
+    
+	echoEnd
+
+
+
+#----- FSTAB
+    start_spinner "Erstelle FStab..."
+        touch /etc/fstab
+        echo "//$SHARE $smbFolderPath cifs vers=3.0,credentials=/root/.$FILENAME" > /etc/fstab
+		systemctl daemon-reload
+    stop_spinner $?
+    
+	echoEnd
+
+
+#----- Mount SMB-Share
+    start_spinner "Mounte das Netzlaufwerk..."
+        mount -t cifs -o rw,vers=3.0,credentials=/root/.$FILENAME //$SHARE $smbFolderPath
+    stop_spinner $?
+
 	echoEnd
 
 
@@ -177,20 +248,6 @@
 						else
 							echo "Ordner $fullInstallerFolderPath bereits vorhanden!"
 						fi
-
-					#--- Folder 1
-						if [ ! -d $folder1Path ]; then
-							mkdir $folder1Path > /dev/null 2>&1
-						else
-							echo "Ordner $folder1Path bereits vorhanden!"
-						fi
-
-					#--- Folder2
-						if [ ! -d $folder2Path ]; then
-							mkdir $folder2Path > /dev/null 2>&1
-						else
-							echo "Ordner $folder2Path bereits vorhanden!"
-						fi
 	stop_spinner $?
 
 #----- Move Files
@@ -200,26 +257,5 @@
 				mv /home/$SUDO_USER/$fullInstaller $fullInstallerFolderPath > /dev/null 2>&1
 			else
 				echo "Die Datei $fullInstallerFolderPath ist bereits vorhanden!"
-			fi
-
-		#--- Folder 1 Bash Script
-			if [ ! -f $folder1bashScriptPath ]; then
-				mv /home/$SUDO_USER/$folder1bashScript $folder1bashScriptPath > /dev/null 2>&1
-			else
-				echo "Die Datei $folder1bashScriptPath ist bereits vorhanden!"
-			fi
-
-		#--- Folder 2 Bash Script
-			if [ ! -f $folder2bashScriptPath ]; then
-				mv /home/$SUDO_USER/$folder2bashScript $folder2bashScriptPath > /dev/null 2>&1
-			else
-				echo "Die Datei $folder2bashScriptPath ist bereits vorhanden!"
-			fi
-
-		#--- Cron-Check.txt
-			if [ ! -f $cronCheckPath ]; then
-				mv /home/$SUDO_USER/$cronCheck $cronCheckPath > /dev/null 2>&1
-			else
-				echo "Die Datei $cronCheckPath ist bereits vorhanden!"
 			fi
 	stop_spinner $?

@@ -1,6 +1,9 @@
 #!/bin/bash
-#	Made by Noah0302sTech
-#	chmod +x $folder1bashScript && sudo bash $folder1bashScript
+# Made by Noah0302sTech
+# chmod +x Host-SMB-Share-Debian-Noah0302sTech.sh && sudo bash Host-SMB-Share-Debian-Noah0302sTech.sh
+#	wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/SMB/Client/Host-SMB-Share-Debian-Noah0302sTech.sh && sudo bash Host-SMB-Share-Debian-Noah0302sTech.sh
+
+
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
@@ -105,24 +108,20 @@
 	#----- Variables
 		urlVar="https://raw.githubusercontent.com/Noah0302sTech/"
 
-		parentFolder="XXXXXXXXXX"
-			subFolder="XXXXXXXXXX"
-				fullInstallerFolder="XXXXXXXXXX"
-					fullInstaller="XXXXXXXXXX"
-				folder1="XXXXXXXXXX"
-					folder1bashScript="XXXXXXXXXX"
-				folder2="XXXXXXXXXX"
-					folder2bashScript="XXXXXXXXXX"
-				cronCheck="XXXXXXXXXX"
+		parentFolder="SMB"
+			subFolder="Host"
+				fullInstallerFolder="Installer"
+					fullInstaller="Host-SMB-Share-Debian-Noah0302sTech.sh"
+				folder1="SMB-Share-Folder"
 
 		parentFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder"
+			fullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder"
+				fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder/$fullInstaller"
 			subFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder"
-				fullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$fullInstallerFolder"
-					fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder/$fullInstaller"
 				folder1Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1"
-					folder1bashScriptPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1/$folder1bashScript"
+					updaterInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1/$bashInstaller"
 				folder2Path="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2"
-					folder2bashScriptPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2/$folder2bashScript"
+					updaterExecuterPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder2/$updaterExecuter"
 				cronCheckPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$cronCheck"
 
 #-----	-----#	#-----	-----#	#-----	-----#
@@ -131,13 +130,48 @@
 
 
 
+#----- Install SMB-Utils
+    start_spinner "Installiere SMB-Utilities..."
+        apt install samba > /dev/null 2>&1
+    stop_spinner $?
+
+	echoEnd
 
 
-#----- XXXXXXXXXX
-	start_spinner "XXXXXXXXXX..."
-		XXXXXXXXXX > /dev/null 2>&1
-	stop_spinner $?
-	
+
+#----- Set default values
+    shareName="SMB-Share"
+    shareComment="Beschreibung für Share"
+    sharePath=$folder1Path
+	smbUser=$SUDO_USER
+
+
+#----- Prompt for custom values
+    read -p "Gib den Namen für den SMB-Share ein [default: $shareName]: " input
+    shareName=${input:-$shareName}
+    read -p "Gib eine Beschreibung für den SMB-Share an [default: $shareComment]: " input
+    shareComment=${input:-$shareComment}
+    read -p "Gib den Pfad für den Ordner an, der geschared werden soll [default: $sharePath]: " input
+    sharePath=${input:-$sharePath}
+    read -p "Gib den User ein, der Zugriff auf den Share haben soll [default: $smbUser]: " input
+    smbUser=${input:-$smbUser}
+
+	echoEnd
+
+
+
+#----- Create Files
+	echo "
+[$shareName]
+comment= $shareComment
+path = $sharePath
+browseable  = yes
+Read only = no
+guest  ok = no
+valid users = $smbUser" >> /etc/samba/smb.conf
+    systemctl restart smbd
+	smbpasswd -a $smbUser
+
 	echoEnd
 
 
@@ -178,18 +212,11 @@
 							echo "Ordner $fullInstallerFolderPath bereits vorhanden!"
 						fi
 
-					#--- Folder 1
+					#--- SMB Share Folder
 						if [ ! -d $folder1Path ]; then
 							mkdir $folder1Path > /dev/null 2>&1
 						else
 							echo "Ordner $folder1Path bereits vorhanden!"
-						fi
-
-					#--- Folder2
-						if [ ! -d $folder2Path ]; then
-							mkdir $folder2Path > /dev/null 2>&1
-						else
-							echo "Ordner $folder2Path bereits vorhanden!"
 						fi
 	stop_spinner $?
 
@@ -200,26 +227,5 @@
 				mv /home/$SUDO_USER/$fullInstaller $fullInstallerFolderPath > /dev/null 2>&1
 			else
 				echo "Die Datei $fullInstallerFolderPath ist bereits vorhanden!"
-			fi
-
-		#--- Folder 1 Bash Script
-			if [ ! -f $folder1bashScriptPath ]; then
-				mv /home/$SUDO_USER/$folder1bashScript $folder1bashScriptPath > /dev/null 2>&1
-			else
-				echo "Die Datei $folder1bashScriptPath ist bereits vorhanden!"
-			fi
-
-		#--- Folder 2 Bash Script
-			if [ ! -f $folder2bashScriptPath ]; then
-				mv /home/$SUDO_USER/$folder2bashScript $folder2bashScriptPath > /dev/null 2>&1
-			else
-				echo "Die Datei $folder2bashScriptPath ist bereits vorhanden!"
-			fi
-
-		#--- Cron-Check.txt
-			if [ ! -f $cronCheckPath ]; then
-				mv /home/$SUDO_USER/$cronCheck $cronCheckPath > /dev/null 2>&1
-			else
-				echo "Die Datei $cronCheckPath ist bereits vorhanden!"
 			fi
 	stop_spinner $?

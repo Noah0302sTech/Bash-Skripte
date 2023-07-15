@@ -3,6 +3,8 @@
 #	chmod +x Docker-SystemPrune-Installer-Noah0302sTech.sh && sudo bash Docker-SystemPrune-Installer-Noah0302sTech.sh
 #	wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Docker/System-Prune/Docker-SystemPrune-Installer-Noah0302sTech.sh && sudo bash Docker-SystemPrune-Installer-Noah0302sTech.sh
 
+#TODO:	Fix "Files not found" if Executer is executed before moving files
+
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
 		if [[ $EUID -ne 0 ]]; then
@@ -176,7 +178,7 @@
 				start_spinner "Erstelle Crontab..."
 					touch /etc/cron.d/docker-System-Prune-Noah0302sTech
 					echo "#Docker System Prune & Trim by Noah0302sTech
-$cronVariable root $bashExecuterPath" > /etc/cron.d/docker-System-Prune-Noah0302sTech
+$cronVariable root sudo -E $bashExecuterPath" > /etc/cron.d/docker-System-Prune-Noah0302sTech
 				stop_spinner $?
 
 			#--- Echo Commands into Docker-SystemPrune-Executer
