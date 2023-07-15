@@ -1,6 +1,6 @@
 #!/bin/bash
-# Made by Noah0302sTech
-# chmod +x AutomountSMB-Deb11-Noah0302sTech.sh && sudo bash AutomountSMB-Deb11-Noah0302sTech.sh
+#	Made by Noah0302sTech
+#	chmod +x AutomountSMB-Deb11-Noah0302sTech.sh && sudo bash AutomountSMB-Deb11-Noah0302sTech.sh
 #	wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/SMB/Client/AutomountSMB-Deb11-Noah0302sTech.sh && sudo bash AutomountSMB-Deb11-Noah0302sTech.sh
 
 
