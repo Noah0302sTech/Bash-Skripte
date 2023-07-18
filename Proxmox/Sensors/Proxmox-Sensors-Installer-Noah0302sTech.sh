@@ -1,6 +1,7 @@
 #!/bin/bash
 # Made by Noah0302sTech
 # chmod +x Proxmox-Sensors-Installer-Noah0302sTech.sh && bash Proxmox-Sensors-Installer-Noah0302sTech.sh
+#	wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Proxmox/Sensors/Proxmox-Sensors-Installer-Noah0302sTech.sh && bash Proxmox-Sensors-Installer-Noah0302sTech.sh
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
@@ -125,16 +126,21 @@
 
 
 #----- Question Install htop
-	while true; do
-		read -p "Möchtest du auch 'htop' installieren? " yn
-		case $yn in
-			[Yy]* ) 	start_spinner "Installiere htop..."
-							apt install htop -y > /dev/null 2>&1
-						stop_spinner $?;
-					break;;
-			[Nn]* ) exit;;
-			* ) echo "Antworte mit y/n.";;
-		esac
+	while IFS= read -n1 -r -p "Möchtest du auch 'htop' installieren? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+	case $REPLY in
+		y)  echo
+				start_spinner "Installiere htop..."
+					apt install htop -y > /dev/null 2>&1
+				stop_spinner $?
+
+			break;;
+		n)  echo
+				echo "Htop wurde NICHT installiert!"
+				
+			break;;
+		*)  echo
+				echo "Antoworte mit y oder n";;
+	esac
 	done
 
 
@@ -163,9 +169,9 @@ alias watchSensors='watch sensors'
 	else
 		start_spinner "Passe MOTD an..."
 			echo "
-Sensors
-Watch Sensor-Temps:	watchSensors
-" >> /etc/motd
+Show Sensor-Temps:	watchSensors
+-----
+s" >> /etc/motd
 		stop_spinner $?
 	fi
 	echo
