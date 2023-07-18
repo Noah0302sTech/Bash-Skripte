@@ -12,7 +12,7 @@
 
 
 
-	#----- Source of Spinner-Function: https://github.com/tlatsas/bash-spinner
+	#----- Source of Spinner-Function: https://github.com/tlatsas/bash-spinner -----#
 			function _spinner() {
 				# $1 start/stop
 				#
@@ -86,6 +86,13 @@
 
 
 
+	#----- echoEnd
+			function echoEnd {
+				echo
+				echo
+				echo
+			}
+
 	#----- Refresh Packages
 		start_spinner "Aktualisiere Package-Listen..."
 			apt update > /dev/null 2>&1
@@ -113,15 +120,25 @@
 		apt install lm-sensors -y > /dev/null 2>&1
 	stop_spinner $?
 
+	echoEnd
+
+
+
 #----- Detect Sensors
 	echo "Erkenne Sensoren..."
 	sleep 1
 		sensors-detect
 
+	echoEnd
+
+
+
 #----- Watch Sensors
 	echo "Watche Sensoren..."
 	sleep 1
 		watch sensors
+
+	echoEnd
 
 
 
@@ -143,6 +160,8 @@
 	esac
 	done
 
+	echoEnd
+
 
 
 #----- Create Alias
@@ -158,8 +177,8 @@ alias watchSensors='watch sensors'
 "  >> /root/.bashrc
 		stop_spinner $?
 	fi
-	echo
-	echo
+
+	echoEnd
 
 
 
@@ -174,8 +193,8 @@ Show Sensor-Temps:	watchSensors
 s" >> /etc/motd
 		stop_spinner $?
 	fi
-	echo
-	echo
+
+	echoEnd
 
 
 
