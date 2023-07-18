@@ -187,10 +187,10 @@ alias watchSensors='watch sensors'
 		echo "Der MOTD Eintrag exisitert bereits in /etc/motd"
 	else
 		start_spinner "Passe MOTD an..."
-			echo "
+			echo "-----
 Show Sensor-Temps:	watchSensors
 -----
-s" >> /etc/motd
+" >> /etc/motd
 		stop_spinner $?
 	fi
 
