@@ -165,7 +165,7 @@
 
 
 #----- Create Alias
-    if grep -q "^alias watchSensors=" /root/.bashrc; then
+    if grep -q "^alias temps=" /root/.bashrc; then
 		echo "Der Alias existiert bereits in /root/.bashrc"
 	else
 		start_spinner "Erstelle Alias..."
@@ -173,7 +173,7 @@
 
 
 #Sensors
-alias watchSensors='watch sensors'
+alias temps='watch sensors'
 "  >> /root/.bashrc
 		stop_spinner $?
 	fi
@@ -188,7 +188,7 @@ alias watchSensors='watch sensors'
 	else
 		start_spinner "Passe MOTD an..."
 			echo "-----
-Show Sensor-Temps:	watchSensors
+Show Sensor-Temps:	temps
 -----
 " >> /etc/motd
 		stop_spinner $?
