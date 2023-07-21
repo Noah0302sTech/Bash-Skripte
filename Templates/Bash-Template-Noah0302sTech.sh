@@ -11,8 +11,8 @@
 
 
 
-	#----- Source of Spinner-Function: https://github.com/tlatsas/bash-spinner -----#
-		function _spinner() {
+	#----- Modified Spinner-Function of: https://github.com/tlatsas/bash-spinner -----#
+			function _spinner() {
 				# $1 start/stop
 				#
 				# on start: $2 display message
@@ -21,10 +21,18 @@
 
 				local on_success="DONE"
 				local on_fail="FAIL"
-				local white="\e[1;37m"
-				local green="\e[1;32m"
-				local red="\e[1;31m"
-				local nc="\e[0m"
+				local white=""
+				local green=""
+				local red=""
+				local nc=""
+
+				if [[ -t 1 ]]; then
+					# Check if the output is a terminal to enable colored output
+					white="\e[1;37m"
+					green="\e[1;32m"
+					red="\e[1;31m"
+					nc="\e[0m"
+				fi
 
 				case $1 in
 					start)
@@ -39,25 +47,13 @@
 							sp='\|/-'
 							delay=${SPINNER_DELAY:-0.15}
 
-							# Define the interval in seconds after which the spinner will be reset
-							reset_interval=60
-							reset_time=$(date +%s)
-
 							while :
 							do
-								printf "\b${sp:i++%${#sp}:1}"
-
-								# Check if it's time to reset the spinner
-								current_time=$(date +%s)
-								if (( current_time >= reset_time + reset_interval )); then
-									reset_time=$current_time
-									i=1
-								fi
-
+								printf "\b ${sp:i++%${#sp}:1}"
 								sleep $delay
 							done
 							;;
-						stop)
+					stop)
 							if [[ -z ${3} ]]; then
 								echo "spinner is not running.."
 								exit 1
@@ -65,7 +61,7 @@
 
 							kill $3 > /dev/null 2>&1
 
-							# inform the user uppon success or failure
+							# inform the user upon success or failure
 							echo -en "\b["
 							if [[ $2 -eq 0 ]]; then
 								echo -en "${green}${on_success}${nc}"
@@ -79,7 +75,8 @@
 							exit 1
 							;;
 				esac
-		}
+			}
+
 
 			function start_spinner {
 				# $1 : msg to display
