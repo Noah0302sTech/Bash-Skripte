@@ -12,7 +12,7 @@
 
 
 	#----- Source of Spinner-Function: https://github.com/tlatsas/bash-spinner -----#
-			function _spinner() {
+		function _spinner() {
 				# $1 start/stop
 				#
 				# on start: $2 display message
@@ -28,46 +28,58 @@
 
 				case $1 in
 					start)
-						# calculate the column where spinner and status msg will be displayed
-						let column=$(tput cols)-${#2}-8
-						# display message and position the cursor in $column column
-						echo -ne ${2}
-						printf "%${column}s"
+							# calculate the column where spinner and status msg will be displayed
+							let column=$(tput cols)-${#2}-8
+							# display message and position the cursor in $column column
+							echo -ne ${2}
+							printf "%${column}s"
 
-						# start spinner
-						i=1
-						sp='\|/-'
-						delay=${SPINNER_DELAY:-0.15}
+							# start spinner
+							i=1
+							sp='\|/-'
+							delay=${SPINNER_DELAY:-0.15}
 
-						while :
-						do
-							printf "\b${sp:i++%${#sp}:1}"
-							sleep $delay
-						done
-						;;
-					stop)
-						if [[ -z ${3} ]]; then
-							echo "spinner is not running.."
-							exit 1
-						fi
+							# Define the interval in seconds after which the spinner will be reset
+							reset_interval=60
+							reset_time=$(date +%s)
 
-						kill $3 > /dev/null 2>&1
+							while :
+							do
+								printf "\b${sp:i++%${#sp}:1}"
 
-						# inform the user uppon success or failure
-						echo -en "\b["
-						if [[ $2 -eq 0 ]]; then
-							echo -en "${green}${on_success}${nc}"
-						else
-							echo -en "${red}${on_fail}${nc}"
-						fi
-						echo -e "]"
-						;;
+								# Check if it's time to reset the spinner
+								current_time=$(date +%s)
+								if (( current_time >= reset_time + reset_interval )); then
+									reset_time=$current_time
+									i=1
+								fi
+
+								sleep $delay
+							done
+							;;
+						stop)
+							if [[ -z ${3} ]]; then
+								echo "spinner is not running.."
+								exit 1
+							fi
+
+							kill $3 > /dev/null 2>&1
+
+							# inform the user uppon success or failure
+							echo -en "\b["
+							if [[ $2 -eq 0 ]]; then
+								echo -en "${green}${on_success}${nc}"
+							else
+								echo -en "${red}${on_fail}${nc}"
+							fi
+							echo -e "]"
+							;;
 					*)
-						echo "invalid argument, try {start/stop}"
-						exit 1
-						;;
+							echo "invalid argument, try {start/stop}"
+							exit 1
+							;;
 				esac
-			}
+		}
 
 			function start_spinner {
 				# $1 : msg to display
