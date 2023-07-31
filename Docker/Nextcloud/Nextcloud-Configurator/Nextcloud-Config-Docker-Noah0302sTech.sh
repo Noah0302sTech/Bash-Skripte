@@ -37,7 +37,7 @@
 						# start spinner
 						i=1
 						sp='\|/-'
-						delay=${SPINNER_DELAY:-0.15}
+						delay=0.25
 
 						while :
 						do
