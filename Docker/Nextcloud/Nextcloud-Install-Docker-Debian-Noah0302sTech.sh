@@ -106,19 +106,29 @@
 	#----- Variables
 		urlVar=https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Docker/Nextcloud/Nextcloud-Configurator/Nextcloud-Config-Docker-Noah0302sTech.sh
 
-		parentFolder="Nextcloud"
-			fullInstallerFolder="Installer"
-				fullInstaller="Nextcloud-Install-Docker-Debian-Noah0302sTech.sh"
-				dockerFile="docker-compose.yml"
-			subFolder="Configurator"
-				bashConfigurator="Nextcloud-Config-Docker-Noah0302sTech.sh"
+
+		parentFolder="Docker"
+			subFolder="Nextcloud"
+				fullInstallerFolder="Full-Installer"
+					fullInstaller="Nextcloud-Install-Docker-Debian-Noah0302sTech.sh"
+				bashConfiguratorFolder="Configurator"
+					bashConfigurator="Nextcloud-Config-Docker-Noah0302sTech.sh"
+				dockerComposeFolder="Docker-Compose"
+					dockerComposeFile="docker-compose.yml"
+				unInstallerFolder="Uninstaller"
+					unInstaller="Docker-SystemPrune-UnInstaller-Noah0302sTech.sh"
+
 
 		parentFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder"
-			fullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder"
-				fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder/$fullInstaller"
-				fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder/$dockerFile"
 			subFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder"
-					updaterInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$bashConfigurator"
+				fullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$fullInstallerFolder"
+					fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$fullInstallerFolder/$fullInstaller"
+				bashConfiguratorFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$bashConfiguratorFolder"
+					bashConfiguratorPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$bashConfiguratorFolder/$bashConfigurator"
+				dockerComposeFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$dockerComposeFolder"
+					dockerComposeFilePath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$dockerComposeFolder/$dockerComposeFile"
+				unInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$unInstallerFolder"
+					unInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$unInstallerFolder/$unInstaller"
 
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
@@ -266,7 +276,7 @@ volumes:
 		start_spinner "Erstelle Alias..."
 			echo "
 #Nextcloud-Docker
-alias nextcloudConfigure='sudo bash $updaterInstallerPath'"  >> /home/$SUDO_USER/.bashrc
+alias nextcloudConfigure='sudo bash $bashConfiguratorPath'"  >> /home/$SUDO_USER/.bashrc
 		stop_spinner $?
 	fi
 	echoEnd
@@ -294,57 +304,88 @@ Configure Nextcloud:  nextcloudConfigure
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
 
-#----- Create Folders
-	start_spinner "Erstelle Verzeichnisse..."
-		#--- Noah0302sTech
-			if [ ! -d /home/$SUDO_USER/Noah0302sTech ]; then
-				mkdir /home/$SUDO_USER/Noah0302sTech > /dev/null 2>&1
-			else
-				echo "Ordner /home/$SUDO_USER/Noah0302sTech bereits vorhanden!"
-			fi
-
-			#--- Nextcloud
-				if [ ! -d $parentFolderPath ]; then
-					mkdir $parentFolderPath > /dev/null 2>&1
+#---------- Creating Files & Folders, moving Files
+	#----- Create Folders
+		start_spinner "Erstelle Verzeichnisse..."
+			#--- Noah0302sTech
+				if [ ! -d /home/$SUDO_USER/Noah0302sTech ]; then
+					mkdir /home/$SUDO_USER/Noah0302sTech > /dev/null 2>&1
 				else
-					echo "Ordner $parentFolderPath bereits vorhanden!"
+					echo "Ordner /home/$SUDO_USER/Noah0302sTech bereits vorhanden!"
 				fi
 
-				#--- Nextcloud-Installer
-					if [ ! -d $fullInstallerFolderPath ]; then
-						mkdir $fullInstallerFolderPath > /dev/null 2>&1
+				#--- Docker
+					if [ ! -d $parentFolderPath ]; then
+						mkdir $parentFolderPath > /dev/null 2>&1
 					else
-						echo "Ordner $fullInstallerFolderPath bereits vorhanden!"
+						echo "Ordner $parentFolderPath bereits vorhanden!"
 					fi
 
-				#--- Nextcloud-Configurator
-					if [ ! -d $subFolderPath ]; then
-						mkdir $subFolderPath > /dev/null 2>&1
+					#--- Nextcloud
+						if [ ! -d $subFolderPath ]; then
+							mkdir $subFolderPath > /dev/null 2>&1
+						else
+							echo "Ordner $subFolderPath bereits vorhanden!"
+						fi
+
+						#--- Full-Installer
+							if [ ! -d $fullInstallerFolderPath ]; then
+								mkdir $fullInstallerFolderPath > /dev/null 2>&1
+							else
+								echo "Ordner $fullInstallerFolderPath bereits vorhanden!"
+							fi
+
+						#--- Configurator
+							if [ ! -d $bashConfiguratorFolderPath ]; then
+								mkdir $bashConfiguratorFolderPath > /dev/null 2>&1
+							else
+								echo "Ordner $bashConfiguratorFolderPath bereits vorhanden!"
+							fi
+
+						#--- Docker-Compose
+							if [ ! -d $dockerComposeFolderPath ]; then
+								mkdir $dockerComposeFolderPath > /dev/null 2>&1
+							else
+								echo "Ordner $dockerComposeFolderPath bereits vorhanden!"
+							fi
+
+						#--- Uninstaller
+							if [ ! -d $unInstallerFolderPath ]; then
+								mkdir $unInstallerFolderPath > /dev/null 2>&1
+							else
+								echo "Ordner $unInstallerFolderPath bereits vorhanden!"
+							fi
+
+		stop_spinner $?
+
+	#----- Move Files
+		start_spinner "Verschiebe Files..."
+				#--- Full-Installer
+					if [ ! -f $fullInstallerPath ]; then
+						mv /home/$SUDO_USER/$fullInstaller $fullInstallerFolderPath > /dev/null 2>&1
 					else
-						echo "Ordner $subFolderPath bereits vorhanden!"
+						echo "Die Datei $fullInstaller ist bereits in $fullInstallerFolderPath vorhanden!"
 					fi
-	stop_spinner $?
 
-#----- Move Files
-	start_spinner "Verschiebe Files..."
-		#--- Full-Installer
-			if [ ! -f $fullInstallerFolderPath ]; then
-				mv /home/$SUDO_USER/$fullInstaller $fullInstallerFolderPath > /dev/null 2>&1
-			else
-				echo "Die Datei $fullInstallerFolderPath ist bereits vorhanden!"
-			fi
+				#--- Trim-Executer
+					if [ ! -f $bashConfiguratorPath ]; then
+						mv /home/$SUDO_USER/$bashConfigurator $bashConfiguratorFolderPath > /dev/null 2>&1
+					else
+						echo "Die Datei $bashConfigurator ist bereits in $bashConfiguratorFolderPath vorhanden!"
+					fi
 
-		#--- Docker-Compose
-			if [ ! -f $fullInstallerPath ]; then
-				mv /home/$SUDO_USER/$dockerFile $fullInstallerPath > /dev/null 2>&1
-			else
-				echo "Die Datei '$dockerFile' ist bereits vorhanden!"
-			fi
+				#--- Uninstaller
+					if [ ! -f $unInstallerPath ]; then
+						mv /home/$SUDO_USER/$unInstaller $unInstallerFolderPath > /dev/null 2>&1
+					else
+						echo "Die Datei $unInstaller ist bereits in $unInstallerFolderPath vorhanden!"
+					fi
 
-			#--- Nextcloud-Configurator
-				if [ ! -f $updaterInstallerPath ]; then
-					mv /home/$SUDO_USER/$bashConfigurator $updaterInstallerPath > /dev/null 2>&1
-				else
-					echo "Die Datei '$bashConfigurator' ist bereits vorhanden!"
-				fi
-	stop_spinner $?
+				#--- Docker-Compose
+					if [ ! -f $dockerComposeFilePath ]; then
+						mv /home/$SUDO_USER/$dockerComposeFile $dockerComposeFolderPath > /dev/null 2>&1
+					else
+						echo "Die Datei $dockerComposeFile ist bereits in $dockerComposeFolderPath vorhanden!"
+					fi
+
+		stop_spinner $?
