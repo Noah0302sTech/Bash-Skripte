@@ -249,7 +249,7 @@ volumes:
 	start_spinner "Erstelle Nextcloud-Config-Skript..."
 		apt install wget -y > /dev/null 2>&1
 		wget $urlVar > /dev/null 2>&1
-		sed -i -e "s/inputFromInstaller/"$nextcloud_dataVar"/g" $bashConfigurator
+		sed -i -e 's#inputFromInstaller#'"$nextcloud_dataVar"'#g' "$bashConfigurator"
 		chmod +x $bashConfigurator > /dev/null 2>&1
 	stop_spinner $?
 	echo "Um NACH DER INSTALLATION die Nextcloud-Config anzupassen, starte das Nextcloud-Config-Skript mit:"
