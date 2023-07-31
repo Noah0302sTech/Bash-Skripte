@@ -1,6 +1,7 @@
 #!/bin/bash
 #	Made by Noah0302sTech
 #	chmod +x Nextcloud-Install-Docker-Debian-Noah0302sTech.sh && sudo bash Nextcloud-Install-Docker-Debian-Noah0302sTech.sh
+#	wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Docker/Nextcloud/Nextcloud-Install-Docker-Debian-Noah0302sTech.sh && sudo bash Nextcloud-Install*
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
