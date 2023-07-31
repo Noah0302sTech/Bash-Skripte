@@ -178,7 +178,7 @@
 				if [ ! -d "$mariaDB_dataVar" ]; then
 					echo "Creating $mariaDB_dataVar"
 					mkdir -p "$mariaDB_dataVar"
-					chown -R www-data:www-data "$mariaDB_dataVar"
+					chown -R $SUDO_USER:$SUDO_USER "$mariaDB_dataVar"
 				fi
 
 	#--- Create a Docker Compose file
