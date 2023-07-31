@@ -158,6 +158,19 @@
 		nextcloud_dataVar=/var/www/html
 		mariaDB_dataVar=/var/lib/mysql
 
+			#- Check if the directories exist
+				if [ ! -d "$nextcloud_dataVar" ]; then
+					echo "Creating $nextcloud_dataVar"
+					mkdir -p "$nextcloud_dataVar"
+					chown -R $SUDO_USER:$SUDO_USER "$nextcloud_dataVar"
+				fi
+
+				if [ ! -d "$mariaDB_dataVar" ]; then
+					echo "Creating $mariaDB_dataVar"
+					mkdir -p "$mariaDB_dataVar"
+					chown -R $SUDO_USER:$SUDO_USER "$mariaDB_dataVar"
+				fi
+
 	#--- Prompt user for custom values
 		read -p "MariaDB-Root-Passwort eigeben [default: $mysqlRootVar]: " input
 		mysqlRootVar=${input:-$mysqlRootVar}
