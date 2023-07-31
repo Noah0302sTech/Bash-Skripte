@@ -2,8 +2,6 @@
 #	Made by Noah0302sTech
 #	chmod +x Nextcloud-Install-Docker-Debian-Noah0302sTech.sh && sudo bash Nextcloud-Install-Docker-Debian-Noah0302sTech.sh
 
-#TODO: Create MOTD and Alias for Nextcloud-Config
-
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
 		if [[ $EUID -ne 0 ]]; then
@@ -39,7 +37,7 @@
 						# start spinner
 						i=1
 						sp='\|/-'
-						delay=${SPINNER_DELAY:-0.15}
+						delay=0.25
 
 						while :
 						do
@@ -100,13 +98,12 @@
 		start_spinner "Aktualisiere Package-Listen..."
 			apt update > /dev/null 2>&1
 		stop_spinner $?
-		echo
-		echo
+		echoEnd
 
 
 
 	#----- Variables
-		urlVar="https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Docker/Nextcloud/Nextcloud-Configurator/Nextcloud-Config-Docker-Noah0302sTech.sh"
+		urlVar=https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/testing/Docker/Nextcloud/Nextcloud-Configurator/Nextcloud-Config-Docker-Noah0302sTech.sh
 
 		parentFolder="Nextcloud"
 			fullInstallerFolder="Installer"
@@ -175,6 +172,7 @@
 services:
   db:
     image: mariadb:latest
+    container_name: $SUDO_USER-mariadb
     environment:
       - MYSQL_ROOT_PASSWORD=$mysqlRootVar
       - MYSQL_PASSWORD=$mysqlPasswordVar
@@ -183,10 +181,11 @@ services:
     restart: unless-stopped
   nextcloud:
     image: nextcloud:latest
+    container_name: $SUDO_USER-nextcloud
     ports:
       - 8080:80
     volumes:
-      - nextcloud_data:$nextcloud_dataVar
+      - $nextcloud_dataVar:/var/www/html/data
     environment:
       - MYSQL_HOST=db
       - MYSQL_USER=nextcloud
@@ -195,7 +194,8 @@ services:
     restart: unless-stopped
     depends_on:
       - db
-" >> docker-compose.yml
+volumes:
+  nextcloud_data" > docker-compose.yml
 		stop_spinner $?
 	echoEnd
 
@@ -243,7 +243,7 @@ alias nextcloudConfigure='sudo bash $updaterInstallerPath'"  >> /home/$SUDO_USER
 	else
 		start_spinner "Passe MOTD an..."
 			echo "-----
-Update System:  nextcloudConfigure
+Configure Nextcloud:  nextcloudConfigure
 -----
 " >> /etc/motd
 		stop_spinner $?
