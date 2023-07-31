@@ -156,6 +156,7 @@
 		mysqlRootVar=sqlrootpassword
 		mysqlPasswordVar=sqlpassword
 		nextcloud_dataVar=/var/www/html
+		mariaDB_dataVar=/var/lib/mysql
 
 	#--- Prompt user for custom values
 		read -p "MariaDB-Root-Passwort eigeben [default: $mysqlRootVar]: " input
@@ -164,6 +165,8 @@
 		mysqlPasswordVar=${input:-$mysqlPasswordVar}
 		read -p "Nextcloud-Data Speicherpfad eigeben [default: $nextcloud_dataVar]: " input
 		nextcloud_dataVar=${input:-$nextcloud_dataVar}
+		read -p "Maria-DB Speicherpfad eigeben [default: $mariaDB_dataVar]: " input
+		mariaDB_dataVar=${input:-$mariaDB_dataVar}
 
 	#--- Create a Docker Compose file
 		start_spinner "Erstelle Docker-Compose-File..."
@@ -178,24 +181,41 @@ services:
       - MYSQL_PASSWORD=$mysqlPasswordVar
       - MYSQL_DATABASE=nextclouddb
       - MYSQL_USER=nextcloud
+    volumes:
+      - db_data:/var/lib/mysql
     restart: unless-stopped
+
   nextcloud:
     image: nextcloud:latest
     container_name: $SUDO_USER-nextcloud
     ports:
       - 8080:80
-    volumes:
-      - $nextcloud_dataVar:/var/www/html/data
     environment:
       - MYSQL_HOST=db
       - MYSQL_USER=nextcloud
       - MYSQL_PASSWORD=$mysqlPasswordVar
       - MYSQL_DATABASE=nextclouddb
+    volumes:
+      - nextcloud_data:/var/www/html
     restart: unless-stopped
     depends_on:
       - db
+
 volumes:
-  nextcloud_data:" > docker-compose.yml
+  db_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: $mariaDB_dataVar
+
+  nextcloud_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: $nextcloud_dataVar
+" > docker-compose.yml
 		stop_spinner $?
 	echoEnd
 
