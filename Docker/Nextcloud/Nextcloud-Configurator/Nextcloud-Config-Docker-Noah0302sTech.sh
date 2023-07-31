@@ -127,7 +127,8 @@
 
 
 #----- Change Config
-	nano /var/lib/docker/volumes/$SUDO_USER-nextcloud/_data/config/config.php
+	nextcloud_dataPath=inputFromInstaller
+	nano $nextcloud_dataPath/config/config.php
 
 
 
