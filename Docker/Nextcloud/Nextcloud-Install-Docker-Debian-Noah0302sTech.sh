@@ -98,7 +98,7 @@
 
 	#----- Refresh Packages
 		start_spinner "Aktualisiere Package-Listen..."
-			apt update -y > /dev/null 2>&1
+			apt update > /dev/null 2>&1
 		stop_spinner $?
 		echo
 		echo
@@ -156,14 +156,17 @@
 
 #----- Docker-Compose
 	#--- Set default values for Docker-Compose
-		MYSQL_ROOT_PASSWORD=sqlrootpassword
-		MYSQL_PASSWORD=sqlpassword
+		mysqlRootVar=sqlrootpassword
+		mysqlPasswordVar=sqlpassword
+		nextcloud_dataVar=/var/www/html
 
 	#--- Prompt user for custom values
-		read -p "MariaDB-Root-Passwort eigeben [default: $MYSQL_ROOT_PASSWORD]: " input
-		MYSQL_ROOT_PASSWORD=${input:-$MYSQL_ROOT_PASSWORD}
-		read -p "MariaDB-Passwort eigeben [default: $MYSQL_PASSWORD]: " input
-		MYSQL_PASSWORD=${input:-$MYSQL_PASSWORD}
+		read -p "MariaDB-Root-Passwort eigeben [default: $mysqlRootVar]: " input
+		mysqlRootVar=${input:-$mysqlRootVar}
+		read -p "MariaDB-Passwort eigeben [default: $mysqlPasswordVar]: " input
+		mysqlPasswordVar=${input:-$mysqlPasswordVar}
+		read -p "Nextcloud-Data Speicherpfad eigeben [default: $nextcloud_dataVar]: " input
+		nextcloud_dataVar=${input:-$nextcloud_dataVar}
 
 	#--- Create a Docker Compose file
 		start_spinner "Erstelle Docker-Compose-File..."
@@ -171,29 +174,27 @@
 		echo "version: '3'
 services:
   db:
-    image: mariadb
+    image: mariadb:latest
     environment:
-      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
-      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+      - MYSQL_ROOT_PASSWORD=$mysqlRootVar
+      - MYSQL_PASSWORD=$mysqlPasswordVar
       - MYSQL_DATABASE=nextclouddb
       - MYSQL_USER=nextcloud
     restart: unless-stopped
   nextcloud:
-    image: nextcloud
+    image: nextcloud:latest
     ports:
       - 8080:80
     volumes:
-      - nextcloud_data:/var/www/html
+      - nextcloud_data:$nextcloud_dataVar
     environment:
       - MYSQL_HOST=db
       - MYSQL_USER=nextcloud
-      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+      - MYSQL_PASSWORD=$mysqlPasswordVar
       - MYSQL_DATABASE=nextclouddb
     restart: unless-stopped
     depends_on:
       - db
-volumes:
-  nextcloud_data:
 " >> docker-compose.yml
 		stop_spinner $?
 	echoEnd
@@ -218,6 +219,35 @@ volumes:
 	echo "Um NACH DER INSTALLATION die Nextcloud-Config anzupassen, starte das Nextcloud-Config-Skript mit:"
 	echo "sudo bash $updaterInstallerPath"
 	echo "ERST NACH DER INSTALLATION MÖGLICH!"
+	echoEnd
+
+
+
+#----- Create Alias
+    if grep -q "^alias nextcloudConfigure=" /home/$SUDO_USER/.bashrc; then
+		echo "Der Alias existiert bereits in /home/$SUDO_USER/.bashrc"
+	else
+		start_spinner "Erstelle Alias..."
+			echo "
+#Nextcloud-Docker
+alias nextcloudConfigure='sudo bash $updaterInstallerPath'"  >> /home/$SUDO_USER/.bashrc
+		stop_spinner $?
+	fi
+	echoEnd
+
+
+
+#----- Create MOTD
+	if grep -q "^Init" /etc/motd; then
+		echo "Der MOTD Eintrag exisitert bereits in /etc/motd"
+	else
+		start_spinner "Passe MOTD an..."
+			echo "-----
+Update System:  nextcloudConfigure
+-----
+" >> /etc/motd
+		stop_spinner $?
+	fi
 	echoEnd
 
 
