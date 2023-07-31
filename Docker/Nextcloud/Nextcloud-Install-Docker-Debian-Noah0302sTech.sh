@@ -273,7 +273,7 @@ alias nextcloudConfigure='sudo bash $updaterInstallerPath'"  >> /home/$SUDO_USER
 
 
 #----- Create MOTD
-	if grep -q "^Init" /etc/motd; then
+	if grep -q "^Nextcloud" /etc/motd; then
 		echo "Der MOTD Eintrag exisitert bereits in /etc/motd"
 	else
 		start_spinner "Passe MOTD an..."
