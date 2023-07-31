@@ -195,7 +195,7 @@ services:
     depends_on:
       - db
 volumes:
-  nextcloud_data" > docker-compose.yml
+  nextcloud_data:" > docker-compose.yml
 		stop_spinner $?
 	echoEnd
 
