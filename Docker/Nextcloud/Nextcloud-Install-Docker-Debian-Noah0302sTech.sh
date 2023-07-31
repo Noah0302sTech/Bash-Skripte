@@ -163,6 +163,7 @@
 		mysqlRootVar=${input:-$mysqlRootVar}
 		read -p "MariaDB-Passwort eigeben [default: $mysqlPasswordVar]: " input
 		mysqlPasswordVar=${input:-$mysqlPasswordVar}
+		echo "Der Speicherpfad von Nextcloud-Data und Maria-DB darf nicht der selbe Ordner sein!"
 		read -p "Nextcloud-Data Speicherpfad eigeben [default: $nextcloud_dataVar]: " input
 		nextcloud_dataVar=${input:-$nextcloud_dataVar}
 		read -p "Maria-DB Speicherpfad eigeben [default: $mariaDB_dataVar]: " input
@@ -170,13 +171,13 @@
 
 			#- Check if the directories exist
 				if [ ! -d "$nextcloud_dataVar" ]; then
-					echo "Creating $nextcloud_dataVar"
+					echo "Erstelle $nextcloud_dataVar..."
 					mkdir -p "$nextcloud_dataVar"
 					chown -R www-data:www-data "$nextcloud_dataVar"
 				fi
 
 				if [ ! -d "$mariaDB_dataVar" ]; then
-					echo "Creating $mariaDB_dataVar"
+					echo "Erstelle $mariaDB_dataVar..."
 					mkdir -p "$mariaDB_dataVar"
 					chown -R $SUDO_USER:$SUDO_USER "$mariaDB_dataVar"
 				fi
@@ -247,7 +248,7 @@ volumes:
 	start_spinner "Erstelle Nextcloud-Config-Skript..."
 		apt install wget -y > /dev/null 2>&1
 		wget $urlVar > /dev/null 2>&1
-		sed -i "s/nextcloud_dataPath=inputFromInstaller/nextcloud_dataPath=$nextcloud_dataVar/" $bashConfigurator > /dev/null 2>&1
+		sed -i 's/nextcloud_dataPath=.*/nextcloud_dataPath='$nextcloud_dataVar'/" $bashConfigurator > /dev/null 2>&1
 		chmod +x $bashConfigurator > /dev/null 2>&1
 	stop_spinner $?
 	echo "Um NACH DER INSTALLATION die Nextcloud-Config anzupassen, starte das Nextcloud-Config-Skript mit:"
