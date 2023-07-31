@@ -37,7 +37,7 @@
 						# start spinner
 						i=1
 						sp='\|/-'
-						delay=${SPINNER_DELAY:-0.15}
+						delay=0.25
 
 						while :
 						do
@@ -96,7 +96,7 @@
 
 	#----- Refresh Packages
 		start_spinner "Aktualisiere Package-Listen..."
-			apt update -y > /dev/null 2>&1
+			apt update > /dev/null 2>&1
 		stop_spinner $?
 		echo
 		echo
@@ -104,19 +104,31 @@
 
 
 	#----- Variables
-		urlVar="https://raw.githubusercontent.com/Noah0302sTech/"
+		urlVar=https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Docker/Nextcloud/
 
-		parentFolder="Nextcloud"
-			fullInstallerFolder="Installer"
-				fullInstaller="Nextcloud-Install-Docker-Debian-Noah0302sTech.sh"
-			subFolder="Configurator"
-				bashInstaller="Nextcloud-Config-Docker-Noah0302sTech.sh"
+
+		parentFolder="Docker"
+			subFolder="Nextcloud"
+				fullInstallerFolder="Full-Installer"
+					fullInstaller="Nextcloud-Install-Docker-Debian-Noah0302sTech.sh"
+				bashConfiguratorFolder="Configurator"
+					bashConfigurator="Nextcloud-Config-Docker-Noah0302sTech.sh"
+				dockerComposeFolder="Docker-Compose"
+					dockerComposeFile="docker-compose.yml"
+				unInstallerFolder="Uninstaller"
+					unInstaller="Docker-SystemPrune-UnInstaller-Noah0302sTech.sh"
+
 
 		parentFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder"
-			fullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder"
-				fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$fullInstallerFolder/$fullInstaller"
 			subFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder"
-					updaterInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$folder1/$bashInstaller"
+				fullInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$fullInstallerFolder"
+					fullInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$fullInstallerFolder/$fullInstaller"
+				bashConfiguratorFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$bashConfiguratorFolder"
+					bashConfiguratorPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$bashConfiguratorFolder/$bashConfigurator"
+				dockerComposeFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$dockerComposeFolder"
+					dockerComposeFilePath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$dockerComposeFolder/$dockerComposeFile"
+				unInstallerFolderPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$unInstallerFolder"
+					unInstallerPath="/home/$SUDO_USER/Noah0302sTech/$parentFolder/$subFolder/$unInstallerFolder/$unInstaller"
 
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
@@ -127,7 +139,8 @@
 
 
 #----- Change Config
-	nano /var/lib/docker/volumes/"$SUDO_USER"_nextcloud_data/_data/config/config.php
+	nextcloud_dataPath=inputFromInstaller
+	nano $nextcloud_dataPath/config/config.php
 
 
 
@@ -137,8 +150,8 @@
 		y)  echo
 			#--- Curl Java-Updater
 				start_spinner "Starte Docker-Container neu... "
-						docker restart "$SUDO_USER"_nextcloud_1 > /dev/null 2>&1
-						docker restart "$SUDO_USER"_db_1 > /dev/null 2>&1
+						docker restart $SUDO_USER-nextcloud > /dev/null 2>&1
+						docker restart $SUDO_USER-mariadb > /dev/null 2>&1
 				stop_spinner $?
 			break;;
 
