@@ -158,6 +158,16 @@
 		nextcloud_dataVar=/var/www/html
 		mariaDB_dataVar=/var/lib/mysql
 
+	#--- Prompt user for custom values
+		read -p "MariaDB-Root-Passwort eigeben [default: $mysqlRootVar]: " input
+		mysqlRootVar=${input:-$mysqlRootVar}
+		read -p "MariaDB-Passwort eigeben [default: $mysqlPasswordVar]: " input
+		mysqlPasswordVar=${input:-$mysqlPasswordVar}
+		read -p "Nextcloud-Data Speicherpfad eigeben [default: $nextcloud_dataVar]: " input
+		nextcloud_dataVar=${input:-$nextcloud_dataVar}
+		read -p "Maria-DB Speicherpfad eigeben [default: $mariaDB_dataVar]: " input
+		mariaDB_dataVar=${input:-$mariaDB_dataVar}
+
 			#- Check if the directories exist
 				if [ ! -d "$nextcloud_dataVar" ]; then
 					echo "Creating $nextcloud_dataVar"
@@ -170,16 +180,6 @@
 					mkdir -p "$mariaDB_dataVar"
 					chown -R $SUDO_USER:$SUDO_USER "$mariaDB_dataVar"
 				fi
-
-	#--- Prompt user for custom values
-		read -p "MariaDB-Root-Passwort eigeben [default: $mysqlRootVar]: " input
-		mysqlRootVar=${input:-$mysqlRootVar}
-		read -p "MariaDB-Passwort eigeben [default: $mysqlPasswordVar]: " input
-		mysqlPasswordVar=${input:-$mysqlPasswordVar}
-		read -p "Nextcloud-Data Speicherpfad eigeben [default: $nextcloud_dataVar]: " input
-		nextcloud_dataVar=${input:-$nextcloud_dataVar}
-		read -p "Maria-DB Speicherpfad eigeben [default: $mariaDB_dataVar]: " input
-		mariaDB_dataVar=${input:-$mariaDB_dataVar}
 
 	#--- Create a Docker Compose file
 		start_spinner "Erstelle Docker-Compose-File..."
