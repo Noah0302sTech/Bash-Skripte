@@ -1,8 +1,3 @@
-#!/bin/bash
-#	Made by Noah0302sTech
-#	chmod +x Omada-Full-Installer-Deb11-Noah0302sTech.sh && sudo bash Omada-Full-Installer-Deb11-Noah0302sTech.sh
-#	curl -sSL https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Omada/Omada-Full-Installer-Deb11-Noah0302sTech.sh | sudo bash
-
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
 		if [[ $EUID -ne 0 ]]; then
@@ -84,14 +79,18 @@
 				unset _sp_pid
 			}
 
-
+	#----- echoEnd
+			function echoEnd {
+				echo
+				echo
+				echo
+			}
 
 	#----- Refresh Packages
 		start_spinner "Aktualisiere Package-Listen..."
-			apt update -y > /dev/null 2>&1
+			apt update > /dev/null 2>&1
 		stop_spinner $?
-		echo
-		echo
+		echoEnd
 
 
 
@@ -116,6 +115,54 @@
 				updaterExecuterFolderPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2"
 					updaterExecuterPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$folder2/$updaterExecuter"
 				cronCheckPath="/home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/$cronCheck"
+
+#-----	-----#	#-----	-----#	#-----	-----#
+#-----	-----#	#-----	-----#	#-----	-----#
+#-----	-----#	#-----	-----#	#-----	-----#
+
+#----- New Omada-Controller-Repository
+	newOmadaRepoURL=https://raw.githubusercontent.com/Noah0302sTech/Omada-Controller/master/Debian-11/Omada_Full-Installer_Debian-11.sh
+	echo "----- INFO -----"
+	echo "Mein Omada-Installer-Skript hat eine eigene Repositroy bekommen:"
+	echo "$newOmadaRepoURL"
+	echo
+	while IFS= read -n1 -r -p "Möchtest du den neuen Installer verwenden? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+	case $REPLY in
+		y)  echo
+				start_spinner "Downloade den neuen Omada-installer..."
+					wget $newOmadaRepoURL > /dev/null 2>&1
+				stop_spinner $?
+				chmod +x Omada_Full-Installer_Debian-11.sh
+				bash ./Omada_Full-Installer_Debian-11.sh
+				rm Omada-Full-Installer-Deb11-Noah0302sTech.sh
+
+			exit 0;;
+		n)  echo
+				echo "Der neue Installer wurde NICHT verwendet!"
+				echo "Der alte Installer wird ggf. nicht mehr funktionieren!"
+
+			break;;
+		*)  echo
+				echo "Answer with '#' or 'n'";;
+	esac
+	done
+	echoEnd
+
+	while IFS= read -n1 -r -p "Möchtest du den alten Installer trotzdem verwenden? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+	case $REPLY in
+		y)  echo
+				echo "Alter Installer wird fortgeführt..."
+
+			break;;
+		n)  echo
+				echo "Omada-Installation abgebrochen!"
+
+			exit 0;;
+		*)  echo
+				echo "Answer with '#' or 'n'";;
+	esac
+	done
+	echoEnd
 
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
@@ -175,11 +222,7 @@
 		esac
 		done
 
-	echo
-	echo
-	echo
-	echo
-	echo
+	echoEnd
 
 
 
@@ -195,11 +238,7 @@
 			apt install jsvc curl gnupg2 -y > /dev/null 2>&1
 		stop_spinner $?
 
-	echo
-	echo
-	echo
-	echo
-	echo
+	echoEnd
 
 
 
@@ -231,11 +270,7 @@
 			systemctl status mongod > /dev/null 2>&1
 		stop_spinner $?
 
-	echo
-	echo
-	echo
-	echo
-	echo
+	echoEnd
 
 
 #----- Install Omada
@@ -266,8 +301,7 @@
 		#stop_spinner $?
 		echo
 
-	echo
-	echo
+	echoEnd
 
 
 
