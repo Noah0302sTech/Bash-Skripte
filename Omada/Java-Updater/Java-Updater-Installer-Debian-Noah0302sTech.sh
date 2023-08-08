@@ -132,7 +132,10 @@
 
 #Java Update
 	echo "Update Java..."
+	echo "deb http://deb.debian.org/debian/ sid main" | tee -a /etc/apt/sources.list
+	apt update
 	"'javaUpdateOutput=$(DEBIAN_FRONTEND=noninteractive apt-get install openjdk-8-jre-headless -y 2>&1)'"
+	sed -i '\%^deb http://deb.debian.org/debian/ sid main%d' /etc/apt/sources.list
 	echo
 	echo
 
