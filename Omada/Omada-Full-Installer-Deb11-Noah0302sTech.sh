@@ -1,3 +1,8 @@
+#!/bin/bash
+#	Made by Noah0302sTech
+#	chmod +x Omada-Full-Installer-Deb11-Noah0302sTech.sh && sudo bash Omada-Full-Installer-Deb11-Noah0302sTech.sh
+#	wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Omada/Omada-Full-Installer-Deb11-Noah0302sTech.sh && sudo bash Omada-Full-Installer-Deb11-Noah0302sTech.sh
+
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
 		if [[ $EUID -ne 0 ]]; then
