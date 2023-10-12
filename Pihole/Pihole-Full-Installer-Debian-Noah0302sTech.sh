@@ -1,6 +1,7 @@
 #!/bin/bash
 #	Made by Noah0302sTech
 #	chmod +x Pihole-Full-Installer-Debian-Noah0302sTech.sh && sudo bash Pihole-Full-Installer-Debian-Noah0302sTech.sh
+#	 wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Pihole/Pihole-Full-Installer-Debian-Noah0302sTech.sh && sudo bash Pihole-Full-Installer-Debian-Noah0302sTech.sh
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
@@ -118,7 +119,7 @@
 
 	#--- Change Pihole Password
 		echo
-		echo "Gib ein neuen Pihole-Passwort ein:"
+		echo "Gib ein neues Pihole-Passwort ein:"
 		pihole -a -p
 	echo
 	echo
