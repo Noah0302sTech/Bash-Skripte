@@ -86,12 +86,20 @@
 
 
 
+		#----- echoEnd
+				function echoEnd {
+					echo
+					echo
+					echo
+				}
+
+
+
 	#----- Refresh Packages
 		start_spinner "Aktualisiere Package-Listen..."
-			sudo apt update -y > /dev/null 2>&1
+			sudo apt update > /dev/null 2>&1
 		stop_spinner $?
-		echo
-		echo
+		echoEnd
 
 #-----	-----#	#-----	-----#	#-----	-----#
 #-----	-----#	#-----	-----#	#-----	-----#
@@ -121,11 +129,8 @@
 		echo
 		echo "Gib ein neues Pihole-Passwort ein:"
 		pihole -a -p
-	echo
-	echo
-	echo
-	echo
-	echo
+	echoEnd
+	echoEnd
 
 
 #----- Install Pihole-Updater
@@ -147,11 +152,8 @@
 			echo "Antoworte mit y oder n";;
 	esac
 	done
-	echo
-	echo
-	echo
-	echo
-	echo
+	echoEnd
+	echoEnd
 
 
 
@@ -174,11 +176,8 @@
 			echo "Antoworte mit y oder n";;
 	esac
 	done
-	echo
-	echo
-	echo
-	echo
-	echo
+	echoEnd
+	echoEnd
 
 
 
@@ -201,11 +200,8 @@
 			echo "Antoworte mit y oder n";;
 	esac
 	done
-	echo
-	echo
-	echo
-	echo
-	echo
+	echoEnd
+	echoEnd
 
 
 
