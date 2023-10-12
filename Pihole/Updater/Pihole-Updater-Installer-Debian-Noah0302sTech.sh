@@ -123,6 +123,7 @@
 	echo "Update Pihole..."
 		sleep 1
 		"'piholeUpdateOutput=$(pihole -up 2>&1)'"
+	echo $piholeUpdateOutput
 	echo
 	echo
 
@@ -132,16 +133,19 @@
 	echo "Update Gravity..."
 		sleep 1
 		"'piholeGravityOutput=$(pihole -g 2>&1)'"
+	echo $piholeGravityOutput
 	echo
 	echo
 
 #Debug
+	echo "----------" >> /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt
 	echo "'Pihole-Updater Cron-Job ran @'" >> /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt
 	date >> /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt
 	echo "Update Pihole..." >> /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt
 		echo "'$piholeUpdateOutput'" >> /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt
 	echo "Update Gravity..." >> /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt
 		echo "'$piholeGravityOutput'" >> /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt
+	echo "----------" >> /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt
 	echo '' >> /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt" > /home/$SUDO_USER/$shSecondaryVar
 
 	#--- Make Pihole-Updater.sh executable
@@ -199,8 +203,7 @@ alias ccPiholeUpdater='cat /home/$SUDO_USER/Noah0302sTech/Pihole/Updater/Cron-Ch
 		echo "Der MOTD Eintrag exisitert bereits in /etc/motd"
 	else
 		start_spinner "Passe MOTD an..."
-			echo "
-Pihole
+			echo "----- Pihole -----
 Cron-Check Pihole:	ccPiholeUpdater
 " >> /etc/motd
 		stop_spinner $?
