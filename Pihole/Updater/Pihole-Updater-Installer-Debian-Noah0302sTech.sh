@@ -123,7 +123,7 @@
 	echo "Update Pihole..."
 		sleep 1
 		"'piholeUpdateOutput=$(pihole -up 2>&1)'"
-	echo $piholeUpdateOutput
+	echo "'$piholeUpdateOutput'"
 	echo
 	echo
 
@@ -133,7 +133,7 @@
 	echo "Update Gravity..."
 		sleep 1
 		"'piholeGravityOutput=$(pihole -g 2>&1)'"
-	echo $piholeGravityOutput
+	echo "'$piholeGravityOutput'"
 	echo
 	echo
 
