@@ -188,8 +188,9 @@ $cronVariable root /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/Pihol
 			echo "
 
 
-#Init
-alias ccPiholeUpdater='cat /home/$SUDO_USER/Noah0302sTech/Pihole/Updater/Cron-Check.txt'
+#Pihole-Updater by Noah0302sTech
+alias piholeUpdater='sudo /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/Pihole-Updater.sh'
+alias ccPiholeUpdater='cat /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderVar/Cron-Check.txt'
 "  >> /home/$SUDO_USER/.bashrc
 		stop_spinner $?
 	fi
@@ -204,7 +205,8 @@ alias ccPiholeUpdater='cat /home/$SUDO_USER/Noah0302sTech/Pihole/Updater/Cron-Ch
 	else
 		start_spinner "Passe MOTD an..."
 			echo "----- Pihole -----
-Cron-Check Pihole:	ccPiholeUpdater
+Manual-Update:	piholeUpdater
+Cron-Check:		ccPiholeUpdater
 " >> /etc/motd
 		stop_spinner $?
 	fi
