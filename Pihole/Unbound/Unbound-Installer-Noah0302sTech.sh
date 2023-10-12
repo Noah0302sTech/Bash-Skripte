@@ -194,6 +194,21 @@
 
 #----- Change Pihole DNS Config
 	echo "Nun muss der DNS-Server in der Pihole WebGUI auf '127.0.0.1#5335' angepasst werden!"
+	sleep 5
+	while IFS= read -n1 -r -p "Hast du den DNS-Server angepasst? [y]es|[n]o: " && [[ $REPLY != q ]]; do
+	case $REPLY in
+		y)	echo
+			echo "Fahre fort!"
+
+			break;;
+		n)	echo
+			echo "Bitte ändere den DNS-Server in der Pihole WebGUI auf '127.0.0.1#5335'!"
+				
+			;;
+		*)	echo
+			echo "Antoworte mit y oder n";;
+	esac
+	done
 	echo
 	echo
 
