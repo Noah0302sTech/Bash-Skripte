@@ -205,8 +205,8 @@ alias ccPiholeUpdater='cat /home/$SUDO_USER/Noah0302sTech/$folderVar/$subFolderV
 	else
 		start_spinner "Passe MOTD an..."
 			echo "----- Pihole -----
-Manual-Update:	piholeUpdater
-Cron-Check:		ccPiholeUpdater
+Manual-Run:	piholeUpdater
+Cron-Check:	ccPiholeUpdater
 " >> /etc/motd
 		stop_spinner $?
 	fi
