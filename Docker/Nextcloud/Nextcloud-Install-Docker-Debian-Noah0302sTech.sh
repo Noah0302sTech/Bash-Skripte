@@ -207,7 +207,7 @@ services:
       - MYSQL_DATABASE=nextclouddb
       - MYSQL_USER=nextcloud
     volumes:
-      - db_data:$mariaDB_dataVar
+      - db_data:/var/lib/mysql
     restart: unless-stopped
 
   nextcloud:
@@ -221,7 +221,7 @@ services:
       - MYSQL_PASSWORD=$mysqlPasswordVar
       - MYSQL_DATABASE=nextclouddb
     volumes:
-      - nextcloud_data:$nextcloud_dataVar
+      - nextcloud_data:/var/www/html
     restart: unless-stopped
     depends_on:
       - db
