@@ -132,9 +132,10 @@
 	then
 		if [[ -z "$(docker ps -q -f status=exited)" ]]; then
 			start_spinner "Keine gestoppten Docker-Container gefunden, führe Docker-System-Prune aus..."
-				dockerPruneOutput=$(docker system prune -f 2>&1)
+				dockerPruneOutputNotFull=$(docker system prune -f 2>&1)
 			stop_spinner $?
-			echo $dockerPruneOutput
+			echo $dockerPruneOutputNotFull
+			dockerPruneOutput="Keine gestoppten Docker-Container gefunden: $dockerPruneOutputNotFull"
 		else
 			echo "Es wurden gestoppte Container gefunden:"
 			docker ps -f "status=exited"
