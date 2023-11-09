@@ -3,8 +3,6 @@
 #	chmod +x Docker-SystemPrune-Installer-Noah0302sTech.sh && sudo bash Docker-SystemPrune-Installer-Noah0302sTech.sh
 #	wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Docker/System-Prune/Docker-SystemPrune-Installer-Noah0302sTech.sh && sudo bash Docker-SystemPrune-Installer-Noah0302sTech.sh
 
-#TODO:	Fix "Files not found" if Executer is executed before moving files
-
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
 		if [[ $EUID -ne 0 ]]; then
@@ -187,11 +185,13 @@ $cronVariable root sudo -E $bashExecuterPath" > /etc/cron.d/docker-System-Prune-
 					echo "
 
 #Cron-Check
-	echo "" >> $cronCheckPath
-	echo "Job lief am:" >> $cronCheckPath
+	echo >> $cronCheckPath
+	echo "'------------------------------'" >> $cronCheckPath
+	echo "'Job lief am:'" >> $cronCheckPath
 	date >> $cronCheckPath
 	echo "'$dockerPruneOutput'" >> $cronCheckPath
-	echo "'$fstrimOutput'" >> $cronCheckPath" >> $bashExecuter
+	echo "'$fstrimOutput'" >> $cronCheckPath
+	echo "'------------------------------'" >> $cronCheckPath" >> $bashExecuter
 
 			#--- Modify Variable
 				cronJobAdded="true"
@@ -220,7 +220,7 @@ $cronVariable root sudo -E $bashExecuterPath" > /etc/cron.d/docker-System-Prune-
 
 			break;;
 		n)  echo
-			echo "DSPtrim wurde nicht erstellt."
+			echo "DSPtrim wurde nicht ausgeführt."
 			
 			break;;
 		*)  echo
@@ -261,13 +261,11 @@ alias DSPtrim='sudo bash $bashExecuterPath'"  >> /home/$SUDO_USER/.bashrc
 	else
 		start_spinner "Passe MOTD an..."
 			echo "Passe MOTD an..."
-			echo "
-Docker-System-Prune + Trim:
-	DSPtrim" >> /etc/motd
+			echo "----- Docker -----
+Prune + Trim:   DSPtrim" >> /etc/motd
 
 		if $cronJobAdded == true; then
-			echo "Cron-Check Docker:
-	ccDocker
+			echo "Cron-Check:     ccDocker
 " >> /etc/motd
 		fi
 		stop_spinner $?
