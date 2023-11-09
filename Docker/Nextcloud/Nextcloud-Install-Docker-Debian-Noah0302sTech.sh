@@ -285,9 +285,8 @@ alias nextcloudConfigure='sudo bash $bashConfiguratorPath'"  >> /home/$SUDO_USER
 		echo "Der MOTD Eintrag exisitert bereits in /etc/motd"
 	else
 		start_spinner "Passe MOTD an..."
-			echo "-----
-Configure Nextcloud:  nextcloudConfigure
------
+			echo "----- Nextcloud -----
+Configure config.php:   nextcloudConfigure
 " >> /etc/motd
 		stop_spinner $?
 	fi
