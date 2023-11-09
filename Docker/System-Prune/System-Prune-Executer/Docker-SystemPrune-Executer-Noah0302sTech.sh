@@ -131,56 +131,59 @@
 	if command -v docker &> /dev/null
 	then
 		if [[ -z "$(docker ps -q -f status=exited)" ]]; then
-			start_spinner "Alle Docker Container laufen, führe Docker-System-Prune aus..."
+			start_spinner "Keine gestoppten Docker-Container gefunden, führe Docker-System-Prune aus..."
 				dockerPruneOutput=$(docker system prune -f 2>&1)
 			stop_spinner $?
 			echo $dockerPruneOutput
 		else
 			echo "Es wurden gestoppte Container gefunden:"
 			docker ps -f "status=exited"
+			dockerPruneOutputNotFull==$(docker ps -f "status=exited")
+			dockerPruneOutput="Es wurden gestoppte Container gefunden: $dockerPruneOutputNotFull"
 		fi
 	else
 		echo "Docker ist nicht installiert, überspringe Docker System Prune"
+		dockerPruneOutput="Docker ist nicht installiert, überspringe Docker System Prune"
 	fi
 	echoEnd
 
 
 
-#----- Check if the filesystem supports fstrim command
-	#--- Check if the script is running within a container
-	if [ -f /proc/1/environ ] && grep -q container=lxc /proc/1/environ; then
-		echo "Script läuft in einem Container!"
-		echo "Möglicherweise keine Berechtigungen für 'fstrim' Command!"
-		echo "Script wird abgebrochen!"
-		exit 0
-	fi
-
-	#--- Check if the script is running within a VMware VM
-	if command -v dmidecode >/dev/null 2>&1 && dmidecode -s system-product-name | grep -qi "VMware"; then
-		echo "Script läuft in einer VMware-VM"
-		echo "Möglicherweise keine Berechtigungen für 'fstrim' Command"
-		echo "Script wird abgebrochen!"
-		exit 0
-	fi
-
+#----- Trim
 	#--- Check if the filesystem supports fstrim command
 	if blkid -o value -s discard $(findmnt -n -o SOURCE --target /) >/dev/null 2>&1; then
 		echo "Filesystem unterstützt 'fstrim' Command"
 
+		#--- Check if the script is running within a container
+			if [ -f /proc/1/environ ] && grep -q container=lxc /proc/1/environ; then
+							echo "Script läuft in einem Container!"
+							echo "Möglicherweise keine Berechtigungen für 'fstrim' Command!"
+							echo "Script wird abgebrochen!"
+							fstrimOutput="Script läuft in einem Container! Möglicherweise keine Berechtigungen für 'fstrim' Command! Script wird abgebrochen!"
+
+		#--- Check if the script is running within a VMware VM
+			elif command -v dmidecode >/dev/null 2>&1 && dmidecode -s system-product-name | grep -qi "VMware"; then
+							echo "Script läuft in einer VMware-VM"
+							echo "Möglicherweise keine Berechtigungen für 'fstrim' Command"
+							echo "Script wird abgebrochen!"
+							fstrimOutput="Script läuft in einer VMware-VM Möglicherweise keine Berechtigungen für 'fstrim' Command! Script wird abgebrochen!"
+
 		# Run fstrim on the root filesystem
-		if command -v fstrim >/dev/null 2>&1; then
-			start_spinner "Trimme Filesystem..."
-				fstrimOutput=$(/sbin/fstrim -av 2>&1)
-			stop_spinner $?
-			echo $fstrimOutput
-		else
-			echo "'fstrim' Command ist nicht verfügbar"
-		fi
+			elif command -v fstrim >/dev/null 2>&1; then
+							start_spinner "Trimme Filesystem..."
+								fstrimOutput=$(/sbin/fstrim -av 2>&1)
+							stop_spinner $?
+							echo $fstrimOutput
+
+			else
+				echo "'fstrim' Command ist nicht verfügbar"
+			fi
+
 	else
 		echo "Filesystem unterstützt 'fstrim' Command NICHT!"
 	fi
-
 	echoEnd
+
 
 
 
