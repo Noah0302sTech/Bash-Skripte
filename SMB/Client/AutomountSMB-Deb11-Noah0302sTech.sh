@@ -196,7 +196,7 @@
 #----- FSTAB
     start_spinner "Erstelle FStab..."
         touch /etc/fstab
-        echo "//$SHARE $smbFolderPath cifs vers=3.0,credentials=/root/.$FILENAME" >> /etc/fstab
+        echo "//$SHARE $smbFolderPath cifs vers=3.0,credentials=/root/.$FILENAME,_netdev 0 0" >> /etc/fstab
 		systemctl daemon-reload
     stop_spinner $?
     
