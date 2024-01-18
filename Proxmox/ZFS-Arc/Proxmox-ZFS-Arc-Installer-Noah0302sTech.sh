@@ -37,7 +37,7 @@
 						# start spinner
 						i=1
 						sp='\|/-'
-						delay=${SPINNER_DELAY:-0.15}
+						delay=${SPINNER_DELAY:-0.25}
 
 						while :
 						do
@@ -87,7 +87,7 @@
 
 	#----- Refresh Packages
 		start_spinner "Aktualisiere Package-Listen..."
-			apt update -y > /dev/null 2>&1
+			apt update > /dev/null 2>&1
 		stop_spinner $?
 		echo
 		echo
@@ -227,12 +227,9 @@ options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf
 	else
 		start_spinner "Erstelle Alias..."
 			echo "
-
-
-#Alias ZFS-Arc-Config
-alias ZFSconfig='bash /root/Noah0302sTech/Proxmox/ZFS-Arc/Proxmox-ZFS-Arc-Config-Noah0302sTech.sh'
-alias ZFSarcsize='cat /proc/spl/kstat/zfs/arcstats | grep -w c_min && cat /proc/spl/kstat/zfs/arcstats | grep -w c_max'
-alias ZFSarcsizeused='cat /proc/spl/kstat/zfs/arcstats | grep -w size'
+#ZFS-Arc-Config
+alias zfsArcSize='cat /proc/spl/kstat/zfs/arcstats | grep -w c_min && cat /proc/spl/kstat/zfs/arcstats | grep -w c_max && cat /proc/spl/kstat/zfs/arcstats | grep -w size'
+alias zfsConfig='bash /root/Noah0302sTech/Proxmox/ZFS-Arc/Proxmox-ZFS-Arc-Config-Noah0302sTech.sh'
 "  >> /root/.bashrc
 		stop_spinner $?
 	fi
@@ -246,10 +243,9 @@ alias ZFSarcsizeused='cat /proc/spl/kstat/zfs/arcstats | grep -w size'
 		echo "Der MOTD Eintrag exisitert bereits in /etc/motd"
 	else
 		start_spinner "Passe MOTD an..."
-			echo "
-ZFS-Arc Konfigurieren:	ZFSconfig
-ZFS-Arc-Size aktuell:	ZFSarcsize
-ZFS-Arc-Size benutzt:	ZFSarcsizeused
+			echo "----- ZFS -----
+ZFS-Arc-Size:           zfsArcSize
+ZFS-Arc-Config:         zfsConfig
 " >> /etc/motd
 		stop_spinner $?
 	fi
