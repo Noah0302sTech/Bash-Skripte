@@ -1,6 +1,7 @@
 #!/bin/bash
 # Made by Noah0302sTech
 # chmod +x Proxmox-ZFS-Arc-Installer-Noah0302sTech.sh && bash Proxmox-ZFS-Arc-Installer-Noah0302sTech.sh
+#	wget https://raw.githubusercontent.com/Noah0302sTech/Bash-Skripte/master/Proxmox/ZFS-Arc/Proxmox-ZFS-Arc-Installer-Noah0302sTech.sh && bash Proxmox-ZFS-Arc-Installer-Noah0302sTech.sh
 
 #---------- Initial Checks & Functions
 	#----- Check for administrative privileges
