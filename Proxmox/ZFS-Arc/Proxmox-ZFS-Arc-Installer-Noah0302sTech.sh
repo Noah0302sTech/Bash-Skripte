@@ -223,7 +223,7 @@ options zfs zfs_arc_max=$zfsMaximumRounded" > /etc/modprobe.d/zfs.conf
 
 
 #----- Create Alias
-    if grep -q "^alias ZFSconfig" /root/.bashrc; then
+    if grep -q "^alias zfsArcSize" /root/.bashrc; then
 		echo "Der Alias existiert bereits in /root/.bashrc"
 	else
 		start_spinner "Erstelle Alias..."
@@ -240,7 +240,7 @@ alias zfsConfig='bash /root/Noah0302sTech/Proxmox/ZFS-Arc/Proxmox-ZFS-Arc-Config
 
 
 #----- Create MOTD
-	if grep -q "^ZFS-Arc Konfigurieren" /etc/motd; then
+	if grep -q "^ZFS-Arc-Size" /etc/motd; then
 		echo "Der MOTD Eintrag exisitert bereits in /etc/motd"
 	else
 		start_spinner "Passe MOTD an..."
